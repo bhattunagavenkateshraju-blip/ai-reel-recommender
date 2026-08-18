@@ -5,6 +5,7 @@
 export class ReelFeedSimulator {
   constructor(containerId, options = {}) {
     this.container = document.getElementById(containerId);
+    this.options = options;  // store for later access
     this.reels = options.reels || [];
     this.currentIndex = 0;
     this.isPlaying = true;
@@ -23,7 +24,8 @@ export class ReelFeedSimulator {
     this.currentIndex = Math.max(0, Math.min(startIndex, reels.length - 1));
     this.watchProgress = 0;
     this.render();
-    this._initCanvasAnimation();
+    const r = this.getCurrentReel();
+    if (r && !r.videoUrl && !r.youtubeEmbedUrl) this._initCanvasAnimation();
     this.onReelChange(this.getCurrentReel());
   }
 
@@ -36,9 +38,10 @@ export class ReelFeedSimulator {
     this.currentIndex = (this.currentIndex + 1) % this.reels.length;
     this.watchProgress = 0;
     this.render();
-    this._initCanvasAnimation();
-    this.onReelChange(this.getCurrentReel());
-    this.onInteraction({ type: 'scroll_next', reel: this.getCurrentReel() });
+    const r = this.getCurrentReel();
+    if (r && !r.videoUrl && !r.youtubeEmbedUrl) this._initCanvasAnimation();
+    this.onReelChange(r);
+    this.onInteraction({ type: 'scroll_next', reel: r });
   }
 
   prevReel() {
@@ -46,9 +49,10 @@ export class ReelFeedSimulator {
     this.currentIndex = (this.currentIndex - 1 + this.reels.length) % this.reels.length;
     this.watchProgress = 0;
     this.render();
-    this._initCanvasAnimation();
-    this.onReelChange(this.getCurrentReel());
-    this.onInteraction({ type: 'scroll_prev', reel: this.getCurrentReel() });
+    const r = this.getCurrentReel();
+    if (r && !r.videoUrl && !r.youtubeEmbedUrl) this._initCanvasAnimation();
+    this.onReelChange(r);
+    this.onInteraction({ type: 'scroll_prev', reel: r });
   }
 
   toggleLike() {
@@ -56,7 +60,8 @@ export class ReelFeedSimulator {
     if (!reel) return;
     this.likedMap[reel.id] = !this.likedMap[reel.id];
     this.render();
-    this._initCanvasAnimation();
+    // Only re-init canvas animation if canvas is present (not real video)
+    if (!reel.videoUrl && !reel.youtubeEmbedUrl) this._initCanvasAnimation();
     this.onInteraction({ type: 'like', liked: this.likedMap[reel.id], reel });
   }
 
@@ -65,7 +70,7 @@ export class ReelFeedSimulator {
     if (!reel) return;
     this.savedMap[reel.id] = !this.savedMap[reel.id];
     this.render();
-    this._initCanvasAnimation();
+    if (!reel.videoUrl && !reel.youtubeEmbedUrl) this._initCanvasAnimation();
     this.onInteraction({ type: 'save', saved: this.savedMap[reel.id], reel });
   }
 

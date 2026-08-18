@@ -142,7 +142,10 @@ class App {
     });
 
     this.feedSimulator.render();
-    this.feedSimulator._initCanvasAnimation();
+    const firstReel = this.feedSimulator.getCurrentReel();
+    if (firstReel && !firstReel.videoUrl && !firstReel.youtubeEmbedUrl) {
+      this.feedSimulator._initCanvasAnimation();
+    }
   }
 
   _initRadar() {
