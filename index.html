@@ -91,17 +91,29 @@
 
             <!-- Stage 1: Context Signals Extractor -->
             <div class="signal-box" id="extractedSignalsBox">
-              <!-- Injected by app.js -->
+              <div class="signal-header-row">
+                <span class="signal-eyebrow">Input Nuance &amp; Subtext</span>
+                <div class="signal-badges-list"><span class="signal-tag" style="opacity:.4">Loading signals...</span></div>
+              </div>
+              <p class="signal-evidence-text" style="opacity:.4"><strong>Evidence:</strong> Scroll to a reel to begin analysis.</p>
             </div>
 
             <!-- Stage 2: Latent Interest Synthesizer -->
             <div class="latent-box" id="latentInterestBox">
-              <!-- Injected by app.js -->
+              <div class="latent-header" style="opacity:.4">
+                <span class="latent-badge-category">—</span>
+                <span class="latent-topic-name">Latent Interest Inference</span>
+              </div>
+              <p class="latent-intent-text" style="opacity:.4"><strong>Inferred Intent:</strong> Awaiting reel interaction…</p>
             </div>
 
             <!-- Stage 3: High-Signal Recommendation Card -->
             <div class="recommendation-card" id="recommendationBox">
-              <!-- Injected by app.js -->
+              <div class="rec-card-header" style="opacity:.4">
+                <div class="rec-category-badge cat-other">—</div>
+                <div class="rec-meta-badges"><span class="badge-difficulty">—</span></div>
+              </div>
+              <h3 class="rec-title" style="opacity:.4">Recommendation will appear here</h3>
             </div>
 
             <!-- Stage 4: Required Output Specification Terminal -->
@@ -113,7 +125,14 @@
                 </span>
                 <button class="btn-copy" id="btnCopyFormatted">📋 Copy Required Output</button>
               </div>
-              <pre class="output-pre" id="requiredOutputFormattedText"><code>Generating recommendation...</code></pre>
+              <pre class="output-pre" id="requiredOutputFormattedText">CURRENT REEL: [Waiting for reel selection...]
+INTEREST DETECTED: —
+WHY: —
+RECOMMENDED TECH REEL: —
+CATEGORY: —
+WHY THIS RECOMMENDATION: —
+DIFFICULTY: —
+CONFIDENCE: —</pre>
             </div>
           </div>
 

@@ -37,10 +37,12 @@ class App {
     this._initAddRealReelModal();
     this._initKeyboardNav();
 
-    // Initial evaluation
-    const currentReel = this.feedSimulator.getCurrentReel();
-    this.updateAgentInspection(currentReel);
-    this.updateAggregatePersona();
+    // Defer initial evaluation until after first paint so all DOM ids exist
+    requestAnimationFrame(() => {
+      const currentReel = this.feedSimulator.getCurrentReel();
+      this.updateAgentInspection(currentReel);
+      this.updateAggregatePersona();
+    });
   }
 
   _resolvePresetReels(preset) {
@@ -152,7 +154,15 @@ class App {
    */
   updateAgentInspection(reel) {
     if (!reel) return;
-    const analysis = this.agent.analyzeReel(reel);
+    let analysis;
+    try {
+      analysis = this.agent.analyzeReel(reel);
+    } catch (err) {
+      console.error('[Agent] analyzeReel failed:', err);
+      const fb = document.getElementById('requiredOutputFormattedText');
+      if (fb) fb.textContent = `Error: ${err.message}`;
+      return;
+    }
 
     // 1. Context & Signals Box
     const signalsBox = document.getElementById('extractedSignalsBox');
