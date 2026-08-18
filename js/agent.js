@@ -73,7 +73,7 @@ export class RecommendationAgent {
     const hasSystemsContext = /kafka|consumer lag|connection pool|nullpointer|ci\/cd|pipeline|microservices|distributed/i.test(text);
 
     // Check for algorithmic / CS theory markers
-    const hasAlgoContext = /two-sum|o\(n|hash map|brute force|linear time|sorting|leetcode|dsa/i.test(text);
+    const hasAlgoContext = /two-sum|o\(n\)|hash map|brute force|linear time|sorting|leetcode|dsa/i.test(text);
 
     // Check for graphics / math / physics markers
     const hasGraphicsContext = /webgl|shader|particles|3-body|physics|runge-kutta|glsl|chaos/i.test(text);

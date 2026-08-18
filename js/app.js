@@ -770,6 +770,10 @@ class App {
           if (scriptDisplay) {
             scriptDisplay.innerHTML = `<div class="script-empty-placeholder" style="color: #ef4444;">Script generation error: ${err.message}</div>`;
           }
+        } finally {
+          btnGenScript.disabled = false;
+          btnGenScript.textContent = '🎬 Generate 60s Educational Video Script';
+        }
       };
     }
   }
