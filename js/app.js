@@ -34,6 +34,7 @@ class App {
     this._initBatchStudio();
     this._initCustomLab();
     this._initGeminiStudio();
+    this._initAddRealReelModal();
     this._initKeyboardNav();
 
     // Initial evaluation
@@ -756,10 +757,103 @@ class App {
           if (scriptDisplay) {
             scriptDisplay.innerHTML = `<div class="script-empty-placeholder" style="color: #ef4444;">Script generation error: ${err.message}</div>`;
           }
-        } finally {
-          btnGenScript.disabled = false;
-          btnGenScript.textContent = '🎬 Generate 60s Educational Video Script';
+      };
+    }
+  }
+
+  _initAddRealReelModal() {
+    const modal = document.getElementById('addRealReelModal');
+    const btnClose = document.getElementById('btnCloseAddModal');
+    const btnCancel = document.getElementById('btnCancelAddModal');
+    const form = document.getElementById('addRealReelForm');
+    const groupVideoUrl = document.getElementById('groupVideoUrl');
+    const groupVideoUpload = document.getElementById('groupVideoUpload');
+
+    const closeModal = () => {
+      if (modal) modal.classList.remove('active');
+    };
+
+    if (btnClose) btnClose.onclick = closeModal;
+    if (btnCancel) btnCancel.onclick = closeModal;
+
+    // Toggle input types (YouTube / Direct MP4 / Upload / Canvas)
+    const sourceRadios = document.querySelectorAll('input[name="videoSourceType"]');
+    sourceRadios.forEach(radio => {
+      radio.onchange = (e) => {
+        const val = e.target.value;
+        if (groupVideoUrl) groupVideoUrl.style.display = (val === 'youtube' || val === 'mp4') ? 'block' : 'none';
+        if (groupVideoUpload) groupVideoUpload.style.display = (val === 'upload') ? 'block' : 'none';
+      };
+    });
+
+    if (form) {
+      form.onsubmit = (e) => {
+        e.preventDefault();
+        const title = document.getElementById('realReelTitle')?.value.trim() || 'Custom Real Reel';
+        const creator = document.getElementById('realReelCreator')?.value.trim() || '@creator';
+        const category = document.getElementById('realReelCategory')?.value || 'Other';
+        const tagsStr = document.getElementById('realReelTags')?.value.trim() || '';
+        const transcript = document.getElementById('realReelTranscript')?.value.trim() || '';
+        const sourceType = document.querySelector('input[name="videoSourceType"]:checked')?.value || 'youtube';
+        const rawUrl = document.getElementById('realVideoUrl')?.value.trim() || '';
+        const fileInput = document.getElementById('realVideoFile');
+
+        if (!transcript) {
+          alert('Please enter a transcript or description for the AI Agent to reason on.');
+          return;
         }
+
+        let videoUrl = null;
+        let youtubeEmbedUrl = null;
+
+        if (sourceType === 'youtube' && rawUrl) {
+          // Parse YouTube ID
+          let ytId = null;
+          const shortsMatch = rawUrl.match(/shorts\/([a-zA-Z0-9_-]+)/);
+          const watchMatch = rawUrl.match(/[?&]v=([a-zA-Z0-9_-]+)/);
+          const youtuBeMatch = rawUrl.match(/youtu\.be\/([a-zA-Z0-9_-]+)/);
+          
+          if (shortsMatch) ytId = shortsMatch[1];
+          else if (watchMatch) ytId = watchMatch[1];
+          else if (youtuBeMatch) ytId = youtuBeMatch[1];
+          else if (/^[a-zA-Z0-9_-]{11}$/.test(rawUrl)) ytId = rawUrl;
+
+          if (ytId) {
+            youtubeEmbedUrl = `https://www.youtube-nocookie.com/embed/${ytId}?autoplay=1&mute=1&loop=1&playlist=${ytId}&controls=0&modestbranding=1`;
+          }
+        } else if (sourceType === 'mp4' && rawUrl) {
+          videoUrl = rawUrl;
+        } else if (sourceType === 'upload' && fileInput && fileInput.files && fileInput.files[0]) {
+          videoUrl = URL.createObjectURL(fileInput.files[0]);
+        }
+
+        const newRealReel = {
+          id: 'real-' + Date.now().toString().slice(-4),
+          title,
+          category,
+          creator,
+          duration: 30,
+          likes: '1.4K',
+          comments: '120',
+          shares: '340',
+          tags: tagsStr.split(/[\s,]+/).filter(t => t.length > 0),
+          audio: 'Original Audio',
+          videoVisualType: 'custom',
+          videoUrl,
+          youtubeEmbedUrl,
+          transcript
+        };
+
+        // Add to active reels deck and switch to simulator view
+        this.activeReels.unshift(newRealReel);
+        this.watchHistory.unshift(newRealReel);
+        this.feedSimulator.setReels(this.activeReels, 0);
+        this.updateAgentInspection(newRealReel);
+        this.updateAggregatePersona();
+
+        closeModal();
+        this.switchTab('simulator');
+        form.reset();
       };
     }
   }

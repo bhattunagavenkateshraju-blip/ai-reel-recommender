@@ -347,6 +347,105 @@
 
   </main>
 
+  <!-- Modal: Add Real Reel Directly -->
+  <div class="modal-backdrop" id="addRealReelModal" role="dialog" aria-modal="true" aria-labelledby="modalTitle">
+    <div class="modal-content-card">
+      <div class="modal-header">
+        <div>
+          <h2 class="modal-title" id="modalTitle">📥 Add Real Reel / Video</h2>
+          <p class="modal-subtitle">Paste a real YouTube Short, MP4 video link, or transcript to analyze with the AI Recommendation Agent.</p>
+        </div>
+        <button class="modal-close-btn" id="btnCloseAddModal" aria-label="Close modal">&times;</button>
+      </div>
+
+      <form id="addRealReelForm" class="modal-form">
+        
+        <!-- Video Source Selection -->
+        <div class="form-group">
+          <label class="form-label">Video Source Type:</label>
+          <div class="video-source-pills">
+            <label class="source-pill">
+              <input type="radio" name="videoSourceType" value="youtube" checked>
+              <span>YouTube Shorts / Video</span>
+            </label>
+            <label class="source-pill">
+              <input type="radio" name="videoSourceType" value="mp4">
+              <span>Direct MP4 / WebM Link</span>
+            </label>
+            <label class="source-pill">
+              <input type="radio" name="videoSourceType" value="upload">
+              <span>Upload Video File</span>
+            </label>
+            <label class="source-pill">
+              <input type="radio" name="videoSourceType" value="canvas">
+              <span>Transcript Only (Canvas)</span>
+            </label>
+          </div>
+        </div>
+
+        <!-- Video URL Input -->
+        <div class="form-group" id="groupVideoUrl">
+          <label for="realVideoUrl" class="form-label">Video / Shorts URL:</label>
+          <input type="text" id="realVideoUrl" class="form-input" placeholder="e.g. https://www.youtube.com/shorts/dQw4w9WgXcQ or https://example.com/video.mp4">
+        </div>
+
+        <!-- File Upload Input (Hidden by default) -->
+        <div class="form-group" id="groupVideoUpload" style="display: none;">
+          <label for="realVideoFile" class="form-label">Choose Video File (.mp4, .webm):</label>
+          <input type="file" id="realVideoFile" class="form-input" accept="video/mp4,video/webm">
+        </div>
+
+        <!-- Reel Title & Creator -->
+        <div class="form-group-row">
+          <div class="form-group" style="flex: 2;">
+            <label for="realReelTitle" class="form-label">Reel Title / Caption:</label>
+            <input type="text" id="realReelTitle" class="form-input" placeholder="e.g. Why Big Tech is ditching Python for Rust" required>
+          </div>
+          <div class="form-group" style="flex: 1;">
+            <label for="realReelCreator" class="form-label">Creator Handle:</label>
+            <input type="text" id="realReelCreator" class="form-input" placeholder="@tech_creator" value="@real_creator">
+          </div>
+        </div>
+
+        <!-- Category -->
+        <div class="form-group-row">
+          <div class="form-group" style="flex: 1;">
+            <label for="realReelCategory" class="form-label">Surface Category:</label>
+            <select id="realReelCategory" class="form-select">
+              <option value="Coding">Coding</option>
+              <option value="Programming Memes">Programming Memes</option>
+              <option value="Career / SWE Lifestyle">Career / SWE Lifestyle</option>
+              <option value="DSA / Coding Interview">DSA / Coding Interview</option>
+              <option value="Gadgets / Hardware">Gadgets / Hardware</option>
+              <option value="Gaming / Systems">Gaming / Systems</option>
+              <option value="AI / Tech News">AI / Tech News</option>
+              <option value="Cybersecurity">Cybersecurity</option>
+              <option value="Entertainment">Entertainment</option>
+              <option value="Other">Other</option>
+            </select>
+          </div>
+          <div class="form-group" style="flex: 1;">
+            <label for="realReelTags" class="form-label">Tags (space-separated):</label>
+            <input type="text" id="realReelTags" class="form-input" placeholder="#rust #performance #backend #dev">
+          </div>
+        </div>
+
+        <!-- Audio Transcript / Narrative (Crucial for AI analysis) -->
+        <div class="form-group">
+          <label for="realReelTranscript" class="form-label">Spoken Audio Transcript / Narrative (for AI Reasoning):</label>
+          <textarea id="realReelTranscript" class="form-textarea" placeholder="Paste the spoken transcript or detailed summary of the video..." rows="3" required></textarea>
+        </div>
+
+        <!-- Submit Buttons -->
+        <div class="modal-actions-row">
+          <button type="button" class="config-btn secondary" id="btnCancelAddModal">Cancel</button>
+          <button type="submit" class="btn-submit-agent" style="flex: 1;">🚀 Add to Live Feed & Analyze</button>
+        </div>
+
+      </form>
+    </div>
+  </div>
+
   <!-- Footer -->
   <footer class="app-footer">
     <p>AI-Powered Tech Reel Recommendation Agent &bull; Turning student scrolling into high-signal educational micro-learning without clickbait traps.</p>

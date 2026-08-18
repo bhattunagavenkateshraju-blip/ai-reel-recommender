@@ -82,9 +82,15 @@ export class ReelFeedSimulator {
 
     this.container.innerHTML = `
       <div class="reel-player-card" id="reelPlayerCard">
-        <!-- Canvas Video Stage -->
+        <!-- Canvas or Real Video Stage -->
         <div class="reel-stage">
-          <canvas id="reelCanvas" class="reel-canvas" width="360" height="640"></canvas>
+          ${reel.videoUrl ? `
+            <video id="reelRealVideo" class="reel-video-element" src="${reel.videoUrl}" autoplay loop muted playsinline></video>
+          ` : reel.youtubeEmbedUrl ? `
+            <iframe id="reelYoutubeIframe" class="reel-video-iframe" src="${reel.youtubeEmbedUrl}" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+          ` : `
+            <canvas id="reelCanvas" class="reel-canvas" width="360" height="640"></canvas>
+          `}
           
           <!-- Category & Audio Pill -->
           <div class="reel-top-bar">
@@ -160,8 +166,11 @@ export class ReelFeedSimulator {
           <div class="feed-counter">
             Reel <strong>${this.currentIndex + 1}</strong> of <strong>${this.reels.length}</strong>
           </div>
+          <button class="add-real-reel-btn" id="btnOpenAddRealReel">
+            <span>➕ Add Real Reel</span>
+          </button>
           <div class="feed-shortcuts-hint">
-            <span>Use <strong>&uarr; / &darr;</strong> keys to scroll</span>
+            <span>Use <strong>&uarr; / &darr;</strong> keys</span>
           </div>
         </div>
       </div>
@@ -175,11 +184,20 @@ export class ReelFeedSimulator {
     const btnPrev = document.getElementById('btnFeedPrev');
     const btnLike = document.getElementById('btnLike');
     const btnSave = document.getElementById('btnSave');
+    const btnAddReal = document.getElementById('btnOpenAddRealReel');
 
     if (btnNext) btnNext.onclick = () => this.nextReel();
     if (btnPrev) btnPrev.onclick = () => this.prevReel();
     if (btnLike) btnLike.onclick = () => this.toggleLike();
     if (btnSave) btnSave.onclick = () => this.toggleSave();
+    if (btnAddReal) btnAddReal.onclick = () => {
+      if (this.options && this.options.onOpenAddReel) {
+        this.options.onOpenAddReel();
+      } else {
+        const modal = document.getElementById('addRealReelModal');
+        if (modal) modal.classList.add('active');
+      }
+    };
   }
 
   _initCanvasAnimation() {
