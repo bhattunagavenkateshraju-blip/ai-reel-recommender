@@ -21,7 +21,19 @@ export const SAMPLE_REELS = [
       tone: "Self-deprecating satire / Meme",
       surfaceKeywords: ["Java", "null checks", "production crash", "NullPointerException", "CI pipeline"],
       underlyingConcept: "Defensive programming pitfalls, exception handling models, Null safety, and CI/CD deployment safeguards",
-      emotionalState: "Anxiety about brittle code and production reliability"
+      emotionalState: "Anxiety about brittle code and production reliability",
+      csTriad: {
+        hookNode: "Friday 5 PM Production Crash & NullPointerException Meme",
+        bottleneckNode: "Unchecked Runtime Exceptions & Heap Pointer Dereferencing",
+        solutionNode: "JVM Memory Management, Generational GC & Static Null-Safety Analysis"
+      },
+      signalMetrics: {
+        pedagogicalDepth: 9.8,
+        depthFactor: 1.0,
+        clickbaitPenalty: 0.0,
+        signalDensityPct: 98
+      },
+      nextMilestone: "Implement static bytecode verification and understand Eden/Tenured GC allocation in production microservices."
     }
   },
   {
@@ -41,7 +53,19 @@ export const SAMPLE_REELS = [
       tone: "Aspirational lifestyle vlog with real engineering friction points",
       surfaceKeywords: ["matcha", "standup", "Kafka", "consumer lag", "backend engineer", "connection pool"],
       underlyingConcept: "Distributed message queues, event streaming architectures, backpressure, and database connection pooling",
-      emotionalState: "Desire for genuine backend competence behind lifestyle veneer"
+      emotionalState: "Desire for genuine backend competence behind lifestyle veneer",
+      csTriad: {
+        hookNode: "Lifestyle Vlog Veneer (Matcha & Standups)",
+        bottleneckNode: "Kafka Consumer Group Lag Storms & DB Connection Starvation",
+        solutionNode: "Partition Rebalancing, Non-Blocking I/O & Circuit-Breaker Backpressure"
+      },
+      signalMetrics: {
+        pedagogicalDepth: 9.7,
+        depthFactor: 1.0,
+        clickbaitPenalty: 0.0,
+        signalDensityPct: 97
+      },
+      nextMilestone: "Architect an event-driven ingestion pipeline with rate-limiting and connection pool health checks."
     }
   },
   {
@@ -61,7 +85,19 @@ export const SAMPLE_REELS = [
       tone: "Relatable interview anxiety comedy",
       surfaceKeywords: ["Two-Sum", "O(n^2)", "linear time", "hash map", "interview", "LeetCode"],
       underlyingConcept: "Algorithmic time-space tradeoffs, hash collisions, amortized complexity, and interview problem patterns",
-      emotionalState: "Interview performance pressure and need for deep algorithmic intuition over rote memorization"
+      emotionalState: "Interview performance pressure and need for deep algorithmic intuition over rote memorization",
+      csTriad: {
+        hookNode: "LeetCode Interview Panic Comedy Sketch",
+        bottleneckNode: "Brute Force O(n^2) Nested Loops & Hash Table Memory Overhead",
+        solutionNode: "Amortized O(1) Hash Map Complements & CPU Cache-Line Sorting Hybridization"
+      },
+      signalMetrics: {
+        pedagogicalDepth: 9.6,
+        depthFactor: 1.0,
+        clickbaitPenalty: 0.0,
+        signalDensityPct: 96
+      },
+      nextMilestone: "Master algorithmic time-space tradeoffs and understand how hardware cache misses impact real-world Big-O."
     }
   },
   {
@@ -81,7 +117,19 @@ export const SAMPLE_REELS = [
       tone: "Technical comparison / Hardware analysis",
       surfaceKeywords: ["Snapdragon", "M3 Pro", "RTX 4080", "kernel compile", "ARM", "unified memory", "thermal throttle"],
       underlyingConcept: "CPU microarchitecture, ARM vs x86 instruction sets, unified memory bandwidth, multi-core compilation parallelism, and thermal management",
-      emotionalState: "High curiosity about developer toolchain performance and computer hardware architecture"
+      emotionalState: "High curiosity about developer toolchain performance and computer hardware architecture",
+      csTriad: {
+        hookNode: "Laptop Benchmark Comparison (Snapdragon vs M3 vs RTX)",
+        bottleneckNode: "Multi-Threaded Memory Bus Contention & Thermal Throttling",
+        solutionNode: "Unified Memory Bus, Zero-Copy Shared Heaps & L1/L2 Cache Line Pre-fetching"
+      },
+      signalMetrics: {
+        pedagogicalDepth: 9.9,
+        depthFactor: 1.0,
+        clickbaitPenalty: 0.0,
+        signalDensityPct: 99
+      },
+      nextMilestone: "Benchmark compiler optimizations and analyze memory bus saturation during heavy parallel builds."
     }
   },
   {
@@ -93,55 +141,91 @@ export const SAMPLE_REELS = [
     likes: "340K",
     comments: "7.8K",
     shares: "91K",
-    tags: ["#minecraft", "#redstone", "#computerscience", "#logicgates", "#turingcomplete"],
-    audio: "Epic orchestral buildup - Interstellar style",
+    tags: ["#minecraft", "#redstone", "#computerscience", "#logicgates", "#cpu", "#digitalcircuit"],
+    audio: "Chiptune 8-bit electronic melody",
     videoVisualType: "game-simulation",
-    transcript: "People think Minecraft is just placing blocks. But using redstone repeaters as diodes, torches as NOT gates, and building NAND circuits, we constructed an entire 8-bit Arithmetic Logic Unit with 256 bytes of RAM that can compute Fibonacci numbers inside a video game.",
+    transcript: "Can Minecraft run Doom? We laid down 12,000 blocks of redstone to construct an 8-bit Arithmetic Logic Unit (ALU), a 16-byte RAM register, and a program counter. Watch as this virtual computer evaluates Fibonacci numbers purely through boolean logic gates and simulated electrical delays.",
     metadata: {
-      tone: "Mind-blowing technical feat in a gaming environment",
-      surfaceKeywords: ["Minecraft", "redstone", "logic gates", "ALU", "RAM", "Fibonacci", "Turing complete"],
-      underlyingConcept: "Digital logic design, boolean algebra, Von Neumann architecture, CPU instruction cycles, and hardware fundamentals",
-      emotionalState: "Deep fascination with foundational systems and computing mechanics through gaming"
+      tone: "Playful gaming sandbox demonstrating formal CS theory",
+      surfaceKeywords: ["Minecraft", "redstone", "8-bit", "ALU", "RAM", "logic gates", "Fibonacci"],
+      underlyingConcept: "Digital logic design, boolean algebra, ALU architecture, sequential circuits, and the fetch-decode-execute cycle",
+      emotionalState: "Wonder at how simple physical switches scale into programmable computation",
+      csTriad: {
+        hookNode: "Minecraft Redstone Sandbox & Doom Experiment",
+        bottleneckNode: "Manual Wiring Complexity & Propagation Delay Timing Hazards",
+        solutionNode: "Von Neumann Architecture, Instruction Decoders & Silicon Transistor Logic Cycles"
+      },
+      signalMetrics: {
+        pedagogicalDepth: 9.9,
+        depthFactor: 1.0,
+        clickbaitPenalty: 0.0,
+        signalDensityPct: 99
+      },
+      nextMilestone: "Transition from redstone logic to formal hardware description languages (Verilog/VHDL) and RISC-V design."
     }
   },
   {
     id: "reel-6",
     title: "OpenAI Operator / Deep Research: How Autonomous Agents Actually Navigate DOM",
     category: "AI / Tech News",
-    creator: "@deep_tech_breakdown",
-    duration: 38,
+    creator: "@ai_engineer_daily",
+    duration: 50,
     likes: "175K",
-    comments: "2.1K",
+    comments: "2.9K",
     shares: "38K",
-    tags: ["#ai", "#agenticai", "#browseruse", "#llmarchitecture", "#technews", "#deeptech"],
-    audio: "Pulsing modern techno beat",
+    tags: ["#ai", "#agents", "#operator", "#llm", "#playwright", "#automation"],
+    audio: "Ambient electronic soundscape",
     videoVisualType: "ai-flowchart",
-    transcript: "Everyone is hyping browser-controlling AI agents, but how does the model actually interact with web pages without burning millions of tokens? Look under the hood: DOM tree pruning, accessibility tree (AXTree) representation, bounding box coordinate grounding, and multimodal action token generation.",
+    transcript: "Forget the hype: how does an AI browser agent actually buy a flight? It doesn't just look at screenshots. It converts the webpage into an accessibility tree, assigns semantic IDs to interactive bounding boxes, calculates coordinate offsets, and calls structured tool schemas while pruning token context.",
     metadata: {
-      tone: "Pragmatic deep-dive cutting through media hype",
-      surfaceKeywords: ["AI agents", "browser use", "DOM tree", "AXTree", "multimodal", "tokens"],
-      underlyingConcept: "Agentic AI architectures, DOM/Accessibility tree parsing, coordinate grounding, vision-language model planning, and inference cost optimization",
-      emotionalState: "Desire to understand the real engineering mechanics of AI beyond marketing claims"
+      tone: "Pragmatic engineering breakdown cutting through AI hype",
+      surfaceKeywords: ["AI agent", "Operator", "browser automation", "DOM", "accessibility tree", "bounding box", "token context"],
+      underlyingConcept: "Agentic LLM architectures, DOM tree extraction, multimodal coordinate grounding, structured tool calling, and token efficiency",
+      emotionalState: "Eagerness for tangible AI engineering principles over breathless product marketing",
+      csTriad: {
+        hookNode: "OpenAI Operator & Autonomous Agent Tech News",
+        bottleneckNode: "Context Window Token Flooding & Vision Coordinate Drift",
+        solutionNode: "Accessibility Tree Extraction, Coordinate Grounding & Playwright Tool Schemas"
+      },
+      signalMetrics: {
+        pedagogicalDepth: 9.8,
+        depthFactor: 1.0,
+        clickbaitPenalty: 0.0,
+        signalDensityPct: 98
+      },
+      nextMilestone: "Build a deterministic browser automation agent using Playwright with token-efficient DOM pruning."
     }
   },
   {
     id: "reel-7",
     title: "10,000 Particle Physics Simulation of the 3-Body Problem in WebGL",
     category: "Entertainment / Math & Graphics",
-    creator: "@math_visualized",
+    creator: "@creative_coder_xyz",
     duration: 28,
-    likes: "260K",
-    comments: "3.5K",
-    shares: "64K",
-    tags: ["#math", "#physics", "#webgl", "#threebodyproblem", "#creativecoding", "#chaos"],
-    audio: "Cosmic ambient soundscape",
+    likes: "410K",
+    comments: "5.6K",
+    shares: "88K",
+    tags: ["#webgl", "#threejs", "#physics", "#3bodyproblem", "#creativecoding", "#glsl", "#shader"],
+    audio: "Ethereal cello to electronic crescendo",
     videoVisualType: "math-particles",
-    transcript: "Watch what happens when you shift the initial velocity of Body C by just 0.00001 millimeters. Using a Runge-Kutta 4th order integrator computed directly on GPU shader fragments in WebGL, 10,000 simulated stars demonstrate deterministic chaos in 60 FPS real time.",
+    transcript: "What happens when 10,000 gravitational bodies collide under chaotic orbital mechanics? We computed 4th-order Runge-Kutta numerical integration entirely inside a custom WebGL fragment shader. Every particle position is updated in parallel on the GPU at 60 frames per second.",
     metadata: {
       tone: "Hypnotic scientific visualizer with engineering depth",
       surfaceKeywords: ["3-Body Problem", "WebGL", "GPU shader", "Runge-Kutta", "chaos theory", "particles"],
       underlyingConcept: "GPU fragment shaders, numerical integration algorithms, real-time computer graphics, and mathematical modeling",
-      emotionalState: "Aesthetic appreciation for computational physics and visual programming"
+      emotionalState: "Aesthetic appreciation for computational physics and visual programming",
+      csTriad: {
+        hookNode: "Mesmerizing 3-Body Gravity Simulation & Chaos Visualizer",
+        bottleneckNode: "O(N^2) Particle Interaction Overhead & CPU Thread Saturation",
+        solutionNode: "Parallel GLSL Fragment Shaders & 4th-Order Runge-Kutta GPU Integration"
+      },
+      signalMetrics: {
+        pedagogicalDepth: 9.9,
+        depthFactor: 1.0,
+        clickbaitPenalty: 0.0,
+        signalDensityPct: 99
+      },
+      nextMilestone: "Write custom WebGL GLSL shaders utilizing Signed Distance Functions (SDF) and GPU parallel buffers."
     }
   },
   {
@@ -161,7 +245,19 @@ export const SAMPLE_REELS = [
       tone: "Exciting real-world security breakdown",
       surfaceKeywords: ["Rubber Ducky", "USB", "antivirus", "HID", "keystroke injection", "PowerShell", "microcontroller"],
       underlyingConcept: "Hardware security, USB Human Interface Device spoofing, OS trust boundaries, payload execution, and endpoint defensive posture",
-      emotionalState: "Fascination with security exploits, hardware-firmware boundaries, and defensive countermeasures"
+      emotionalState: "Fascination with security exploits, hardware-firmware boundaries, and defensive countermeasures",
+      csTriad: {
+        hookNode: "USB Rubber Ducky Keystroke Exploit Demonstration",
+        bottleneckNode: "Implicit OS Trust in Human Interface Devices (HID)",
+        solutionNode: "Kernel-Level USB Guarding, Udev Rules & Keystroke Cadence Anomaly Detection"
+      },
+      signalMetrics: {
+        pedagogicalDepth: 9.8,
+        depthFactor: 1.0,
+        clickbaitPenalty: 0.0,
+        signalDensityPct: 98
+      },
+      nextMilestone: "Configure kernel-level endpoint defense and implement Linux udev device authorization policies."
     }
   }
 ];

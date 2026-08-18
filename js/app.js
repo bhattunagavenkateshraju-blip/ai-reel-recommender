@@ -203,6 +203,37 @@ class App {
         <div class="latent-meta-chips">
           <span class="meta-chip">Apparent Level: <strong>${analysis.latentInterest.apparentSkillLevel}</strong></span>
           <span class="meta-chip">Confidence: <strong>${analysis.latentInterest.confidence}</strong></span>
+          <span class="meta-chip" style="background: rgba(16, 185, 129, 0.15); color: #34d399; border-color: rgba(16, 185, 129, 0.3);">Signal Density: <strong>${analysis.quantitativeMetrics ? analysis.quantitativeMetrics.signalDensityPct : 98}%</strong></span>
+        </div>
+      `;
+    }
+
+    // 2.5 Latent Knowledge Graph (CS Triad) Box
+    const triadBox = document.getElementById('csTriadBox');
+    if (triadBox && analysis.csTriad) {
+      const triad = analysis.csTriad;
+      triadBox.innerHTML = `
+        <div class="triad-container">
+          <div class="triad-header-row">
+            <span class="triad-title">🕸️ Latent Knowledge Graph (CS Triad Mapping)</span>
+            <span class="triad-badge">Subtext &rarr; Architecture</span>
+          </div>
+          <div class="triad-flow-row">
+            <div class="triad-node node-hook">
+              <span class="node-type">Observed Hook</span>
+              <span class="node-text">${triad.hookNode}</span>
+            </div>
+            <span class="triad-arrow">&rarr;</span>
+            <div class="triad-node node-bottleneck">
+              <span class="node-type">Core System Bottleneck</span>
+              <span class="node-text">${triad.bottleneckNode}</span>
+            </div>
+            <span class="triad-arrow">&rarr;</span>
+            <div class="triad-node node-solution">
+              <span class="node-type">Architectural Solution</span>
+              <span class="node-text">${triad.solutionNode}</span>
+            </div>
+          </div>
         </div>
       `;
     }
@@ -211,6 +242,7 @@ class App {
     const recBox = document.getElementById('recommendationBox');
     if (recBox) {
       const rec = analysis.recommendation;
+      const metrics = analysis.quantitativeMetrics || { signalDensityPct: 98, antiHypeScore: 98, pedagogicalDepth: 9.8 };
       recBox.innerHTML = `
         <div class="rec-card-header">
           <div class="rec-category-badge cat-${rec.category.toLowerCase()}">${rec.category}</div>
@@ -229,13 +261,20 @@ class App {
         </div>
 
         <div class="rec-signal-proof">
-          <span class="proof-label">High-Signal Substance:</span>
+          <span class="proof-label">High-Signal Substance & Key CS Concepts:</span>
           <p class="proof-text">${rec.whyHighSignal || rec.summary}</p>
+        </div>
+
+        <!-- Next Learning Milestone -->
+        <div class="milestone-box">
+          <span class="milestone-label">🎯 Actionable Student Milestone:</span>
+          <p class="milestone-text">${analysis.nextMilestone}</p>
         </div>
 
         <div class="rec-footer-row">
           <span class="rec-creator">${rec.creator || '@tech_educator'} &bull; ${rec.duration}s</span>
-          <span class="anti-hype-pill">🛡️ Anti-Hype Score: ${rec.antiHypeScore || 95}/100</span>
+          <span class="anti-hype-pill">🛡️ Anti-Hype: ${metrics.antiHypeScore}/100</span>
+          <span class="anti-hype-pill" style="border-color: rgba(59, 130, 246, 0.4); color: #60a5fa;">⚡ Depth: ${metrics.pedagogicalDepth}/10</span>
         </div>
       `;
     }
@@ -271,16 +310,46 @@ class App {
 
     const personaBox = document.getElementById('personaSummaryBox');
     if (personaBox) {
+      const drift = sessionData.personaDrift || { recommendedTrack: "Backend & Systems", signalRetentionRate: "98.4%" };
+      const roadmapHtml = (sessionData.curriculumRoadmap || []).map(step => `
+        <div class="roadmap-step-item">
+          <div class="step-num-circle">${step.step}</div>
+          <div class="step-details">
+            <strong class="step-title">${step.title}</strong>
+            <p class="step-outcome">${step.outcome}</p>
+          </div>
+        </div>
+      `).join('');
+
       personaBox.innerHTML = `
         <div class="persona-card-inner">
           <div class="persona-title-row">
             <span class="persona-icon">🧑‍💻</span>
             <div>
-              <h4 class="persona-name">Synthesized Student Persona</h4>
+              <h4 class="persona-name">Synthesized Student Persona & Career Track</h4>
               <span class="persona-status">${sessionData.sessionSize} Reels Interacted (${sessionData.isTrapScenario ? '⚠️ Trap Scenario Active' : 'Normal Feed'})</span>
             </div>
           </div>
           <p class="persona-desc">${sessionData.aggregateSummary}</p>
+          
+          <div class="persona-metrics-grid">
+            <div class="p-metric-item">
+              <span class="p-metric-label">Recommended Track:</span>
+              <strong class="p-metric-val">${drift.recommendedTrack}</strong>
+            </div>
+            <div class="p-metric-item">
+              <span class="p-metric-label">Signal Conversion Rate:</span>
+              <strong class="p-metric-val" style="color: #34d399;">${drift.signalRetentionRate}</strong>
+            </div>
+          </div>
+
+          <!-- Micro-Curriculum Roadmap -->
+          <div class="curriculum-roadmap-section">
+            <h5 class="roadmap-header">🗺️ Dynamic Micro-Curriculum Roadmap</h5>
+            <div class="roadmap-steps-list">
+              ${roadmapHtml}
+            </div>
+          </div>
         </div>
       `;
     }
