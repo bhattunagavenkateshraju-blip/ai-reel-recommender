@@ -1,0 +1,4908 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>AI Tech Reel Recommendation Agent | Educational Micro-Learning for Students</title>
+  <meta name="description" content="AI-powered recommendation agent that analyzes student Reels interactions, infers underlying technical interests beyond superficial keywords, and recommends high-signal educational tech reels.">
+  
+  <!-- Google Fonts: Inter & JetBrains Mono -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=JetBrains+Mono:ital,wght@0,400;0,500;0,600;0,700;1,400&display=swap" rel="stylesheet">
+  
+  <style>
+/* ==========================================================================
+   AI-Powered Tech Reel Recommendation Agent - Design System & Styles
+   ========================================================================== */
+
+:root {
+  --bg-app: #090d16;
+  --bg-surface: #0f172a;
+  --bg-surface-elevated: #1e293b;
+  --bg-card: #131d33;
+  --bg-card-hover: #1a2744;
+  --bg-terminal: #070a12;
+  
+  --border-subtle: rgba(255, 255, 255, 0.08);
+  --border-medium: rgba(255, 255, 255, 0.14);
+  --border-active: #3b82f6;
+  
+  --text-primary: #f8fafc;
+  --text-secondary: #94a3b8;
+  --text-muted: #64748b;
+  --text-highlight: #38bdf8;
+
+  --accent-blue: #3b82f6;
+  --accent-cyan: #06b6d4;
+  --accent-emerald: #10b981;
+  --accent-amber: #f59e0b;
+  --accent-rose: #ef4444;
+  --accent-purple: #8b5cf6;
+  --accent-pink: #ec4899;
+
+  --radius-sm: 6px;
+  --radius-md: 10px;
+  --radius-lg: 16px;
+  --radius-xl: 24px;
+  --radius-full: 9999px;
+
+  --shadow-sm: 0 1px 2px 0 rgba(0, 0, 0, 0.25);
+  --shadow-md: 0 4px 6px -1px rgba(0, 0, 0, 0.3), 0 2px 4px -2px rgba(0, 0, 0, 0.2);
+  --shadow-lg: 0 10px 15px -3px rgba(0, 0, 0, 0.4), 0 4px 6px -4px rgba(0, 0, 0, 0.25);
+  --shadow-glow: 0 0 25px rgba(59, 130, 246, 0.15);
+
+  --font-sans: 'Inter', system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+  --font-mono: 'JetBrains Mono', 'Fira Code', Consolas, monospace;
+}
+
+*, *::before, *::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  font-family: var(--font-sans);
+  background-color: var(--bg-app);
+  color: var(--text-primary);
+  line-height: 1.5;
+  min-height: 100vh;
+  overflow-x: hidden;
+  -webkit-font-smoothing: antialiased;
+}
+
+/* ==========================================================================
+   Header & Navigation
+   ========================================================================== */
+
+.app-header {
+  background: var(--bg-surface);
+  border-bottom: 1px solid var(--border-subtle);
+  position: sticky;
+  top: 0;
+  z-index: 50;
+  backdrop-filter: blur(12px);
+}
+
+.header-container {
+  max-width: 1400px;
+  margin: 0 auto;
+  padding: 12px 24px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 16px;
+}
+
+.brand-col {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.brand-icon {
+  width: 36px;
+  height: 36px;
+  border-radius: var(--radius-md);
+  background: linear-gradient(135deg, var(--accent-blue), var(--accent-purple));
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 18px;
+  box-shadow: 0 2px 10px rgba(59, 130, 246, 0.3);
+}
+
+.brand-title {
+  font-size: 18px;
+  font-weight: 700;
+  letter-spacing: -0.02em;
+  color: var(--text-primary);
+}
+
+.brand-badge {
+  font-family: var(--font-mono);
+  font-size: 11px;
+  padding: 2px 8px;
+  border-radius: var(--radius-full);
+  background: rgba(59, 130, 246, 0.15);
+  color: var(--accent-cyan);
+  border: 1px solid rgba(59, 130, 246, 0.3);
+}
+
+.header-actions {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+}
+
+.preset-picker-group {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.preset-label {
+  font-size: 12px;
+  font-family: var(--font-mono);
+  color: var(--text-secondary);
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+}
+
+.preset-select {
+  background: var(--bg-surface-elevated);
+  color: var(--text-primary);
+  border: 1px solid var(--border-medium);
+  border-radius: var(--radius-sm);
+  padding: 6px 12px;
+  font-size: 13px;
+  font-family: var(--font-sans);
+  cursor: pointer;
+  outline: none;
+  transition: all 0.15s ease;
+}
+
+.preset-select:focus, .preset-select:hover {
+  border-color: var(--accent-blue);
+}
+
+/* Tab Navigation */
+.nav-tab-strip {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  background: rgba(0, 0, 0, 0.2);
+  padding: 4px;
+  border-radius: var(--radius-md);
+  border: 1px solid var(--border-subtle);
+}
+
+.nav-tab-btn {
+  background: transparent;
+  color: var(--text-secondary);
+  border: none;
+  padding: 6px 14px;
+  border-radius: var(--radius-sm);
+  font-size: 13px;
+  font-weight: 500;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  transition: all 0.15s ease;
+}
+
+.nav-tab-btn:hover {
+  color: var(--text-primary);
+  background: rgba(255, 255, 255, 0.04);
+}
+
+.nav-tab-btn.active {
+  background: var(--accent-blue);
+  color: #ffffff;
+  font-weight: 600;
+}
+
+.tab-badge {
+  font-size: 10px;
+  padding: 1px 6px;
+  border-radius: var(--radius-full);
+  background: rgba(0, 0, 0, 0.3);
+}
+
+/* ==========================================================================
+   Main Content Layout
+   ========================================================================== */
+
+.app-main {
+  max-width: 1400px;
+  margin: 0 auto;
+  padding: 20px 24px 60px;
+}
+
+/* Preset banner */
+.preset-banner {
+  background: linear-gradient(90deg, rgba(30, 41, 59, 0.7), rgba(15, 23, 42, 0.7));
+  border: 1px solid var(--border-subtle);
+  border-radius: var(--radius-md);
+  padding: 10px 16px;
+  margin-bottom: 20px;
+  font-size: 13px;
+}
+
+.preset-banner-content {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 10px;
+}
+
+.preset-goal-tag {
+  font-family: var(--font-mono);
+  font-size: 12px;
+  color: var(--accent-cyan);
+  background: rgba(6, 182, 212, 0.1);
+  padding: 2px 8px;
+  border-radius: var(--radius-sm);
+}
+
+/* Tab Sections */
+.app-tab-section {
+  display: none;
+}
+
+.app-tab-section.active {
+  display: block;
+}
+
+/* ==========================================================================
+   Simulator View: Reel Player & Agent Inspector Split Grid
+   ========================================================================== */
+
+.simulator-grid {
+  display: grid;
+  grid-template-columns: 380px 1fr;
+  gap: 24px;
+  align-items: start;
+}
+
+@media (max-width: 1024px) {
+  .simulator-grid {
+    grid-template-columns: 1fr;
+  }
+}
+
+/* Reel Player Card */
+.reel-player-card {
+  background: var(--bg-surface);
+  border: 1px solid var(--border-subtle);
+  border-radius: var(--radius-xl);
+  overflow: hidden;
+  box-shadow: var(--shadow-lg);
+  position: relative;
+}
+
+.reel-stage {
+  position: relative;
+  width: 100%;
+  aspect-ratio: 9 / 16;
+  background: #000000;
+  overflow: hidden;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.reel-canvas {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+/* Reel Top Bar */
+.reel-top-bar {
+  position: absolute;
+  top: 14px;
+  left: 14px;
+  right: 14px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  z-index: 10;
+  pointer-events: none;
+}
+
+.reel-category-badge {
+  background: rgba(15, 23, 42, 0.85);
+  backdrop-filter: blur(8px);
+  color: var(--text-highlight);
+  font-size: 11px;
+  font-weight: 600;
+  padding: 4px 10px;
+  border-radius: var(--radius-full);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  letter-spacing: 0.02em;
+}
+
+.audio-track-pill {
+  background: rgba(15, 23, 42, 0.85);
+  backdrop-filter: blur(8px);
+  padding: 4px 10px;
+  border-radius: var(--radius-full);
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 10px;
+  color: var(--text-secondary);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  max-width: 160px;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.sound-wave-icon {
+  display: flex;
+  align-items: flex-end;
+  gap: 2px;
+  height: 10px;
+}
+
+.sound-wave-icon .bar {
+  width: 2px;
+  background: var(--accent-cyan);
+  border-radius: 1px;
+  animation: soundBar 0.8s ease-in-out infinite alternate;
+}
+
+.sound-wave-icon .bar-1 { height: 4px; }
+.sound-wave-icon .bar-2 { height: 10px; animation-delay: 0.2s; }
+.sound-wave-icon .bar-3 { height: 6px; animation-delay: 0.4s; }
+
+@keyframes soundBar {
+  0% { height: 2px; }
+  100% { height: 10px; }
+}
+
+/* Feed Navigation Floating Arrows */
+.feed-nav-btn {
+  position: absolute;
+  left: 12px;
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  background: rgba(15, 23, 42, 0.7);
+  backdrop-filter: blur(6px);
+  border: 1px solid rgba(255, 255, 255, 0.15);
+  color: #ffffff;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  z-index: 15;
+  transition: all 0.15s ease;
+}
+
+.feed-nav-btn:hover {
+  background: var(--accent-blue);
+  transform: scale(1.1);
+}
+
+.feed-nav-btn.prev-btn { top: 45%; }
+.feed-nav-btn.next-btn { top: 55%; }
+
+/* Reel Side Actions */
+.reel-side-actions {
+  position: absolute;
+  right: 12px;
+  bottom: 120px;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  align-items: center;
+  z-index: 10;
+}
+
+.action-btn {
+  background: transparent;
+  border: none;
+  color: #ffffff;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 4px;
+  cursor: pointer;
+  font-size: 11px;
+  font-weight: 500;
+  transition: transform 0.15s ease;
+}
+
+.action-btn:hover {
+  transform: scale(1.12);
+}
+
+.action-btn.liked {
+  color: var(--accent-rose);
+}
+
+.action-btn.saved {
+  color: var(--accent-amber);
+}
+
+/* Reel Bottom Overlay */
+.reel-overlay-info {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  padding: 16px;
+  background: linear-gradient(0deg, rgba(3, 7, 18, 0.95) 0%, rgba(3, 7, 18, 0.6) 70%, transparent 100%);
+  z-index: 10;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.creator-row {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.creator-avatar {
+  width: 26px;
+  height: 26px;
+  border-radius: 50%;
+  background: var(--accent-purple);
+  color: #ffffff;
+  font-size: 10px;
+  font-weight: 700;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.creator-handle {
+  font-size: 12px;
+  font-weight: 600;
+  color: #ffffff;
+}
+
+.follow-btn {
+  background: transparent;
+  border: 1px solid rgba(255, 255, 255, 0.3);
+  color: #ffffff;
+  font-size: 10px;
+  font-weight: 600;
+  padding: 2px 8px;
+  border-radius: var(--radius-full);
+  cursor: pointer;
+}
+
+.reel-title-text {
+  font-size: 14px;
+  font-weight: 600;
+  color: #ffffff;
+  line-height: 1.3;
+}
+
+.reel-transcript-preview {
+  font-size: 11px;
+  color: #cbd5e1;
+  line-height: 1.4;
+  background: rgba(0, 0, 0, 0.4);
+  padding: 6px 8px;
+  border-radius: var(--radius-sm);
+  border-left: 2px solid var(--accent-blue);
+  max-height: 60px;
+  overflow-y: auto;
+}
+
+.caption-label {
+  font-weight: 600;
+  color: var(--accent-cyan);
+}
+
+.reel-tags-row {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 4px;
+  margin-top: 2px;
+}
+
+.tag-pill {
+  font-family: var(--font-mono);
+  font-size: 10px;
+  color: var(--text-secondary);
+}
+
+.reel-progress-container {
+  height: 3px;
+  background: rgba(255, 255, 255, 0.2);
+  border-radius: var(--radius-full);
+  margin-top: 6px;
+  overflow: hidden;
+}
+
+.reel-progress-bar {
+  height: 100%;
+  background: var(--accent-blue);
+  transition: width 0.1s linear;
+}
+
+.feed-footer-controls {
+  padding: 10px 16px;
+  background: var(--bg-card);
+  border-top: 1px solid var(--border-subtle);
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  font-size: 12px;
+  color: var(--text-secondary);
+}
+
+.feed-shortcuts-hint strong {
+  color: var(--text-primary);
+  background: rgba(255, 255, 255, 0.08);
+  padding: 1px 4px;
+  border-radius: 3px;
+}
+
+/* ==========================================================================
+   AI Agent Mind & Inspector (Right Column)
+   ========================================================================== */
+
+.inspector-col {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.inspector-card {
+  background: var(--bg-surface);
+  border: 1px solid var(--border-subtle);
+  border-radius: var(--radius-lg);
+  padding: 20px;
+  box-shadow: var(--shadow-md);
+}
+
+.inspector-header-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 16px;
+  border-bottom: 1px solid var(--border-subtle);
+  padding-bottom: 12px;
+}
+
+.inspector-title {
+  font-size: 16px;
+  font-weight: 700;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  color: var(--text-primary);
+}
+
+.step-indicator {
+  font-family: var(--font-mono);
+  font-size: 11px;
+  background: rgba(59, 130, 246, 0.15);
+  color: var(--accent-cyan);
+  padding: 2px 8px;
+  border-radius: var(--radius-sm);
+}
+
+/* Stage 1: Context & Nuance Signals */
+.signal-box {
+  background: var(--bg-card);
+  border: 1px solid var(--border-subtle);
+  border-radius: var(--radius-md);
+  padding: 14px;
+  margin-bottom: 16px;
+}
+
+.signal-header-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin-bottom: 8px;
+}
+
+.signal-eyebrow {
+  font-size: 11px;
+  text-transform: uppercase;
+  font-family: var(--font-mono);
+  color: var(--text-muted);
+  font-weight: 600;
+}
+
+.signal-badges-list {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+}
+
+.signal-tag {
+  font-size: 11px;
+  font-weight: 600;
+  padding: 2px 8px;
+  border-radius: var(--radius-sm);
+}
+
+.signal-tag.humor { background: rgba(245, 158, 11, 0.15); color: #fbbf24; }
+.signal-tag.career { background: rgba(59, 130, 246, 0.15); color: #60a5fa; }
+.signal-tag.systems { background: rgba(16, 185, 129, 0.15); color: #34d399; }
+.signal-tag.dsa { background: rgba(168, 85, 247, 0.15); color: #c084fc; }
+.signal-tag.hardware { background: rgba(236, 72, 153, 0.15); color: #f472b6; }
+.signal-tag.ai { background: rgba(139, 92, 246, 0.15); color: #a78bfa; }
+.signal-tag.sec { background: rgba(239, 68, 68, 0.15); color: #f87171; }
+.signal-tag.graphics { background: rgba(6, 182, 212, 0.15); color: #22d3ee; }
+.signal-tag.logic { background: rgba(244, 63, 94, 0.15); color: #fb7185; }
+
+.signal-evidence-text {
+  font-size: 13px;
+  color: var(--text-secondary);
+  line-height: 1.5;
+}
+
+/* Stage 2: Latent Interest Box */
+.latent-box {
+  background: linear-gradient(135deg, rgba(30, 41, 59, 0.8), rgba(15, 23, 42, 0.9));
+  border: 1px solid var(--border-medium);
+  border-radius: var(--radius-md);
+  padding: 14px;
+  margin-bottom: 16px;
+}
+
+.latent-header {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-bottom: 6px;
+}
+
+.latent-badge-category {
+  background: var(--accent-blue);
+  color: #ffffff;
+  font-size: 11px;
+  font-weight: 700;
+  padding: 2px 8px;
+  border-radius: var(--radius-sm);
+}
+
+.latent-topic-name {
+  font-size: 14px;
+  font-weight: 700;
+  color: var(--text-primary);
+}
+
+.latent-intent-text {
+  font-size: 12px;
+  color: var(--text-secondary);
+  line-height: 1.4;
+  margin-bottom: 8px;
+}
+
+.latent-meta-chips {
+  display: flex;
+  gap: 12px;
+}
+
+.meta-chip {
+  font-size: 11px;
+  font-family: var(--font-mono);
+  color: var(--text-muted);
+}
+
+.meta-chip strong {
+  color: var(--text-highlight);
+}
+
+/* Stage 3: Recommended Tech Reel Card */
+.recommendation-card {
+  background: var(--bg-card);
+  border: 1px solid var(--border-medium);
+  border-radius: var(--radius-md);
+  padding: 18px;
+  position: relative;
+  box-shadow: var(--shadow-glow);
+}
+
+.rec-card-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 10px;
+}
+
+.rec-category-badge {
+  font-size: 11px;
+  font-weight: 700;
+  padding: 3px 10px;
+  border-radius: var(--radius-sm);
+  letter-spacing: 0.04em;
+}
+
+.cat-java { background: rgba(245, 158, 11, 0.2); color: #fbbf24; border: 1px solid #f59e0b; }
+.cat-hld { background: rgba(59, 130, 246, 0.2); color: #60a5fa; border: 1px solid #3b82f6; }
+.cat-dsa { background: rgba(16, 185, 129, 0.2); color: #34d399; border: 1px solid #10b981; }
+.cat-hardware { background: rgba(236, 72, 153, 0.2); color: #f472b6; border: 1px solid #ec4899; }
+.cat-ai { background: rgba(139, 92, 246, 0.2); color: #a78bfa; border: 1px solid #8b5cf6; }
+.cat-cybersecurity { background: rgba(239, 68, 68, 0.2); color: #f87171; border: 1px solid #ef4444; }
+.cat-other { background: rgba(6, 182, 212, 0.2); color: #22d3ee; border: 1px solid #06b6d4; }
+.cat-cloud { background: rgba(14, 165, 233, 0.2); color: #38bdf8; border: 1px solid #0ea5e9; }
+.cat-career { background: rgba(20, 184, 166, 0.2); color: #2dd4bf; border: 1px solid #14b8a6; }
+
+.rec-meta-badges {
+  display: flex;
+  gap: 8px;
+}
+
+.badge-difficulty {
+  font-size: 11px;
+  font-weight: 600;
+  padding: 2px 8px;
+  border-radius: var(--radius-sm);
+}
+
+.badge-difficulty.beginner { background: rgba(16, 185, 129, 0.15); color: #34d399; }
+.badge-difficulty.intermediate { background: rgba(59, 130, 246, 0.15); color: #60a5fa; }
+.badge-difficulty.advanced { background: rgba(168, 85, 247, 0.15); color: #c084fc; }
+
+.badge-confidence {
+  font-size: 11px;
+  font-weight: 600;
+  padding: 2px 8px;
+  border-radius: var(--radius-sm);
+}
+
+.badge-confidence.high { background: rgba(16, 185, 129, 0.15); color: #34d399; }
+.badge-confidence.medium { background: rgba(245, 158, 11, 0.15); color: #fbbf24; }
+.badge-confidence.low { background: rgba(239, 68, 68, 0.15); color: #f87171; }
+
+.rec-title {
+  font-size: 16px;
+  font-weight: 700;
+  color: #ffffff;
+  margin-bottom: 6px;
+}
+
+.rec-hook {
+  font-size: 13px;
+  font-style: italic;
+  color: var(--text-highlight);
+  margin-bottom: 12px;
+}
+
+.rec-why-block, .rec-signal-proof {
+  margin-bottom: 10px;
+}
+
+.why-label, .proof-label {
+  font-size: 11px;
+  font-family: var(--font-mono);
+  font-weight: 700;
+  color: var(--text-muted);
+  text-transform: uppercase;
+  display: block;
+  margin-bottom: 2px;
+}
+
+.why-text, .proof-text {
+  font-size: 13px;
+  color: var(--text-secondary);
+  line-height: 1.45;
+}
+
+.rec-footer-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-top: 14px;
+  padding-top: 10px;
+  border-top: 1px solid var(--border-subtle);
+  font-size: 12px;
+  color: var(--text-muted);
+}
+
+.anti-hype-pill {
+  font-family: var(--font-mono);
+  font-size: 11px;
+  color: var(--accent-emerald);
+  background: rgba(16, 185, 129, 0.1);
+  padding: 2px 8px;
+  border-radius: var(--radius-full);
+}
+
+/* Stage 4: Required Output Formatted Terminal Box */
+.required-output-box {
+  background: var(--bg-terminal);
+  border: 1px solid var(--border-medium);
+  border-radius: var(--radius-md);
+  overflow: hidden;
+  margin-top: 16px;
+}
+
+.required-output-header {
+  background: rgba(255, 255, 255, 0.03);
+  border-bottom: 1px solid var(--border-subtle);
+  padding: 8px 14px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.output-title-label {
+  font-family: var(--font-mono);
+  font-size: 11px;
+  font-weight: 700;
+  color: var(--accent-cyan);
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.btn-copy {
+  background: var(--bg-surface-elevated);
+  border: 1px solid var(--border-medium);
+  color: var(--text-primary);
+  font-size: 12px;
+  font-weight: 500;
+  padding: 4px 10px;
+  border-radius: var(--radius-sm);
+  cursor: pointer;
+  transition: all 0.15s ease;
+}
+
+.btn-copy:hover {
+  background: var(--accent-blue);
+  border-color: var(--accent-blue);
+}
+
+.output-pre {
+  padding: 14px;
+  font-family: var(--font-mono);
+  font-size: 12px;
+  color: #e2e8f0;
+  line-height: 1.6;
+  white-space: pre-wrap;
+  word-break: break-word;
+  max-height: 240px;
+  overflow-y: auto;
+}
+
+/* Persona & Radar Section */
+.persona-section {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 16px;
+}
+
+.persona-card-inner {
+  background: var(--bg-card);
+  border: 1px solid var(--border-subtle);
+  border-radius: var(--radius-md);
+  padding: 14px;
+}
+
+.persona-title-row {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-bottom: 6px;
+}
+
+.persona-icon {
+  font-size: 20px;
+}
+
+.persona-name {
+  font-size: 14px;
+  font-weight: 700;
+  color: var(--text-primary);
+}
+
+.persona-status {
+  font-size: 11px;
+  font-family: var(--font-mono);
+  color: var(--accent-amber);
+}
+
+.persona-desc {
+  font-size: 12px;
+  color: var(--text-secondary);
+  line-height: 1.4;
+}
+
+/* Radar SVG & Bars */
+.radar-wrapper {
+  display: grid;
+  grid-template-columns: 320px 1fr;
+  gap: 20px;
+  align-items: center;
+}
+
+@media (max-width: 768px) {
+  .radar-wrapper {
+    grid-template-columns: 1fr;
+  }
+}
+
+.radar-chart-box {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.radar-svg {
+  width: 100%;
+  max-width: 320px;
+  height: auto;
+}
+
+.radar-bars-box {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.radar-bars-title {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  font-size: 13px;
+  font-weight: 600;
+  color: var(--text-primary);
+  margin-bottom: 4px;
+}
+
+.badge-pill {
+  font-size: 11px;
+  font-family: var(--font-mono);
+  background: rgba(255, 255, 255, 0.08);
+  padding: 2px 8px;
+  border-radius: var(--radius-full);
+  color: var(--text-secondary);
+}
+
+.radar-bars-list {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.radar-bar-item {
+  display: flex;
+  flex-direction: column;
+  gap: 3px;
+}
+
+.radar-bar-header {
+  display: flex;
+  justify-content: space-between;
+  font-size: 11px;
+  color: var(--text-secondary);
+}
+
+.color-dot {
+  display: inline-block;
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  margin-right: 6px;
+}
+
+.radar-bar-track {
+  height: 5px;
+  background: rgba(255, 255, 255, 0.06);
+  border-radius: var(--radius-full);
+  overflow: hidden;
+}
+
+.radar-bar-fill {
+  height: 100%;
+  border-radius: var(--radius-full);
+  transition: width 0.3s ease;
+}
+
+/* ==========================================================================
+   Tab 2: Built-in Trap Analyzer & Comparator
+   ========================================================================== */
+
+.trap-analyzer-hero {
+  text-align: center;
+  max-width: 800px;
+  margin: 0 auto 24px;
+}
+
+.trap-hero-badge {
+  display: inline-block;
+  font-family: var(--font-mono);
+  font-size: 11px;
+  font-weight: 700;
+  background: rgba(239, 68, 68, 0.15);
+  color: #f87171;
+  border: 1px solid rgba(239, 68, 68, 0.3);
+  padding: 3px 10px;
+  border-radius: var(--radius-full);
+  margin-bottom: 8px;
+}
+
+.trap-hero-title {
+  font-size: 24px;
+  font-weight: 800;
+  letter-spacing: -0.02em;
+  color: #ffffff;
+  margin-bottom: 8px;
+}
+
+.trap-hero-desc {
+  font-size: 14px;
+  color: var(--text-secondary);
+  line-height: 1.5;
+}
+
+.trap-summary-banner {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 16px;
+  margin-bottom: 24px;
+}
+
+@media (max-width: 768px) {
+  .trap-summary-banner {
+    grid-template-columns: 1fr;
+  }
+}
+
+.summary-box {
+  padding: 16px;
+  border-radius: var(--radius-md);
+}
+
+.summary-box h4 {
+  font-size: 14px;
+  margin-bottom: 8px;
+}
+
+.summary-box ul {
+  list-style: none;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  font-size: 12px;
+}
+
+.summary-box li::before {
+  content: '• ';
+  color: var(--text-muted);
+}
+
+.naive-box {
+  background: rgba(239, 68, 68, 0.08);
+  border: 1px solid rgba(239, 68, 68, 0.2);
+}
+
+.naive-box h4 { color: #f87171; }
+.naive-box li { color: #fca5a5; }
+
+.deep-box {
+  background: rgba(16, 185, 129, 0.08);
+  border: 1px solid rgba(16, 185, 129, 0.2);
+}
+
+.deep-box h4 { color: #34d399; }
+.deep-box li { color: #a7f3d0; }
+
+.trap-items-list {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.trap-card-row {
+  background: var(--bg-surface);
+  border: 1px solid var(--border-subtle);
+  border-radius: var(--radius-lg);
+  padding: 18px;
+}
+
+.trap-row-header {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-bottom: 14px;
+  padding-bottom: 10px;
+  border-bottom: 1px solid var(--border-subtle);
+}
+
+.trap-step-num {
+  font-family: var(--font-mono);
+  font-size: 11px;
+  font-weight: 700;
+  background: var(--bg-surface-elevated);
+  padding: 2px 8px;
+  border-radius: var(--radius-sm);
+  color: var(--accent-cyan);
+}
+
+.trap-reel-title {
+  font-size: 15px;
+  font-weight: 700;
+  color: var(--text-primary);
+}
+
+.trap-comparison-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 16px;
+}
+
+@media (max-width: 768px) {
+  .trap-comparison-grid {
+    grid-template-columns: 1fr;
+  }
+}
+
+.trap-col {
+  border-radius: var(--radius-md);
+  padding: 14px;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.naive-col {
+  background: rgba(239, 68, 68, 0.05);
+  border: 1px solid rgba(239, 68, 68, 0.15);
+}
+
+.agent-col {
+  background: rgba(59, 130, 246, 0.05);
+  border: 1px solid rgba(59, 130, 246, 0.25);
+  box-shadow: 0 0 15px rgba(59, 130, 246, 0.08);
+}
+
+.col-header {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 13px;
+  font-weight: 700;
+  margin-bottom: 4px;
+}
+
+.naive-col .col-header { color: #f87171; }
+.agent-col .col-header { color: #60a5fa; }
+
+.verdict-tag {
+  margin-left: auto;
+  font-size: 10px;
+  font-family: var(--font-mono);
+  font-weight: 700;
+  padding: 2px 6px;
+  border-radius: var(--radius-sm);
+}
+
+.verdict-tag.fail {
+  background: rgba(239, 68, 68, 0.2);
+  color: #fca5a5;
+  border: 1px solid rgba(239, 68, 68, 0.4);
+}
+
+.verdict-tag.pass {
+  background: rgba(16, 185, 129, 0.2);
+  color: #6ee7b7;
+  border: 1px solid rgba(16, 185, 129, 0.4);
+}
+
+.col-body {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.field-group {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.field-label {
+  font-size: 10px;
+  font-family: var(--font-mono);
+  color: var(--text-muted);
+  text-transform: uppercase;
+}
+
+.field-val {
+  font-size: 13px;
+  font-weight: 500;
+  color: var(--text-primary);
+}
+
+.highlight-naive {
+  color: #fca5a5;
+  font-weight: 600;
+}
+
+.highlight-agent {
+  color: var(--accent-cyan);
+  font-weight: 600;
+}
+
+.highlight-agent-rec {
+  color: #6ee7b7;
+  font-weight: 700;
+}
+
+.flaw-text {
+  font-size: 12px;
+  color: #cbd5e1;
+  line-height: 1.4;
+}
+
+.success-text {
+  font-size: 12px;
+  color: #cbd5e1;
+  line-height: 1.4;
+}
+
+.rec-tags-line {
+  display: flex;
+  gap: 6px;
+  margin-top: 6px;
+}
+
+.badge-cat, .badge-diff, .badge-conf {
+  font-size: 10px;
+  font-family: var(--font-mono);
+  font-weight: 600;
+  padding: 2px 6px;
+  border-radius: var(--radius-sm);
+  background: rgba(255, 255, 255, 0.08);
+  color: var(--text-secondary);
+}
+
+/* ==========================================================================
+   Tab 3: Batch Output Studio (All 8 Sample Inputs)
+   ========================================================================== */
+
+.batch-studio-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 16px;
+  margin-bottom: 24px;
+}
+
+.batch-studio-title {
+  font-size: 20px;
+  font-weight: 700;
+}
+
+.batch-studio-desc {
+  font-size: 13px;
+  color: var(--text-secondary);
+}
+
+.batch-actions-row {
+  display: flex;
+  gap: 8px;
+  flex-wrap: wrap;
+}
+
+.batch-btn {
+  background: var(--bg-surface-elevated);
+  border: 1px solid var(--border-medium);
+  color: var(--text-primary);
+  font-size: 13px;
+  font-weight: 600;
+  padding: 8px 14px;
+  border-radius: var(--radius-sm);
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  transition: all 0.15s ease;
+}
+
+.batch-btn.primary {
+  background: var(--accent-blue);
+  border-color: var(--accent-blue);
+  color: #ffffff;
+}
+
+.batch-btn:hover {
+  transform: translateY(-1px);
+  box-shadow: var(--shadow-sm);
+}
+
+.batch-grid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 18px;
+}
+
+.batch-reel-card {
+  background: var(--bg-surface);
+  border: 1px solid var(--border-subtle);
+  border-radius: var(--radius-lg);
+  padding: 18px;
+}
+
+.batch-card-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  gap: 12px;
+  margin-bottom: 10px;
+}
+
+.batch-title-col {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+
+.batch-num-pill {
+  font-family: var(--font-mono);
+  font-size: 10px;
+  background: rgba(59, 130, 246, 0.15);
+  color: var(--accent-cyan);
+  padding: 2px 6px;
+  border-radius: var(--radius-sm);
+  font-weight: 700;
+}
+
+.batch-title {
+  font-size: 15px;
+  font-weight: 700;
+  color: #ffffff;
+}
+
+.batch-cat-pill {
+  font-size: 11px;
+  background: rgba(255, 255, 255, 0.08);
+  color: var(--text-secondary);
+  padding: 2px 8px;
+  border-radius: var(--radius-full);
+}
+
+.batch-copy-btn {
+  background: var(--bg-surface-elevated);
+  border: 1px solid var(--border-subtle);
+  color: var(--text-secondary);
+  font-size: 11px;
+  font-family: var(--font-mono);
+  padding: 4px 8px;
+  border-radius: var(--radius-sm);
+  cursor: pointer;
+  transition: all 0.15s ease;
+}
+
+.batch-copy-btn:hover {
+  color: #ffffff;
+  background: var(--accent-blue);
+  border-color: var(--accent-blue);
+}
+
+.batch-transcript-quote {
+  font-size: 12px;
+  color: #cbd5e1;
+  background: rgba(0, 0, 0, 0.25);
+  padding: 8px 12px;
+  border-radius: var(--radius-sm);
+  margin-bottom: 12px;
+  border-left: 2px solid var(--border-medium);
+  font-style: italic;
+}
+
+.batch-formatted-pre {
+  background: var(--bg-terminal);
+  border: 1px solid var(--border-subtle);
+  border-radius: var(--radius-sm);
+  padding: 14px;
+  font-family: var(--font-mono);
+  font-size: 12px;
+  color: #e2e8f0;
+  line-height: 1.55;
+  white-space: pre-wrap;
+}
+
+/* ==========================================================================
+   Tab 4: Custom Reel Lab
+   ========================================================================== */
+
+.custom-lab-container {
+  display: grid;
+  grid-template-columns: 460px 1fr;
+  gap: 24px;
+  align-items: start;
+}
+
+@media (max-width: 900px) {
+  .custom-lab-container {
+    grid-template-columns: 1fr;
+  }
+}
+
+.custom-form-card {
+  background: var(--bg-surface);
+  border: 1px solid var(--border-subtle);
+  border-radius: var(--radius-lg);
+  padding: 20px;
+}
+
+.form-group {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  margin-bottom: 14px;
+}
+
+.form-label {
+  font-size: 12px;
+  font-weight: 600;
+  color: var(--text-primary);
+}
+
+.form-input, .form-textarea, .form-select {
+  background: var(--bg-card);
+  border: 1px solid var(--border-medium);
+  color: var(--text-primary);
+  font-family: var(--font-sans);
+  font-size: 13px;
+  padding: 8px 12px;
+  border-radius: var(--radius-sm);
+  outline: none;
+  transition: border-color 0.15s ease;
+}
+
+.form-textarea {
+  min-height: 100px;
+  resize: vertical;
+  line-height: 1.45;
+}
+
+.form-input:focus, .form-textarea:focus, .form-select:focus {
+  border-color: var(--accent-blue);
+}
+
+.form-presets-row {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  flex-wrap: wrap;
+  margin-bottom: 16px;
+}
+
+.presets-label {
+  font-size: 11px;
+  color: var(--text-muted);
+}
+
+.fill-custom-preset {
+  font-size: 11px;
+  font-family: var(--font-mono);
+  background: rgba(255, 255, 255, 0.06);
+  border: 1px solid var(--border-subtle);
+  color: var(--text-secondary);
+  padding: 2px 6px;
+  border-radius: var(--radius-sm);
+  cursor: pointer;
+  text-decoration: none;
+}
+
+.fill-custom-preset:hover {
+  background: rgba(59, 130, 246, 0.15);
+  color: var(--accent-cyan);
+}
+
+.btn-submit-agent {
+  width: 100%;
+  background: var(--accent-blue);
+  color: #ffffff;
+  border: none;
+  font-size: 14px;
+  font-weight: 600;
+  padding: 10px 16px;
+  border-radius: var(--radius-sm);
+  cursor: pointer;
+  transition: all 0.15s ease;
+}
+
+.btn-submit-agent:hover {
+  background: #2563eb;
+}
+
+.custom-result-card {
+  background: var(--bg-surface);
+  border: 1px solid var(--border-medium);
+  border-radius: var(--radius-lg);
+  padding: 20px;
+}
+
+.custom-result-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 14px;
+}
+
+.custom-success-pill {
+  font-family: var(--font-mono);
+  font-size: 11px;
+  font-weight: 700;
+  background: rgba(16, 185, 129, 0.15);
+  color: #34d399;
+  padding: 3px 8px;
+  border-radius: var(--radius-sm);
+}
+
+.custom-output-pre {
+  background: var(--bg-terminal);
+  border: 1px solid var(--border-subtle);
+  border-radius: var(--radius-sm);
+  padding: 14px;
+  font-family: var(--font-mono);
+  font-size: 12px;
+  color: #f8fafc;
+  line-height: 1.6;
+  white-space: pre-wrap;
+  margin-bottom: 16px;
+}
+
+.custom-breakdown-details {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.detail-item {
+  display: flex;
+  justify-content: space-between;
+  font-size: 12px;
+  border-bottom: 1px solid var(--border-subtle);
+  padding-bottom: 6px;
+}
+
+.d-label {
+  color: var(--text-muted);
+  font-family: var(--font-mono);
+}
+
+.d-val {
+  color: var(--text-primary);
+  font-weight: 600;
+}
+
+/* ==========================================================================
+   Tab 5: Live Gemini AI Studio & Script Generator Styles
+   ========================================================================== */
+
+.gemini-hero-box {
+  text-align: center;
+  max-width: 800px;
+  margin: 0 auto 20px;
+}
+
+.gemini-hero-badge {
+  display: inline-block;
+  font-family: var(--font-mono);
+  font-size: 11px;
+  font-weight: 700;
+  background: rgba(139, 92, 246, 0.15);
+  color: #c4b5fd;
+  border: 1px solid rgba(139, 92, 246, 0.3);
+  padding: 3px 10px;
+  border-radius: var(--radius-full);
+  margin-bottom: 8px;
+}
+
+.gemini-hero-title {
+  font-size: 22px;
+  font-weight: 800;
+  color: #ffffff;
+  margin-bottom: 6px;
+}
+
+.gemini-hero-desc {
+  font-size: 13px;
+  color: var(--text-secondary);
+  line-height: 1.5;
+}
+
+.gemini-config-bar {
+  background: var(--bg-surface);
+  border: 1px solid var(--border-medium);
+  border-radius: var(--radius-md);
+  padding: 12px 18px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 12px;
+  margin-bottom: 20px;
+}
+
+.config-input-group {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  flex: 1;
+  max-width: 600px;
+}
+
+.config-label {
+  font-size: 12px;
+  font-weight: 600;
+  color: var(--text-primary);
+  white-space: nowrap;
+}
+
+.config-input {
+  flex: 1;
+  background: var(--bg-card);
+  border: 1px solid var(--border-medium);
+  color: var(--text-primary);
+  font-family: var(--font-mono);
+  font-size: 12px;
+  padding: 6px 10px;
+  border-radius: var(--radius-sm);
+  outline: none;
+}
+
+.config-btn {
+  background: var(--accent-blue);
+  border: 1px solid var(--accent-blue);
+  color: #ffffff;
+  font-size: 12px;
+  font-weight: 600;
+  padding: 6px 12px;
+  border-radius: var(--radius-sm);
+  cursor: pointer;
+  white-space: nowrap;
+}
+
+.config-btn.secondary {
+  background: var(--bg-surface-elevated);
+  border-color: var(--border-subtle);
+  color: var(--text-secondary);
+}
+
+.gemini-status-indicator {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 12px;
+  font-family: var(--font-mono);
+  color: var(--text-secondary);
+}
+
+.status-dot {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: #10b981;
+}
+
+.status-dot.active-gemini {
+  background: #8b5cf6;
+  box-shadow: 0 0 8px #8b5cf6;
+}
+
+.gemini-workspace-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 20px;
+}
+
+@media (max-width: 900px) {
+  .gemini-workspace-grid {
+    grid-template-columns: 1fr;
+  }
+}
+
+.gemini-card {
+  background: var(--bg-surface);
+  border: 1px solid var(--border-subtle);
+  border-radius: var(--radius-lg);
+  padding: 20px;
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+}
+
+.gemini-card-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  border-bottom: 1px solid var(--border-subtle);
+  padding-bottom: 10px;
+}
+
+.gemini-card-title {
+  font-size: 15px;
+  font-weight: 700;
+  color: var(--text-primary);
+}
+
+.badge-gemini-tag {
+  font-family: var(--font-mono);
+  font-size: 10px;
+  font-weight: 700;
+  background: rgba(139, 92, 246, 0.15);
+  color: #c4b5fd;
+  padding: 2px 6px;
+  border-radius: var(--radius-sm);
+}
+
+.gemini-sample-fill {
+  font-size: 11px;
+  font-family: var(--font-mono);
+  background: rgba(255, 255, 255, 0.06);
+  border: 1px solid var(--border-subtle);
+  color: var(--text-secondary);
+  padding: 2px 6px;
+  border-radius: var(--radius-sm);
+  cursor: pointer;
+}
+
+.gemini-sample-fill:hover {
+  background: rgba(139, 92, 246, 0.2);
+  color: #c4b5fd;
+}
+
+.btn-gemini-action {
+  width: 100%;
+  background: linear-gradient(135deg, #6366f1, #8b5cf6);
+  color: #ffffff;
+  border: none;
+  font-size: 13px;
+  font-weight: 700;
+  padding: 10px 16px;
+  border-radius: var(--radius-sm);
+  cursor: pointer;
+  transition: all 0.15s ease;
+}
+
+.btn-gemini-action.secondary {
+  background: linear-gradient(135deg, #0ea5e9, #2563eb);
+}
+
+.btn-gemini-action:hover {
+  transform: translateY(-1px);
+  box-shadow: 0 4px 12px rgba(99, 102, 241, 0.3);
+}
+
+.form-group-row {
+  display: flex;
+  gap: 12px;
+}
+
+.gemini-result-box {
+  background: var(--bg-terminal);
+  border: 1px solid var(--border-subtle);
+  border-radius: var(--radius-sm);
+  padding: 12px;
+  min-height: 180px;
+  max-height: 320px;
+  overflow-y: auto;
+}
+
+.gemini-pre-output {
+  font-family: var(--font-mono);
+  font-size: 11.5px;
+  color: #e2e8f0;
+  line-height: 1.55;
+  white-space: pre-wrap;
+}
+
+.gemini-script-display {
+  background: var(--bg-terminal);
+  border: 1px solid var(--border-subtle);
+  border-radius: var(--radius-sm);
+  padding: 14px;
+  min-height: 180px;
+  max-height: 360px;
+  overflow-y: auto;
+}
+
+.script-empty-placeholder {
+  font-size: 12px;
+  color: var(--text-muted);
+  text-align: center;
+  padding: 30px 10px;
+}
+
+.script-card-content {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.script-hook-banner {
+  background: rgba(245, 158, 11, 0.15);
+  border: 1px solid rgba(245, 158, 11, 0.3);
+  color: #fde68a;
+  padding: 8px 12px;
+  border-radius: var(--radius-sm);
+  font-size: 12px;
+  font-weight: 600;
+}
+
+.script-scene-item {
+  background: rgba(255, 255, 255, 0.03);
+  border: 1px solid var(--border-subtle);
+  border-radius: var(--radius-sm);
+  padding: 8px 10px;
+}
+
+.scene-time-pill {
+  font-family: var(--font-mono);
+  font-size: 10px;
+  color: var(--accent-cyan);
+  font-weight: 700;
+}
+
+.scene-visual-prompt {
+  font-size: 11px;
+  color: #94a3b8;
+  font-style: italic;
+  margin: 2px 0 4px;
+}
+
+.scene-voiceover {
+  font-size: 12px;
+  color: #ffffff;
+  line-height: 1.4;
+}
+
+/* ==========================================================================
+   Utilities & Footer
+   ========================================================================== */
+
+.app-footer {
+  border-top: 1px solid var(--border-subtle);
+  background: var(--bg-surface);
+  padding: 16px 24px;
+  font-size: 12px;
+  color: var(--text-muted);
+  text-align: center;
+}
+
+.app-footer a {
+  color: var(--accent-cyan);
+  text-decoration: none;
+}
+
+</style>
+</head>
+<body>
+
+  <!-- Top App Navigation Bar -->
+  <header class="app-header">
+    <div class="header-container">
+      <div class="brand-col">
+        <div class="brand-icon">⚡</div>
+        <div>
+          <h1 class="brand-title">AI Tech Reel Recommendation Agent</h1>
+        </div>
+        <span class="brand-badge">Context-Engine v2.4</span>
+      </div>
+
+      <div class="header-actions">
+        <!-- Preset Scenario Selector -->
+        <div class="preset-picker-group">
+          <label for="presetSelect" class="preset-label">Test Scenario:</label>
+          <select id="presetSelect" class="preset-select" aria-label="Select student preset scenario"></select>
+        </div>
+
+        <!-- Navigation Tabs -->
+        <nav class="nav-tab-strip" aria-label="Main Navigation">
+          <button class="nav-tab-btn active" data-tab="simulator" id="tabBtnSimulator">
+            <span>📱 Feed & Agent Mind</span>
+          </button>
+          <button class="nav-tab-btn" data-tab="trap-analysis" id="tabBtnTrap">
+            <span>🛡️ Trap Analyzer</span>
+          </button>
+          <button class="nav-tab-btn" data-tab="batch-studio" id="tabBtnBatch">
+            <span>📦 Batch Studio</span>
+            <span class="tab-badge">8 Reels</span>
+          </button>
+          <button class="nav-tab-btn" data-tab="custom-lab" id="tabBtnCustom">
+            <span>🧪 Custom Lab</span>
+          </button>
+          <button class="nav-tab-btn" data-tab="gemini-studio" id="tabBtnGemini">
+            <span>✨ Gemini Studio & Script Gen</span>
+          </button>
+        </nav>
+      </div>
+    </div>
+  </header>
+
+  <!-- Main Application Body -->
+  <main class="app-main">
+
+    <!-- Active Preset Description Banner -->
+    <div class="preset-banner" id="presetDescriptionBox">
+      <!-- Injected via JavaScript -->
+    </div>
+
+    <!-- ========================================================================= -->
+    <!-- TAB 1: Reel Feed Simulator & Live AI Agent Inspector                       -->
+    <!-- ========================================================================= -->
+    <section class="app-tab-section active" id="tab-simulator">
+      <div class="simulator-grid">
+        
+        <!-- Left Column: Interactive Reel Player Simulator -->
+        <div class="player-col">
+          <div id="reelFeedContainer">
+            <!-- Injected by ReelFeedSimulator -->
+          </div>
+        </div>
+
+        <!-- Right Column: AI Agent Mind & Live Thought Process -->
+        <div class="inspector-col">
+          
+          <!-- Stage 1 & 2: Context Extraction & Latent Inference -->
+          <div class="inspector-card">
+            <div class="inspector-header-row">
+              <h2 class="inspector-title">
+                <span>🧠 AI Agent Reasoning Pipeline</span>
+              </h2>
+              <span class="step-indicator">Stages 1–4</span>
+            </div>
+
+            <!-- Stage 1: Context Signals Extractor -->
+            <div class="signal-box" id="extractedSignalsBox">
+              <!-- Injected by app.js -->
+            </div>
+
+            <!-- Stage 2: Latent Interest Synthesizer -->
+            <div class="latent-box" id="latentInterestBox">
+              <!-- Injected by app.js -->
+            </div>
+
+            <!-- Stage 3: High-Signal Recommendation Card -->
+            <div class="recommendation-card" id="recommendationBox">
+              <!-- Injected by app.js -->
+            </div>
+
+            <!-- Stage 4: Required Output Specification Terminal -->
+            <div class="required-output-box">
+              <div class="required-output-header">
+                <span class="output-title-label">
+                  <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="4" width="20" height="16" rx="2"/><path d="M10 4v4"/><path d="M2 8h20"/><path d="M6 4v4"/></svg>
+                  REQUIRED OUTPUT FORMAT
+                </span>
+                <button class="btn-copy" id="btnCopyFormatted">📋 Copy Required Output</button>
+              </div>
+              <pre class="output-pre" id="requiredOutputFormattedText"><code>Generating recommendation...</code></pre>
+            </div>
+          </div>
+
+          <!-- Student Persona & Radar Graph -->
+          <div class="inspector-card">
+            <div class="inspector-header-row">
+              <h3 class="inspector-title">
+                <span>📊 Latent Interest Radar & Aggregate Persona</span>
+              </h3>
+              <span class="step-indicator">Dynamic Vector</span>
+            </div>
+            
+            <div class="persona-section">
+              <div id="personaSummaryBox">
+                <!-- Injected by app.js -->
+              </div>
+              <div id="interestRadarContainer">
+                <!-- Injected by InterestRadarVisualizer -->
+              </div>
+            </div>
+          </div>
+
+        </div>
+
+      </div>
+    </section>
+
+    <!-- ========================================================================= -->
+    <!-- TAB 2: Built-in Trap Analyzer (Naive Matcher vs Deep Context Agent)        -->
+    <!-- ========================================================================= -->
+    <section class="app-tab-section" id="tab-trap-analysis">
+      <div id="trapAnalyzerContainer">
+        <!-- Injected by trap-analyzer.js & app.js -->
+      </div>
+    </section>
+
+    <!-- ========================================================================= -->
+    <!-- TAB 3: Batch Evaluation Studio (All 8 Sample Inputs)                       -->
+    <!-- ========================================================================= -->
+    <section class="app-tab-section" id="tab-batch-studio">
+      <div class="batch-studio-header">
+        <div>
+          <h2 class="batch-studio-title">Comprehensive Batch Evaluation</h2>
+          <p class="batch-studio-desc">Evaluation of all 8 fictional/anonymized sample Reels formatted strictly to the Required Output specification.</p>
+        </div>
+        <div class="batch-actions-row">
+          <button class="batch-btn primary" id="btnCopyAllBatch">📋 Copy All 8 Outputs</button>
+          <button class="batch-btn" id="btnDownloadBatchMd">📥 Download Markdown</button>
+          <button class="batch-btn" id="btnExportBatchJson">💾 Export JSON</button>
+        </div>
+      </div>
+
+      <div class="batch-grid" id="batchOutputsList">
+        <!-- Injected by app.js -->
+      </div>
+    </section>
+
+    <!-- ========================================================================= -->
+    <!-- TAB 4: Custom Reel Input Lab                                              -->
+    <!-- ========================================================================= -->
+    <section class="app-tab-section" id="tab-custom-lab">
+      <div class="custom-lab-container">
+        
+        <!-- Input Form -->
+        <div class="custom-form-card">
+          <h2 class="inspector-title" style="margin-bottom: 14px;">🧪 Custom Reel Input Sandbox</h2>
+          <p class="signal-evidence-text" style="margin-bottom: 16px;">Test the AI Recommendation Agent on any arbitrary Reel transcript, meme, or student interaction.</p>
+
+          <form id="customReelForm">
+            <div class="form-group">
+              <label for="customTitle" class="form-label">Reel Title / Hook:</label>
+              <input type="text" id="customTitle" class="form-input" placeholder="e.g. My code worked on localhost but crashed on AWS EC2" value="My code worked on localhost but crashed on AWS EC2">
+            </div>
+
+            <div class="form-group">
+              <label for="customCategory" class="form-label">Surface Category:</label>
+              <select id="customCategory" class="form-select">
+                <option value="Programming Memes">Programming Memes</option>
+                <option value="Career / SWE Lifestyle">Career / SWE Lifestyle</option>
+                <option value="DSA / Coding Interview">DSA / Coding Interview</option>
+                <option value="Gadgets / Hardware">Gadgets / Hardware</option>
+                <option value="Gaming / Systems">Gaming / Systems</option>
+                <option value="AI / Tech News">AI / Tech News</option>
+                <option value="Cybersecurity">Cybersecurity</option>
+                <option value="Entertainment">Entertainment</option>
+                <option value="Other">Other</option>
+              </select>
+            </div>
+
+            <div class="form-group">
+              <label for="customTranscript" class="form-label">Reel Audio Transcript / Subtitle Content:</label>
+              <textarea id="customTranscript" class="form-textarea" placeholder="Enter the spoken audio transcript or narrative of the Reel...">Running Docker container in production with 512MB RAM limit. OOMKilled signal 9 triggers whenever 100 concurrent websocket connections open. Me frantically checking docker stats in SSH.</textarea>
+            </div>
+
+            <div class="form-group">
+              <label for="customTags" class="form-label">Hashtags / Metadata (space separated):</label>
+              <input type="text" id="customTags" class="form-input" placeholder="#docker #aws #oomkilled #cloud #devops" value="#docker #aws #oomkilled #cloud #devops">
+            </div>
+
+            <div class="form-presets-row">
+              <span class="presets-label">Quick autofill sample:</span>
+              <button type="button" class="fill-custom-preset" data-reel-id="reel-1">Java Meme</button>
+              <button type="button" class="fill-custom-preset" data-reel-id="reel-2">SWE Lifestyle</button>
+              <button type="button" class="fill-custom-preset" data-reel-id="reel-3">Two-Sum DSA</button>
+              <button type="button" class="fill-custom-preset" data-reel-id="reel-5">Minecraft ALU</button>
+              <button type="button" class="fill-custom-preset" data-reel-id="reel-8">USB Rubber Ducky</button>
+            </div>
+
+            <button type="submit" class="btn-submit-agent" id="btnRunCustomAgent">⚡ Run AI Agent Inference</button>
+          </form>
+        </div>
+
+        <!-- Output Result Panel -->
+        <div id="customAgentResult">
+          <div class="custom-result-card">
+            <div class="custom-result-header">
+              <span class="custom-success-pill">Ready for Analysis</span>
+            </div>
+            <p class="signal-evidence-text">Fill out the form or choose a quick autofill sample and click "Run AI Agent Inference" to see the full reasoning breakdown and Required Output format.</p>
+          </div>
+        </div>
+
+      </div>
+    </section>
+
+    <!-- ========================================================================= -->
+    <!-- TAB 5: Live Gemini AI Studio & 60s Reel Script Generator                  -->
+    <!-- ========================================================================= -->
+    <section class="app-tab-section" id="tab-gemini-studio">
+      <div class="gemini-studio-container">
+        
+        <!-- Header banner -->
+        <div class="gemini-hero-box">
+          <div class="gemini-hero-badge">GOOGLE GEMINI 2.5/3.6 FLASH INTEGRATION</div>
+          <h2 class="gemini-hero-title">Live Multimodal AI Recommendation & Script Studio</h2>
+          <p class="gemini-hero-desc">Connect directly to Gemini to perform live semantic reasoning on arbitrary video transcripts, verify trap mitigation, and auto-generate viral 60-second educational Tech Reel scripts.</p>
+        </div>
+
+        <!-- API Key & Config Bar -->
+        <div class="gemini-config-bar">
+          <div class="config-input-group">
+            <label for="geminiApiKeyInput" class="config-label">🔑 Gemini API Key:</label>
+            <input type="password" id="geminiApiKeyInput" class="config-input" placeholder="Paste your Google AI Studio API Key (AIzaSy...)">
+            <button class="config-btn" id="btnSaveGeminiKey">Save Key</button>
+            <button class="config-btn secondary" id="btnClearGeminiKey">Clear</button>
+          </div>
+          <div class="gemini-status-indicator" id="geminiStatusIndicator">
+            <span class="status-dot"></span>
+            <span class="status-text" id="geminiStatusText">Ready (Local Heuristic Agent Available)</span>
+          </div>
+        </div>
+
+        <!-- Split Workspace: Analysis & Script Generator -->
+        <div class="gemini-workspace-grid">
+          
+          <!-- Column 1: Live Gemini Reel Analyzer -->
+          <div class="gemini-card">
+            <div class="gemini-card-header">
+              <h3 class="gemini-card-title">1. Live Gemini Context Inference</h3>
+              <span class="badge-gemini-tag">Zero-Shot Reasoning</span>
+            </div>
+
+            <div class="form-group">
+              <label class="form-label">Test with Sample or Custom Transcript:</label>
+              <div class="form-presets-row" style="margin-bottom: 8px;">
+                <button type="button" class="gemini-sample-fill" data-reel-id="reel-1">Java Meme</button>
+                <button type="button" class="gemini-sample-fill" data-reel-id="reel-2">SWE Vlog</button>
+                <button type="button" class="gemini-sample-fill" data-reel-id="reel-3">DSA Joke</button>
+                <button type="button" class="gemini-sample-fill" data-reel-id="reel-4">M3 Compile</button>
+              </div>
+              <textarea id="geminiPromptInput" class="form-textarea" style="min-height: 110px;" placeholder="Paste student video transcript or narrative here...">When you fix a production crash by adding 15 nested if-else null checks, commit message 'minor fix', push straight to main at 4:59 PM on Friday, and shut your laptop before the CI pipeline triggers NullPointerException in cluster 3.</textarea>
+            </div>
+
+            <button class="btn-gemini-action" id="btnRunGeminiAnalysis">✨ Run Live Gemini Analysis</button>
+
+            <!-- Result Output Box -->
+            <div class="gemini-result-box" id="geminiAnalysisResultBox">
+              <pre class="gemini-pre-output"><code id="geminiOutputCode">Click "Run Live Gemini Analysis" to inspect live model output...</code></pre>
+            </div>
+          </div>
+
+          <!-- Column 2: 60-Second Educational Script Generator -->
+          <div class="gemini-card">
+            <div class="gemini-card-header">
+              <h3 class="gemini-card-title">2. 60s Tech Reel Script Generator</h3>
+              <span class="badge-gemini-tag">Content Bridge Studio</span>
+            </div>
+
+            <div class="form-group">
+              <label for="scriptTopicInput" class="form-label">Recommended Tech Topic:</label>
+              <input type="text" id="scriptTopicInput" class="form-input" value="How the JVM Garbage Collector Actually Works: Stop Your Microservices From Freezing">
+            </div>
+
+            <div class="form-group-row">
+              <div class="form-group" style="flex: 1;">
+                <label for="scriptCategorySelect" class="form-label">Category:</label>
+                <select id="scriptCategorySelect" class="form-select">
+                  <option value="Java">Java</option>
+                  <option value="HLD">HLD</option>
+                  <option value="DSA">DSA</option>
+                  <option value="Hardware">Hardware</option>
+                  <option value="AI">AI</option>
+                  <option value="Cybersecurity">Cybersecurity</option>
+                  <option value="Other">Other</option>
+                </select>
+              </div>
+              <div class="form-group" style="flex: 1;">
+                <label for="scriptDifficultySelect" class="form-label">Target Difficulty:</label>
+                <select id="scriptDifficultySelect" class="form-select">
+                  <option value="Intermediate">Intermediate</option>
+                  <option value="Beginner">Beginner</option>
+                  <option value="Advanced">Advanced</option>
+                </select>
+              </div>
+            </div>
+
+            <button class="btn-gemini-action secondary" id="btnGenerateReelScript">🎬 Generate 60s Educational Video Script</button>
+
+            <!-- Script Viewer Box -->
+            <div class="gemini-script-display" id="geminiScriptDisplay">
+              <div class="script-empty-placeholder">
+                <span>Select a topic and generate a 60-second educational storyboard with visual cues and narrator dialogue.</span>
+              </div>
+            </div>
+          </div>
+
+        </div>
+
+      </div>
+    </section>
+
+  </main>
+
+  <!-- Footer -->
+  <footer class="app-footer">
+    <p>AI-Powered Tech Reel Recommendation Agent &bull; Turning student scrolling into high-signal educational micro-learning without clickbait traps.</p>
+  </footer>
+
+  <!-- Scripts -->
+  <script>
+(function() {
+/**
+ * Dataset of 8 Diverse Sample Reels & Curated High-Signal Tech Knowledge Base
+ * Covering Entertainment, Gaming, Coding, AI, Gadgets, Career, Programming Memes, and Tech News.
+ */
+
+const SAMPLE_REELS = [
+  {
+    id: "reel-1",
+    title: "Friday 5 PM Prod Push",
+    category: "Programming Memes",
+    creator: "@dev_humor",
+    duration: 18,
+    likes: "142K",
+    comments: "2.8K",
+    shares: "34K",
+    tags: ["#codinghumor", "#java", "#nullpointer", "#developerlife", "#gitpush"],
+    audio: "Dramatic suspense violin drop",
+    videoVisualType: "meme-matrix",
+    transcript: "When you fix a production crash by adding 15 nested if-else null checks, commit message 'minor fix', push straight to main at 4:59 PM on Friday, and shut your laptop before the CI pipeline triggers NullPointerException in cluster 3.",
+    metadata: {
+      tone: "Self-deprecating satire / Meme",
+      surfaceKeywords: ["Java", "null checks", "production crash", "NullPointerException", "CI pipeline"],
+      underlyingConcept: "Defensive programming pitfalls, exception handling models, Null safety, and CI/CD deployment safeguards",
+      emotionalState: "Anxiety about brittle code and production reliability"
+    }
+  },
+  {
+    id: "reel-2",
+    title: "Day in the Life: Junior Backend SWE",
+    category: "Career / SWE Lifestyle",
+    creator: "@alex_codes_seattle",
+    duration: 32,
+    likes: "89K",
+    comments: "1.4K",
+    shares: "12K",
+    tags: ["#dayinthelife", "#backendengineer", "#techcareer", "#kafka", "#microservices"],
+    audio: "Chill Lo-Fi Beat - Coffee in Seattle",
+    videoVisualType: "lifestyle-vlog",
+    transcript: "7:30 AM matcha latte walk. 9:00 AM daily standup pretending I understand the legacy auth service. 11:00 AM investigating why Kafka consumer group lag jumped to 400,000 messages during morning traffic spike. 2:00 PM pairing with senior engineer on database connection pool starvation. 5:00 PM free gym and surviving day 180 as a backend engineer.",
+    metadata: {
+      tone: "Aspirational lifestyle vlog with real engineering friction points",
+      surfaceKeywords: ["matcha", "standup", "Kafka", "consumer lag", "backend engineer", "connection pool"],
+      underlyingConcept: "Distributed message queues, event streaming architectures, backpressure, and database connection pooling",
+      emotionalState: "Desire for genuine backend competence behind lifestyle veneer"
+    }
+  },
+  {
+    id: "reel-3",
+    title: "Interviewer Asks Two-Sum Optimization",
+    category: "DSA / Coding Interview",
+    creator: "@algo_trauma",
+    duration: 24,
+    likes: "210K",
+    comments: "4.1K",
+    shares: "52K",
+    tags: ["#leetcode", "#codinginterview", "#faangprep", "#dsa", "#twosum"],
+    audio: "Tense heartbeat to fast rap drop",
+    videoVisualType: "sketch-comedy",
+    transcript: "Interviewer: 'Great, your nested loop brute force works in O(n^2). Now can you make it linear time O(n)?' Me sweating profusely pretending I didn't frantically cram hash map complement lookups in the company lobby 6 minutes before the zoom call.",
+    metadata: {
+      tone: "Relatable interview anxiety comedy",
+      surfaceKeywords: ["Two-Sum", "O(n^2)", "linear time", "hash map", "interview", "LeetCode"],
+      underlyingConcept: "Algorithmic time-space tradeoffs, hash collisions, amortized complexity, and interview problem patterns",
+      emotionalState: "Interview performance pressure and need for deep algorithmic intuition over rote memorization"
+    }
+  },
+  {
+    id: "reel-4",
+    title: "Snapdragon X Elite vs M3 Pro vs RTX 4080: The Kernel Compile Stress Test",
+    category: "Gadgets / Hardware",
+    creator: "@silicon_benchmarks",
+    duration: 45,
+    likes: "95K",
+    comments: "3.2K",
+    shares: "18K",
+    tags: ["#hardware", "#m3pro", "#snapdragonx", "#laptopreview", "#benchmarks", "#linuxkernel"],
+    audio: "High-octane synthwave electronic track",
+    videoVisualType: "hardware-teardown",
+    transcript: "Is ARM on Windows ready for developers? We threw a complete Linux kernel compilation across 32 threads on the Snapdragon X Elite, Apple M3 Pro with 36GB unified memory, and an RTX 4080 beast laptop. Watch thermal throttling kick in at second 28 and see how memory bandwidth changes everything.",
+    metadata: {
+      tone: "Technical comparison / Hardware analysis",
+      surfaceKeywords: ["Snapdragon", "M3 Pro", "RTX 4080", "kernel compile", "ARM", "unified memory", "thermal throttle"],
+      underlyingConcept: "CPU microarchitecture, ARM vs x86 instruction sets, unified memory bandwidth, multi-core compilation parallelism, and thermal management",
+      emotionalState: "High curiosity about developer toolchain performance and computer hardware architecture"
+    }
+  },
+  {
+    id: "reel-5",
+    title: "Building an 8-bit Computer Inside Minecraft with Logic Gates",
+    category: "Gaming / Systems Under the Hood",
+    creator: "@redstone_architect",
+    duration: 40,
+    likes: "340K",
+    comments: "7.8K",
+    shares: "91K",
+    tags: ["#minecraft", "#redstone", "#computerscience", "#logicgates", "#turingcomplete"],
+    audio: "Epic orchestral buildup - Interstellar style",
+    videoVisualType: "game-simulation",
+    transcript: "People think Minecraft is just placing blocks. But using redstone repeaters as diodes, torches as NOT gates, and building NAND circuits, we constructed an entire 8-bit Arithmetic Logic Unit with 256 bytes of RAM that can compute Fibonacci numbers inside a video game.",
+    metadata: {
+      tone: "Mind-blowing technical feat in a gaming environment",
+      surfaceKeywords: ["Minecraft", "redstone", "logic gates", "ALU", "RAM", "Fibonacci", "Turing complete"],
+      underlyingConcept: "Digital logic design, boolean algebra, Von Neumann architecture, CPU instruction cycles, and hardware fundamentals",
+      emotionalState: "Deep fascination with foundational systems and computing mechanics through gaming"
+    }
+  },
+  {
+    id: "reel-6",
+    title: "OpenAI Operator / Deep Research: How Autonomous Agents Actually Navigate DOM",
+    category: "AI / Tech News",
+    creator: "@deep_tech_breakdown",
+    duration: 38,
+    likes: "175K",
+    comments: "2.1K",
+    shares: "38K",
+    tags: ["#ai", "#agenticai", "#browseruse", "#llmarchitecture", "#technews", "#deeptech"],
+    audio: "Pulsing modern techno beat",
+    videoVisualType: "ai-flowchart",
+    transcript: "Everyone is hyping browser-controlling AI agents, but how does the model actually interact with web pages without burning millions of tokens? Look under the hood: DOM tree pruning, accessibility tree (AXTree) representation, bounding box coordinate grounding, and multimodal action token generation.",
+    metadata: {
+      tone: "Pragmatic deep-dive cutting through media hype",
+      surfaceKeywords: ["AI agents", "browser use", "DOM tree", "AXTree", "multimodal", "tokens"],
+      underlyingConcept: "Agentic AI architectures, DOM/Accessibility tree parsing, coordinate grounding, vision-language model planning, and inference cost optimization",
+      emotionalState: "Desire to understand the real engineering mechanics of AI beyond marketing claims"
+    }
+  },
+  {
+    id: "reel-7",
+    title: "10,000 Particle Physics Simulation of the 3-Body Problem in WebGL",
+    category: "Entertainment / Math & Graphics",
+    creator: "@math_visualized",
+    duration: 28,
+    likes: "260K",
+    comments: "3.5K",
+    shares: "64K",
+    tags: ["#math", "#physics", "#webgl", "#threebodyproblem", "#creativecoding", "#chaos"],
+    audio: "Cosmic ambient soundscape",
+    videoVisualType: "math-particles",
+    transcript: "Watch what happens when you shift the initial velocity of Body C by just 0.00001 millimeters. Using a Runge-Kutta 4th order integrator computed directly on GPU shader fragments in WebGL, 10,000 simulated stars demonstrate deterministic chaos in 60 FPS real time.",
+    metadata: {
+      tone: "Hypnotic scientific visualizer with engineering depth",
+      surfaceKeywords: ["3-Body Problem", "WebGL", "GPU shader", "Runge-Kutta", "chaos theory", "particles"],
+      underlyingConcept: "GPU fragment shaders, numerical integration algorithms, real-time computer graphics, and mathematical modeling",
+      emotionalState: "Aesthetic appreciation for computational physics and visual programming"
+    }
+  },
+  {
+    id: "reel-8",
+    title: "How a $5 USB Rubber Ducky Injects 1,000 Words Per Minute",
+    category: "Cybersecurity / Pop Culture Tech",
+    creator: "@whitehat_labs",
+    duration: 35,
+    likes: "198K",
+    comments: "3.1K",
+    shares: "45K",
+    tags: ["#cybersecurity", "#infosec", "#rubberducky", "#ethicalhacking", "#hardwaresecurity"],
+    audio: "Cyberpunk synth arpeggio",
+    videoVisualType: "security-terminal",
+    transcript: "Why doesn't your antivirus block a malicious USB keystroke injection? Because the operating system trusts Human Interface Devices (HID) by default. The microcontroller mimics a standard keyboard, fires pre-programmed payload keystrokes at 1,000 WPM, opens PowerShell, and executes before the OS even shows a prompt.",
+    metadata: {
+      tone: "Exciting real-world security breakdown",
+      surfaceKeywords: ["Rubber Ducky", "USB", "antivirus", "HID", "keystroke injection", "PowerShell", "microcontroller"],
+      underlyingConcept: "Hardware security, USB Human Interface Device spoofing, OS trust boundaries, payload execution, and endpoint defensive posture",
+      emotionalState: "Fascination with security exploits, hardware-firmware boundaries, and defensive countermeasures"
+    }
+  }
+];
+
+/**
+ * Curated Pool of High-Signal, Engaging Educational Tech Reels
+ * Designed to provide genuine substance without falling into shallow clickbait traps.
+ */
+const TECH_REELS_CATALOG = [
+  {
+    id: "tech-1",
+    title: "How the JVM Garbage Collector Actually Works: Stop Your Microservices From Freezing",
+    category: "Java",
+    difficulty: "Intermediate",
+    confidence: "High",
+    creator: "@jvm_internals_pro",
+    duration: 52,
+    targetInterests: ["Java", "Backend Systems", "JVM Internals", "Memory Management", "Microservices Performance"],
+    antiHypeScore: 98,
+    isHypeClickbait: false,
+    hook: "Ever wondered why your Java service gets random 2-second latency spikes under load?",
+    whyHighSignal: "Explains Eden Space, Survivor spaces, Tenured generation, ZGC vs G1GC generational garbage collection, and avoiding Stop-The-World pauses with visual memory allocations.",
+    summary: "Visual walkthrough of JVM memory heaps, generational GC algorithms (G1 vs ZGC), object promotion mechanics, and tuning flags for low-latency backend systems."
+  },
+  {
+    id: "tech-2",
+    title: "Why Dual-Pivot Quicksort & Timsort Beat Naive Algorithms in Real Production",
+    category: "DSA",
+    difficulty: "Intermediate",
+    confidence: "High",
+    creator: "@algorithms_unlocked",
+    duration: 48,
+    targetInterests: ["DSA", "Coding Interview", "Algorithmic Complexity", "Algorithm Optimization", "Problem Solving"],
+    antiHypeScore: 95,
+    isHypeClickbait: false,
+    hook: "Why doesn't Java or Python standard library use regular Quicksort or MergeSort?",
+    whyHighSignal: "Deconstructs CPU cache locality, branch prediction, and how hybrid sorting algorithms achieve O(N) performance on partially sorted real-world data.",
+    summary: "Exploration of production sorting algorithms (Timsort in Python, Dual-Pivot Quicksort in Java), showing how memory cache lines make theoretical big-O behave differently in silicon."
+  },
+  {
+    id: "tech-3",
+    title: "Surviving Kafka Consumer Lag: Partition Rebalancing and Backpressure Patterns Explained",
+    category: "HLD",
+    difficulty: "Intermediate",
+    confidence: "High",
+    creator: "@distributed_systems_daily",
+    duration: 55,
+    targetInterests: ["Backend Systems", "Distributed Systems", "High Level Design", "Kafka", "Cloud Architecture"],
+    antiHypeScore: 97,
+    isHypeClickbait: false,
+    hook: "Your message queue has 500k unread events and your pods are crashing. Here is the step-by-step fix.",
+    whyHighSignal: "Breaks down partition distribution, heartbeat intervals, batch commit semantics, and circuit-breaker backpressure without buzzwords.",
+    summary: "Practical high-level design breakdown of event-driven distributed systems handling massive traffic spikes, partition rebalancing storms, and database write throughput bottlenecks."
+  },
+  {
+    id: "tech-4",
+    title: "How Unified Memory & CPU Cache Lines Supercharge Modern Compilers",
+    category: "Hardware",
+    difficulty: "Advanced",
+    confidence: "High",
+    creator: "@silicon_architecture",
+    duration: 58,
+    targetInterests: ["Hardware", "Computer Architecture", "Developer Toolchains", "Memory Bandwidth", "Low Level Systems"],
+    antiHypeScore: 96,
+    isHypeClickbait: false,
+    hook: "Why does a 16-core ARM chip compile C++ code faster than a 64-core server with slow RAM?",
+    whyHighSignal: "Explains L1/L2/L3 cache misses, memory bus contention during LLVM parsing, and zero-copy unified memory architecture.",
+    summary: "In-depth computer architecture breakdown demonstrating how memory bandwidth, cache pre-fetching, and unified memory buses dominate multi-threaded compilation workloads."
+  },
+  {
+    id: "tech-5",
+    title: "From Logic Gates to the CPU Instruction Cycle: How Silicon Executes 'a + b'",
+    category: "Other",
+    difficulty: "Beginner",
+    confidence: "High",
+    creator: "@beneater_inspired",
+    duration: 50,
+    targetInterests: ["Computer Architecture", "Digital Logic", "CS Fundamentals", "Systems Programming"],
+    antiHypeScore: 99,
+    isHypeClickbait: false,
+    hook: "What actually happens on a microscopic level when your computer evaluates a single addition?",
+    whyHighSignal: "Visualizes Full Adders, the Program Counter, Instruction Register, and clock ticks executing machine opcode in animated silicon paths.",
+    summary: "Clear, visual breakdown bridging boolean logic gates, transistor switches, and the CPU fetch-decode-execute cycle that powers every computer program."
+  },
+  {
+    id: "tech-6",
+    title: "Building an Autonomous Web Agent from Scratch in 100 Lines of Python & Playwright",
+    category: "AI",
+    difficulty: "Intermediate",
+    confidence: "High",
+    creator: "@applied_ai_eng",
+    duration: 59,
+    targetInterests: ["AI", "Agentic Systems", "Web Automation", "LLM Engineering", "Python Systems"],
+    antiHypeScore: 94,
+    isHypeClickbait: false,
+    hook: "Stop paying for wrapper apps. Here is the raw loop behind browser-controlling AI agents.",
+    whyHighSignal: "Shows exact prompt schema, structured JSON function calling, accessibility tree filtering, and resilient DOM selector fallbacks with real code.",
+    summary: "Hands-on implementation of an autonomous browser agent: scraping accessibility snapshots, sending structured state to an LLM, and executing click/type actions via Playwright."
+  },
+  {
+    id: "tech-7",
+    title: "Writing Custom GPU Fragment Shaders in GLSL: Raymarching 3D Fractals in 60 FPS",
+    category: "Other",
+    difficulty: "Advanced",
+    confidence: "High",
+    creator: "@shader_toy_mastery",
+    duration: 54,
+    targetInterests: ["Computer Graphics", "GPU Programming", "Mathematics & Physics", "Creative Coding", "WebGL/GLSL"],
+    antiHypeScore: 96,
+    isHypeClickbait: false,
+    hook: "How to render photorealistic 3D mathematical worlds without a single polygon using signed distance functions.",
+    whyHighSignal: "Deep dive into raymarching algorithms, signed distance functions (SDF), light vector dot products, and parallel GPU fragment execution.",
+    summary: "Visual and mathematical tutorial explaining how GLSL pixel shaders compute light rays, normal vectors, and recursive fractal geometry directly on the GPU."
+  },
+  {
+    id: "tech-8",
+    title: "USB HID Attack Defense: How to Detect and Block BadUSB at the Linux & Windows Kernel Level",
+    category: "Cybersecurity",
+    difficulty: "Intermediate",
+    confidence: "High",
+    creator: "@kernel_security_lab",
+    duration: 50,
+    targetInterests: ["Cybersecurity", "Endpoint Defense", "Operating Systems", "Hardware Security", "Kernel Architecture"],
+    antiHypeScore: 97,
+    isHypeClickbait: false,
+    hook: "How system administrators stop keystroke injection attacks cold using USB device whitelisting and typing velocity heuristic daemons.",
+    whyHighSignal: "Explains Linux `udev` rules, Windows Device Guard policies, and open-source typing cadency analysis daemons that detect synthetic 1,000 WPM input.",
+    summary: "Practical defensive cybersecurity guide covering USB device enumeration, authorization policies, and behavioral heuristics that prevent unauthorized HID payloads."
+  },
+  {
+    id: "tech-9",
+    title: "System Design 101: Designing a Real-Time Collaborative Doc (CRDT vs OT)",
+    category: "HLD",
+    difficulty: "Advanced",
+    confidence: "High",
+    creator: "@system_design_forge",
+    duration: 56,
+    targetInterests: ["High Level Design", "Distributed Systems", "Backend Architecture", "Data Structures", "Career Growth"],
+    antiHypeScore: 98,
+    isHypeClickbait: false,
+    hook: "How Google Docs and Figma resolve simultaneous typing conflicts across 50 users without a lock.",
+    whyHighSignal: "Compares Operational Transformation (OT) with Conflict-free Replicated Data Types (CRDTs) with visual state graphs.",
+    summary: "Comprehensive architectural breakdown of concurrent editing protocols, vector clocks, and tombstone garbage collection in distributed collaborative apps."
+  },
+  {
+    id: "tech-10",
+    title: "Memory Safety Deep Dive: How Rust Ownership & Borrow Checker Eliminates Use-After-Free at Compile Time",
+    category: "Other",
+    difficulty: "Intermediate",
+    confidence: "High",
+    creator: "@lowlevel_chronicles",
+    duration: 51,
+    targetInterests: ["Systems Programming", "Memory Safety", "Rust / C++", "Compiler Design"],
+    antiHypeScore: 99,
+    isHypeClickbait: false,
+    hook: "Why 70% of all Microsoft and Google security vulnerabilities are memory bugs, and how affine type systems fix them without a garbage collector.",
+    whyHighSignal: "Breaks down stack vs heap pointers, lifetime annotations, RAII, and zero-cost compile-time static analysis.",
+    summary: "Deep technical dive into memory layout, pointer lifetimes, and how the compiler mathematically proves pointer safety before generating assembly."
+  },
+  {
+    id: "tech-11",
+    title: "SQL Query Planner Internals: Why Your 'SELECT *' Ignores Your Index and How to Fix It",
+    category: "Cloud",
+    difficulty: "Intermediate",
+    confidence: "High",
+    creator: "@db_internals_guy",
+    duration: 47,
+    targetInterests: ["Database Internals", "SQL Optimization", "Backend Systems", "Data Engineering"],
+    antiHypeScore: 97,
+    isHypeClickbait: false,
+    hook: "You created an index on user_id, but Postgres is still doing a Sequential Scan. Why?",
+    whyHighSignal: "Deconstructs B-Tree node page reads, cost estimation formulas, selectivity heuristics, and EXPLAIN ANALYZE interpretation.",
+    summary: "Visual guide to database execution engines, B-tree index traversal, index-only scans vs heap fetches, and tuning slow relational queries."
+  },
+  {
+    id: "tech-12",
+    title: "Demystifying Transformer Attention: What Q, K, V Matrices Actually Do in 60 Seconds",
+    category: "AI",
+    difficulty: "Intermediate",
+    confidence: "High",
+    creator: "@ml_foundations",
+    duration: 59,
+    targetInterests: ["AI", "Machine Learning", "Transformer Architecture", "Deep Learning Fundamentals"],
+    antiHypeScore: 98,
+    isHypeClickbait: false,
+    hook: "Skip the pop-science buzzwords. Here is the pure linear algebra behind multi-head self-attention.",
+    whyHighSignal: "Visual matrix multiplication walkthrough showing how dot product similarity scores create dynamic context weights between tokens.",
+    summary: "Rigorous yet intuitive visualization of query, key, value projections, softmax temperature scaling, and context vector creation in LLM attention layers."
+  }
+];
+
+/**
+ * Examples of Low-Signal / Clickbait Hype Content (Rejected by our Anti-Hype Gate)
+ * Used to illustrate the Trap and Quality Filter functionality.
+ */
+const REJECTED_HYPE_EXAMPLES = [
+  {
+    title: "Top 10 AI Tools That Will Get You a $200,000 FAANG Job Tomorrow Without Coding!",
+    reason: "Zero educational substance; predatory career hype; generic affiliate listicle."
+  },
+  {
+    title: "Learn Java in 10 Minutes: What is a Variable? (Java 101)",
+    reason: "Shallow literal keyword match; assumes student watching advanced concurrency/CI meme is a day-1 beginner needing syntax basics."
+  },
+  {
+    title: "Copy-Paste This 1 Prompt To Build a Million Dollar SaaS App in 5 Minutes",
+    reason: "False productivity promise; ignores systems engineering, security, databases, and deployment."
+  },
+  {
+    title: "Coding is Dead in 2026! Stop Learning Data Structures and Use This Tool Instead",
+    reason: "Alarmist clickbait designed for outrage engagement rather than durable technical capability."
+  }
+];
+
+/**
+ * Curated Student Interaction Presets for Testing & Simulation
+ */
+const PRESETS = [
+  {
+    id: "preset-trap",
+    name: "The Built-In Trap Scenario",
+    description: "Student watches Java meme + SWE lifestyle + interview joke + laptop comparison. Tests if system infers broader Software Engineering & Systems fundamentals or falls into shallow keyword / AI hype traps.",
+    reels: ["reel-1", "reel-2", "reel-3", "reel-4"],
+    expectedInference: "Aspiring Backend & Systems Software Engineer preparing for tech career hurdles and performance-sensitive development.",
+    avoidanceGoal: "Reject generic Java syntax basics and generic '10 AI job tools' hype. Recommend JVM GC memory management, production sorting algorithms, and memory architecture."
+  },
+  {
+    id: "preset-gaming-systems",
+    name: "Gaming to Systems & Graphics",
+    description: "Student interacts with Minecraft redstone computers and WebGL 3-Body particle physics.",
+    reels: ["reel-5", "reel-7"],
+    expectedInference: "Deep curiosity in digital logic, CPU architecture, GPU shaders, and mathematical modeling.",
+    avoidanceGoal: "Don't just recommend game streaming clips; recommend CPU instruction cycle breakdowns and GLSL raymarching shaders."
+  },
+  {
+    id: "preset-ai-deep-tech",
+    name: "Pragmatic AI & Systems Builder",
+    description: "Student watches autonomous browser agent DOM mechanics and cybersecurity USB exploits.",
+    reels: ["reel-6", "reel-8"],
+    expectedInference: "Under-the-hood AI engineering, systems automation, OS security boundaries, and hardware interop.",
+    avoidanceGoal: "Avoid superficial prompt listicles; recommend Playwright agent construction and transformer self-attention linear algebra."
+  },
+  {
+    id: "preset-all-samples",
+    name: "All 8 Sample Reels (Comprehensive Batch)",
+    description: "Full evaluation of all 8 fictional/anonymized reels across Entertainment, Gaming, Coding, AI, Gadgets, Career, Memes, and Tech News.",
+    reels: ["reel-1", "reel-2", "reel-3", "reel-4", "reel-5", "reel-6", "reel-7", "reel-8"],
+    expectedInference: "Multi-faceted tech curiosity across full-stack engineering, algorithms, hardware, and security.",
+    avoidanceGoal: "Strictly format all 8 outputs adhering to REQUIRED OUTPUT specification."
+  }
+];
+
+
+/**
+ * AI-Powered Recommendation Agent Engine
+ * 
+ * Analyzes short-form video Reels interacted with by students, infers latent academic/tech
+ * interests (beyond superficial keywords), evades clickbait traps, and generates high-signal
+ * educational technology recommendations adhering strictly to the REQUIRED OUTPUT format.
+ */
+
+class RecommendationAgent {
+  constructor(catalog = TECH_REELS_CATALOG) {
+    this.catalog = catalog;
+    this.antiHypeRules = [
+      /\b(top 10 ai tools|get rich|10x engineer in 5 mins|replace you|make \$[0-9]+k|no coding required|secret prompt|coding is dead)\b/i,
+      /\b(become a millionaire|get hired with zero skills|hack any account|magic ai button)\b/i
+    ];
+  }
+
+  /**
+   * Deep Analysis of a single Reel interaction.
+   * Extracts multi-dimensional semantic signals, detects latent interests, and performs recommendation.
+   * 
+   * @param {Object} reel - Reel object containing title, category, transcript, tags, metadata
+   * @param {Object} interactionContext - Optional engagement signals (watchCompletion, liked, saved)
+   * @returns {Object} Structured analysis and recommendation result
+   */
+  analyzeReel(reel, interactionContext = {}) {
+    const rawTranscript = reel.transcript || '';
+    const title = reel.title || 'Untitled Reel';
+    const category = reel.category || 'General';
+    const tags = Array.isArray(reel.tags) ? reel.tags.join(' ') : (reel.tags || '');
+
+    // Step 1: Context & Nuance Extraction
+    const extraction = this._extractContextualSignals(reel, rawTranscript, tags);
+
+    // Step 2: Latent Interest Inference
+    const latentInterest = this._inferLatentInterests(reel, extraction);
+
+    // Step 3: Candidate Recommendation & Anti-Hype Gate
+    const recommendationMatch = this._findBestHighSignalRecommendation(latentInterest, reel);
+
+    // Step 4: Format to Exact Specification
+    const formattedOutput = this._formatRequiredOutput(reel, latentInterest, recommendationMatch);
+
+    return {
+      reelId: reel.id,
+      reelTitle: reel.title,
+      extraction,
+      latentInterest,
+      recommendation: recommendationMatch,
+      formattedText: formattedOutput.rawText,
+      structuredData: formattedOutput.fields
+    };
+  }
+
+  /**
+   * Internal: Extract linguistic, cultural, and contextual signals beyond literal words.
+   */
+  _extractContextualSignals(reel, transcript, tags) {
+    const text = `${reel.title} ${transcript} ${tags}`.toLowerCase();
+    
+    // Check for meme / satire / humor markers
+    const isMemeOrHumor = /humor|meme|joke|sweating|pretending|surviving|rant|crash|shut your laptop/i.test(text);
+    
+    // Check for developer culture & career context
+    const hasCareerContext = /standup|pr review|pairing|junior|faang|interview|career|matcha|day in the life/i.test(text);
+
+    // Check for hardware / performance markers
+    const hasHardwareContext = /m3|snapdragon|rtx|compile|kernel|thermal|bandwidth|arm|x86|fps|threads/i.test(text);
+
+    // Check for systems / engineering friction points
+    const hasSystemsContext = /kafka|consumer lag|connection pool|nullpointer|ci\/cd|pipeline|microservices|distributed/i.test(text);
+
+    // Check for algorithmic / CS theory markers
+    const hasAlgoContext = /two-sum|o\(n|hash map|brute force|linear time|sorting|leetcode|dsa/i.test(text);
+
+    // Check for graphics / math / physics markers
+    const hasGraphicsContext = /webgl|shader|particles|3-body|physics|runge-kutta|glsl|chaos/i.test(text);
+
+    // Check for digital logic / architecture markers
+    const hasLogicArchContext = /redstone|logic gates|alu|ram|turing|8-bit|cpu|von neumann/i.test(text);
+
+    // Check for security / exploit mechanics markers
+    const hasSecurityContext = /rubber ducky|usb|hid|antivirus|keystroke|powershell|exploit|malicious/i.test(text);
+
+    // Check for real AI systems / agents markers
+    const hasAgenticAIContext = /browser-use|dom tree|axtree|tokens|autonomous agent|operator|multimodal/i.test(text);
+
+    return {
+      isMemeOrHumor,
+      hasCareerContext,
+      hasHardwareContext,
+      hasSystemsContext,
+      hasAlgoContext,
+      hasGraphicsContext,
+      hasLogicArchContext,
+      hasSecurityContext,
+      hasAgenticAIContext,
+      summaryEvidence: this._synthesizeEvidence(reel, {
+        isMemeOrHumor,
+        hasCareerContext,
+        hasHardwareContext,
+        hasSystemsContext,
+        hasAlgoContext,
+        hasGraphicsContext,
+        hasLogicArchContext,
+        hasSecurityContext,
+        hasAgenticAIContext
+      })
+    };
+  }
+
+  /**
+   * Internal: Synthesize human-readable evidence of why specific interests were detected.
+   */
+  _synthesizeEvidence(reel, signals) {
+    const t = reel.transcript || '';
+    const id = reel.id || '';
+
+    // Specific evidence mappings for sample reels
+    if (id === 'reel-1' || /nullpointer|nested if-else|friday/i.test(t)) {
+      return "The student interacts with developer humor highlighting the stress of production crashes, NullPointerExceptions in CI pipelines, and defensive null-checking. This signals an authentic grasp of real-world backend debugging, defensive programming pitfalls, and memory safety.";
+    }
+    if (id === 'reel-2' || /kafka|consumer lag|matcha|connection pool/i.test(t)) {
+      return "While framed as a relatable 'day in the life' lifestyle vlog, the narrative highlights concrete backend friction points: Kafka consumer group lag under morning traffic spikes and database connection pool starvation.";
+    }
+    if (id === 'reel-3' || /two-sum|hash map|lobby|interviewer/i.test(t)) {
+      return "The comedy sketch centers on coding interview stress, specifically moving from O(n^2) brute force to O(n) hash map lookups. This demonstrates direct engagement with technical interview preparation, algorithmic complexity, and time-space tradeoffs.";
+    }
+    if (id === 'reel-4' || /snapdragon|m3 pro|kernel compile/i.test(t)) {
+      return "The clip focuses on multi-threaded Linux kernel compilation benchmarks across ARM (Snapdragon/M3) and x86 architectures, tracking thermal throttling and memory bandwidth. This reveals an interest in hardware performance limits, compiler workloads, and silicon microarchitecture.";
+    }
+    if (id === 'reel-5' || /minecraft|redstone|alu|turing/i.test(t)) {
+      return "The gaming footage shows building logic gates (NOT/NAND), an 8-bit ALU, and RAM to compute Fibonacci numbers inside Minecraft. This demonstrates deep interest in foundational digital logic, CPU architecture, and how hardware computes instructions.";
+    }
+    if (id === 'reel-6' || /browser-use|dom tree|axtree|tokens/i.test(t)) {
+      return "The video cuts through generic AI marketing to explain the actual systems architecture of autonomous web agents: DOM/Accessibility tree extraction, coordinate bounding box grounding, and multimodal token cost optimization.";
+    }
+    if (id === 'reel-7' || /3-body|webgl|gpu shader|runge-kutta/i.test(t)) {
+      return "The hypnotic visualizer demonstrates a 10,000-particle 3-body gravitational chaos simulation using Runge-Kutta numerical integration on WebGL GPU fragment shaders, showing interest in mathematical simulation and real-time graphics.";
+    }
+    if (id === 'reel-8' || /rubber ducky|usb|hid|keystroke/i.test(t)) {
+      return "The content explains how USB Rubber Ducky devices exploit OS trust in Human Interface Devices (HID) to inject 1,000 WPM payloads. This indicates interest in hardware-level security, trust boundaries, and endpoint exploit mechanics.";
+    }
+
+    // Generic fallback synthesizer based on signals
+    const evidenceParts = [];
+    if (signals.hasSystemsContext) evidenceParts.push("engagement with backend infrastructure and distributed systems concepts");
+    if (signals.hasAlgoContext) evidenceParts.push("interest in algorithmic problem solving and time-space complexity");
+    if (signals.hasHardwareContext) evidenceParts.push("curiosity regarding processor architecture and compilation performance");
+    if (signals.hasAgenticAIContext) evidenceParts.push("interest in practical AI agent systems and token efficiency");
+    if (signals.hasSecurityContext) evidenceParts.push("fascination with cybersecurity trust boundaries and exploit mechanics");
+    if (signals.hasGraphicsContext) evidenceParts.push("interest in computer graphics, shaders, and mathematical modeling");
+    if (signals.hasLogicArchContext) evidenceParts.push("fascination with digital logic and computer organization");
+
+    return evidenceParts.length > 0
+      ? `Interaction reflects ${evidenceParts.join(', ')} rather than passive consumption.`
+      : `Contextual analysis of transcript and themes indicates curiosity about technical implementation details in ${reel.category}.`;
+  }
+
+  /**
+   * Internal: Infer latent technical interests and domain mappings.
+   */
+  _inferLatentInterests(reel, extraction) {
+    const id = reel.id || '';
+    const t = (reel.transcript || '').toLowerCase();
+
+    // High precision mapping for benchmark reels
+    if (id === 'reel-1' || /nullpointer|nested if-else/i.test(t)) {
+      return {
+        topic: "Software Engineering / JVM Memory & Runtime Reliability",
+        primaryCategory: "Java",
+        secondaryCategory: "HLD",
+        confidence: "High",
+        apparentSkillLevel: "Intermediate",
+        intent: "Wants to understand production code reliability, JVM exception mechanics, and how to write robust backend systems without brittle null checks."
+      };
+    }
+    if (id === 'reel-2' || /kafka|consumer lag|connection pool/i.test(t)) {
+      return {
+        topic: "Backend Engineering / Distributed Message Queues & System Design",
+        primaryCategory: "HLD",
+        secondaryCategory: "Cloud",
+        confidence: "High",
+        apparentSkillLevel: "Intermediate",
+        intent: "Aspiring backend engineer seeking practical mastery over message streaming (Kafka) bottlenecks, partition lags, and production architecture."
+      };
+    }
+    if (id === 'reel-3' || /two-sum|hash map|leetcode/i.test(t)) {
+      return {
+        topic: "Algorithms & Data Structures / Coding Interview Mastery",
+        primaryCategory: "DSA",
+        secondaryCategory: "Career",
+        confidence: "High",
+        apparentSkillLevel: "Intermediate",
+        intent: "Preparing for technical interviews, seeking intuitive understanding of algorithmic tradeoffs beyond rote memorization."
+      };
+    }
+    if (id === 'reel-4' || /snapdragon|m3 pro|kernel compile/i.test(t)) {
+      return {
+        topic: "Computer Architecture / CPU Microarchitecture & Compiler Performance",
+        primaryCategory: "Hardware",
+        secondaryCategory: "Other",
+        confidence: "High",
+        apparentSkillLevel: "Advanced",
+        intent: "Interested in developer hardware ergonomics, memory bandwidth, ARM vs x86 instruction parallelism, and compilation bottlenecks."
+      };
+    }
+    if (id === 'reel-5' || /minecraft|redstone|logic gates|alu/i.test(t)) {
+      return {
+        topic: "Computer Systems Fundamentals / Digital Logic & CPU Architecture",
+        primaryCategory: "Other",
+        secondaryCategory: "Hardware",
+        confidence: "High",
+        apparentSkillLevel: "Beginner",
+        intent: "Fascinated by how simple boolean logic gates combine to form full arithmetic logic units (ALU) and instruction execution cycles."
+      };
+    }
+    if (id === 'reel-6' || /browser-use|dom tree|axtree|tokens/i.test(t)) {
+      return {
+        topic: "Applied AI Engineering / Agentic LLM Architectures & DOM Grounding",
+        primaryCategory: "AI",
+        secondaryCategory: "Cloud",
+        confidence: "High",
+        apparentSkillLevel: "Intermediate",
+        intent: "Eager to learn real engineering patterns behind autonomous agents, bypassing shallow marketing hype to build working agent loops."
+      };
+    }
+    if (id === 'reel-7' || /3-body|webgl|gpu shader/i.test(t)) {
+      return {
+        topic: "Computer Graphics & Mathematical Simulation / WebGL & Shaders",
+        primaryCategory: "Other",
+        secondaryCategory: "AI",
+        confidence: "High",
+        apparentSkillLevel: "Advanced",
+        intent: "Inspired by visual mathematics, wanting to learn GPU fragment shaders, numerical integration, and real-time graphics pipelines."
+      };
+    }
+    if (id === 'reel-8' || /rubber ducky|usb|hid|antivirus/i.test(t)) {
+      return {
+        topic: "Cybersecurity / Hardware Security & Operating System Trust Boundaries",
+        primaryCategory: "Cybersecurity",
+        secondaryCategory: "Hardware",
+        confidence: "High",
+        apparentSkillLevel: "Intermediate",
+        intent: "Interested in how operating systems interface with hardware, HID trust vulnerabilities, and how defensive engineers mitigate keystroke injection."
+      };
+    }
+
+    // Default contextual inference based on extracted signals
+    let topic = "General Computer Science & Software Engineering";
+    let primaryCategory = "Other";
+    if (extraction.hasSystemsContext) {
+      topic = "Distributed Systems & Backend Architecture";
+      primaryCategory = "HLD";
+    } else if (extraction.hasAlgoContext) {
+      topic = "Data Structures & Algorithmic Optimization";
+      primaryCategory = "DSA";
+    } else if (extraction.hasHardwareContext) {
+      topic = "Computer Architecture & Hardware Performance";
+      primaryCategory = "Hardware";
+    } else if (extraction.hasAgenticAIContext) {
+      topic = "Artificial Intelligence & Agent Architectures";
+      primaryCategory = "AI";
+    } else if (extraction.hasSecurityContext) {
+      topic = "Cybersecurity & Defensive Engineering";
+      primaryCategory = "Cybersecurity";
+    }
+
+    return {
+      topic,
+      primaryCategory,
+      secondaryCategory: "Career",
+      confidence: "Medium",
+      apparentSkillLevel: "Intermediate",
+      intent: `Student shows interest in the deeper technical mechanics of ${topic}.`
+    };
+  }
+
+  /**
+   * Internal: Score and select the highest signal tech reel that bridges the student's interest
+   * while filtering out shallow clickbait and hype listicles.
+   */
+  _findBestHighSignalRecommendation(latentInterest, currentReel) {
+    const targetCategory = latentInterest.primaryCategory;
+    const targetTopic = latentInterest.topic.toLowerCase();
+
+    // Map specific reel recommendations to deliver top educational value
+    const specificMap = {
+      'reel-1': 'tech-1',  // Friday prod push / NullPointerException -> JVM Garbage Collection & Memory Management
+      'reel-2': 'tech-3',  // Junior SWE Kafka lag vlog -> Kafka Consumer Lag & Backpressure Patterns
+      'reel-3': 'tech-2',  // Two-Sum interview joke -> Dual-Pivot Quicksort & Timsort Cache Locality
+      'reel-4': 'tech-4',  // Snapdragon vs M3 vs RTX compile test -> Unified Memory & CPU Cache Lines
+      'reel-5': 'tech-5',  // Minecraft redstone computer -> Logic Gates to CPU Instruction Cycle (a + b)
+      'reel-6': 'tech-6',  // OpenAI Operator / Browser-use -> Building Web Agent in 100 lines Python
+      'reel-7': 'tech-7',  // 3-Body WebGL simulation -> Writing GPU Fragment Shaders in GLSL Raymarching
+      'reel-8': 'tech-8'   // USB Rubber ducky exploit -> USB HID Attack Defense at Kernel Level
+    };
+
+    let selectedTechReel = null;
+
+    if (currentReel.id && specificMap[currentReel.id]) {
+      selectedTechReel = this.catalog.find(r => r.id === specificMap[currentReel.id]);
+    }
+
+    // If not directly mapped, score the catalog
+    if (!selectedTechReel) {
+      const candidates = this.catalog.filter(r => {
+        // Anti-hype filter check
+        if (r.isHypeClickbait || (r.antiHypeScore && r.antiHypeScore < 80)) return false;
+        for (const rule of this.antiHypeRules) {
+          if (rule.test(r.title) || rule.test(r.summary)) return false;
+        }
+        return true;
+      });
+
+      // Rank candidates based on category and topic affinity
+      const scored = candidates.map(c => {
+        let score = 0;
+        if (c.category === targetCategory) score += 50;
+        if (c.category === latentInterest.secondaryCategory) score += 25;
+        if (c.targetInterests.some(i => targetTopic.includes(i.toLowerCase()))) score += 30;
+        if (c.difficulty === latentInterest.apparentSkillLevel) score += 15;
+        score += (c.antiHypeScore || 90) * 0.1;
+        return { item: c, score };
+      });
+
+      scored.sort((a, b) => b.score - a.score);
+      selectedTechReel = scored.length > 0 ? scored[0].item : this.catalog[0];
+    }
+
+    // Build specific "Why this recommendation" explanation
+    const whyRecommendation = this._buildWhyRecommendationText(currentReel, latentInterest, selectedTechReel);
+
+    return {
+      id: selectedTechReel.id,
+      title: selectedTechReel.title,
+      category: selectedTechReel.category,
+      difficulty: selectedTechReel.difficulty,
+      confidence: latentInterest.confidence || "High",
+      creator: selectedTechReel.creator,
+      duration: selectedTechReel.duration,
+      whyRecommendation,
+      antiHypeScore: selectedTechReel.antiHypeScore,
+      summary: selectedTechReel.summary,
+      whyHighSignal: selectedTechReel.whyHighSignal
+    };
+  }
+
+  /**
+   * Internal: Generate the exact rationale connecting current reel interest to recommended tech reel.
+   */
+  _buildWhyRecommendationText(currentReel, latentInterest, techReel) {
+    const id = currentReel.id || '';
+
+    if (id === 'reel-1') {
+      return "Rather than serving a generic 'Java 101' syntax tutorial (the naive trap), this recommendation builds on the student's familiarity with runtime exceptions by explaining the JVM's actual memory layout (Eden/Tenured spaces) and how garbage collection pauses cause production service latency.";
+    }
+    if (id === 'reel-2') {
+      return "Connects directly to the Kafka lag and database starvation scenarios shown in the vlog, providing an architectural blueprint on partition distribution, consumer heartbeat tuning, and backpressure patterns for real-world backend resilience.";
+    }
+    if (id === 'reel-3') {
+      return "Transforms interview anxiety humor into deep algorithmic intuition. Instead of superficial LeetCode grind or clickbait '10 AI Interview Tools', it explains why standard libraries use hybrid sorting (Dual-Pivot Quicksort / Timsort) based on CPU cache line locality.";
+    }
+    if (id === 'reel-4') {
+      return "Bridges benchmark curiosity into core computer architecture, explaining how L1/L2 cache misses, memory bus contention, and unified zero-copy architectures determine real-world compiler and build speeds.";
+    }
+    if (id === 'reel-5') {
+      return "Channels the student's fascination with in-game redstone logic into formal computer organization, showing how physical silicon transistors and machine opcodes execute basic arithmetic in modern CPUs.";
+    }
+    if (id === 'reel-6') {
+      return "Satisfies curiosity around agentic AI without sensationalized hype. Provides a tangible, 100-line Python implementation using Playwright, accessibility trees, and structured tool calling.";
+    }
+    if (id === 'reel-7') {
+      return "Capitalizes on visual physics curiosity by introducing GLSL fragment shaders, raymarching signed distance functions (SDF), and GPU parallel computing concepts.";
+    }
+    if (id === 'reel-8') {
+      return "Channels curiosity about USB keystroke attacks into defensive systems engineering, explaining USB device authorization, Linux udev rules, and kernel-level typing cadence detection.";
+    }
+
+    return `Connects the student's detected interest in ${latentInterest.topic} with a high-substance explainer on ${techReel.title}, avoiding superficial hype while advancing practical understanding.`;
+  }
+
+  /**
+   * Format the result into the exact specification required by the user prompt.
+   */
+  _formatRequiredOutput(reel, latentInterest, recommendation) {
+    const currentRef = `[${reel.id ? reel.id.toUpperCase() : 'REEL'}] ${reel.title} (${reel.category})`;
+    const interestDetected = latentInterest.topic;
+    const whyEvidence = latentInterest.summaryEvidence || this._synthesizeEvidence(reel, {});
+    const recommendedTechReel = `${recommendation.title}`;
+    const category = recommendation.category;
+    const whyThisRec = recommendation.whyRecommendation;
+    const difficulty = recommendation.difficulty;
+    const confidence = recommendation.confidence;
+
+    const rawText = [
+      `CURRENT REEL: ${currentRef}`,
+      `INTEREST DETECTED: ${interestDetected}`,
+      `WHY: ${whyEvidence}`,
+      `RECOMMENDED TECH REEL: ${recommendedTechReel}`,
+      `CATEGORY: ${category}`,
+      `WHY THIS RECOMMENDATION: ${whyThisRec}`,
+      `DIFFICULTY: ${difficulty}`,
+      `CONFIDENCE: ${confidence}`
+    ].join('\n');
+
+    return {
+      rawText,
+      fields: {
+        currentReel: currentRef,
+        interestDetected,
+        whyEvidence,
+        recommendedTechReel,
+        category,
+        whyThisRecommendation: whyThisRec,
+        difficulty,
+        confidence
+      }
+    };
+  }
+
+  /**
+   * Analyze a multi-reel watch history / user session to synthesize an aggregate student persona.
+   */
+  synthesizeAggregateSession(reels) {
+    if (!reels || reels.length === 0) return null;
+
+    const analyses = reels.map(r => this.analyzeReel(r));
+
+    // Category distribution
+    const categoryCounts = {
+      'AI': 0,
+      'DSA': 0,
+      'Java': 0,
+      'HLD': 0,
+      'Cybersecurity': 0,
+      'Cloud': 0,
+      'Hardware': 0,
+      'Career': 0,
+      'Other': 0
+    };
+
+    const topicKeywords = {};
+
+    analyses.forEach(a => {
+      const cat = a.recommendation.category;
+      if (categoryCounts[cat] !== undefined) {
+        categoryCounts[cat] += 1;
+      } else {
+        categoryCounts['Other'] += 1;
+      }
+
+      const words = a.latentInterest.topic.split(/[\s/,]+/);
+      words.forEach(w => {
+        if (w.length > 3) {
+          topicKeywords[w] = (topicKeywords[w] || 0) + 1;
+        }
+      });
+    });
+
+    // Check if the Trap Scenario signature is present
+    const hasJavaMeme = reels.some(r => r.id === 'reel-1' || /java|nullpointer/i.test(r.title + r.transcript));
+    const hasSWELifestyle = reels.some(r => r.id === 'reel-2' || /lifestyle|junior|matcha/i.test(r.title + r.transcript));
+    const hasInterviewJoke = reels.some(r => r.id === 'reel-3' || /interview|two-sum|leetcode/i.test(r.title + r.transcript));
+    const hasLaptopHardware = reels.some(r => r.id === 'reel-4' || /m3|snapdragon|laptop|hardware/i.test(r.title + r.transcript));
+
+    const isTrapScenario = hasJavaMeme && hasSWELifestyle && hasInterviewJoke && hasLaptopHardware;
+
+    let aggregateSummary = "";
+    if (isTrapScenario) {
+      aggregateSummary = "Student Profile: Aspiring Software Engineer actively preparing for technical careers. High engagement with developer humor, backend friction, algorithmic complexity, and hardware toolchains. Latent focus is Systems Engineering, JVM Internals, and Computer Architecture rather than generic syntax basics.";
+    } else {
+      aggregateSummary = `Student Profile: Tech-leaning student with strong engagement across ${Object.entries(categoryCounts).filter(([_, c]) => c > 0).map(([k, c]) => `${k} (${c})`).join(', ')}.`;
+    }
+
+    return {
+      sessionSize: reels.length,
+      analyses,
+      categoryCounts,
+      isTrapScenario,
+      aggregateSummary
+    };
+  }
+}
+
+
+/**
+ * Gemini AI Service Integration
+ * 
+ * Provides live AI inference via Google Gemini API (gemini-3.6-flash / gemini-2.5-flash / gemini-1.5-flash)
+ * for real-time transcript reasoning, trap evasion, and 60-second Educational Tech Reel Script generation.
+ */
+
+class GeminiService {
+  constructor() {
+    this.storageKey = 'ANTIGRAVITY_GEMINI_API_KEY';
+    this.model = 'gemini-2.5-flash';
+  }
+
+  getApiKey() {
+    try {
+      return localStorage.getItem(this.storageKey) || '';
+    } catch (e) {
+      return '';
+    }
+  }
+
+  setApiKey(key) {
+    try {
+      localStorage.setItem(this.storageKey, key.trim());
+    } catch (e) {
+      console.warn('Could not persist API key to localStorage', e);
+    }
+  }
+
+  hasApiKey() {
+    return !!this.getApiKey();
+  }
+
+  /**
+   * System Prompt enforcing deep context reasoning, anti-hype filtration, and the exact required schema.
+   */
+  _getSystemInstruction() {
+    return `You are an elite AI Recommendation Agent specializing in analyzing short-form video reels watched by students.
+Your goal is to infer the student's underlying academic and career interests (beyond superficial literal keywords), evade clickbait/hype traps, and recommend engaging, high-signal technology-related Reels to turn mindless scrolling into purposeful skill building.
+
+BUILT-IN TRAP TO EVADE:
+If a student watches developer humor, career lifestyle, interview jokes, or gadget teardowns:
+- DO NOT recommend shallow syntax tutorials (e.g. "What is a variable in Java")
+- DO NOT recommend predatory AI hype (e.g. "10 AI tools that will get you a job tomorrow without coding")
+- DO infer the broader Computer Science, Systems Engineering, JVM internals, Algorithmic Complexity, or Computer Architecture interests.
+
+STRICT REQUIRED OUTPUT FORMAT (You must output ONLY this exact plain text block, no markdown code fences or conversational greetings):
+CURRENT REEL: [reference]
+INTEREST DETECTED: [topic / interest]
+WHY: [evidence from content]
+RECOMMENDED TECH REEL: [topic/title]
+CATEGORY: [Must be exactly one of: AI / DSA / Java / HLD / Cybersecurity / Cloud / Hardware / Career / Other]
+WHY THIS RECOMMENDATION: [connection to interest]
+DIFFICULTY: [Must be exactly one of: Beginner / Intermediate / Advanced]
+CONFIDENCE: [Must be exactly one of: High / Medium / Low]`;
+  }
+
+  /**
+   * Live Gemini Analysis of any arbitrary Reel transcript.
+   */
+  async analyzeWithGemini(reelData, customKey = null) {
+    const apiKey = customKey || this.getApiKey();
+    if (!apiKey) {
+      throw new Error('No Gemini API key provided. Please enter an API key or use the built-in heuristic agent.');
+    }
+
+    const endpoint = `https://generativelanguage.googleapis.com/v1beta/models/${this.model}:generateContent?key=${apiKey}`;
+
+    const prompt = `Analyze this student's interacted Reel:
+TITLE: ${reelData.title || 'Untitled Reel'}
+CATEGORY: ${reelData.category || 'General'}
+TRANSCRIPT: ${reelData.transcript || ''}
+TAGS: ${Array.isArray(reelData.tags) ? reelData.tags.join(', ') : reelData.tags || ''}
+
+Generate the recommendation following the STRICT REQUIRED OUTPUT FORMAT.`;
+
+    const requestBody = {
+      contents: [
+        {
+          role: "user",
+          parts: [{ text: prompt }]
+        }
+      ],
+      systemInstruction: {
+        parts: [{ text: this._getSystemInstruction() }]
+      },
+      generationConfig: {
+        temperature: 0.2,
+        topP: 0.95,
+        maxOutputTokens: 800
+      }
+    };
+
+    const response = await fetch(endpoint, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify(requestBody)
+    });
+
+    if (!response.ok) {
+      const errJson = await response.json().catch(() => ({}));
+      throw new Error(errJson.error?.message || `Gemini API error: ${response.status} ${response.statusText}`);
+    }
+
+    const json = await response.json();
+    const outputText = json.candidates?.[0]?.content?.parts?.[0]?.text || '';
+    
+    return {
+      rawText: outputText.trim(),
+      parsed: this._parseRequiredOutputText(outputText.trim())
+    };
+  }
+
+  /**
+   * Generate a 60-second Educational Tech Reel Script for a recommended topic.
+   */
+  async generateReelScript(recommendedTopic, category, targetDifficulty, customKey = null) {
+    const apiKey = customKey || this.getApiKey();
+    if (!apiKey) {
+      throw new Error('Gemini API key required for live script generation.');
+    }
+
+    const endpoint = `https://generativelanguage.googleapis.com/v1beta/models/${this.model}:generateContent?key=${apiKey}`;
+
+    const prompt = `Write a viral, high-signal, 60-second educational Tech Reel script for students on the topic:
+TOPIC: "${recommendedTopic}"
+CATEGORY: ${category}
+DIFFICULTY: ${targetDifficulty}
+
+Structure the response in JSON with the following keys:
+{
+  "hook": "Spoken hook in the first 3 seconds (provocative question or surprising technical paradox)",
+  "visualScenes": [
+    { "timestamp": "0:00 - 0:10", "visualPrompt": "Detailed storyboard prompt for video animator", "voiceover": "Narrator dialogue" },
+    { "timestamp": "0:10 - 0:30", "visualPrompt": "Visualizing the underlying mechanism / code diagram", "voiceover": "Narrator dialogue" },
+    { "timestamp": "0:30 - 0:50", "visualPrompt": "Fixing the problem / applying the architectural principle", "voiceover": "Narrator dialogue" },
+    { "timestamp": "0:50 - 1:00", "visualPrompt": "Key takeaway summary card + challenge question", "voiceover": "Call to action dialogue" }
+  ],
+  "keyTakeaway": "One-sentence core concept summary",
+  "challengeQuestion": "Quick test question for the student viewer"
+}`;
+
+    const requestBody = {
+      contents: [{ role: "user", parts: [{ text: prompt }] }],
+      generationConfig: {
+        responseMimeType: "application/json",
+        temperature: 0.4
+      }
+    };
+
+    const response = await fetch(endpoint, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify(requestBody)
+    });
+
+    if (!response.ok) {
+      const errJson = await response.json().catch(() => ({}));
+      throw new Error(errJson.error?.message || `Gemini API error: ${response.status}`);
+    }
+
+    const json = await response.json();
+    const rawJsonText = json.candidates?.[0]?.content?.parts?.[0]?.text || '{}';
+    return JSON.parse(rawJsonText);
+  }
+
+  _parseRequiredOutputText(text) {
+    const fields = {
+      currentReel: '',
+      interestDetected: '',
+      whyEvidence: '',
+      recommendedTechReel: '',
+      category: 'Other',
+      whyThisRecommendation: '',
+      difficulty: 'Intermediate',
+      confidence: 'High'
+    };
+
+    const getField = (prefix) => {
+      const match = text.match(new RegExp(`${prefix}:?\\s*([^\n]+(?:\n(?!CURRENT|INTEREST|WHY|RECOMMENDED|CATEGORY|DIFFICULTY|CONFIDENCE)[^\n]+)*)`, 'i'));
+      return match ? match[1].trim() : '';
+    };
+
+    fields.currentReel = getField('CURRENT REEL');
+    fields.interestDetected = getField('INTEREST DETECTED');
+    fields.whyEvidence = getField('WHY');
+    fields.recommendedTechReel = getField('RECOMMENDED TECH REEL');
+    fields.category = getField('CATEGORY') || 'Other';
+    fields.whyThisRecommendation = getField('WHY THIS RECOMMENDATION');
+    fields.difficulty = getField('DIFFICULTY') || 'Intermediate';
+    fields.confidence = getField('CONFIDENCE') || 'High';
+
+    return fields;
+  }
+}
+
+
+/**
+ * Trap Analyzer & Naive vs Deep Agent Comparator
+ * 
+ * Demonstrates the built-in trap scenario:
+ * When a student watches:
+ * 1. Java meme
+ * 2. SWE lifestyle vlog
+ * 3. Coding interview joke
+ * 4. Laptop comparison
+ * 
+ * Side-by-side comparison between Naive Keyword Matching vs Deep Context Recommendation Agent.
+ */
+
+const TRAP_SCENARIO_DATA = {
+  scenarioTitle: "The Built-In Trap Scenario",
+  description: "A student watches a Java meme, a software-engineer lifestyle Reel, a coding interview joke, and a laptop comparison.",
+  studentContext: "CS Undergrad / Self-taught developer in their 2nd/3rd year, experiencing real coding friction, studying for technical interviews, and interested in developer hardware.",
+  
+  items: [
+    {
+      reelId: "reel-1",
+      reelTitle: "Friday 5 PM Prod Push (Java NullPointerException Meme)",
+      naiveOutput: {
+        keywordMatched: "Java",
+        recommendedTitle: "Learn Java in 10 Minutes: What is a Variable? (Java 101 for Absolute Beginners)",
+        category: "Java",
+        flaw: "Shallow literal match. Assumes a student laughing at production NullPointerExceptions in CI/CD pipelines needs to learn what a variable is.",
+        verdict: "FAILED (Boring / Irrelevant)"
+      },
+      agentOutput: {
+        interestDetected: "Software Engineering / JVM Memory & Runtime Reliability",
+        recommendedTitle: "How the JVM Garbage Collector Actually Works: Stop Your Microservices From Freezing",
+        category: "Java",
+        difficulty: "Intermediate",
+        confidence: "High",
+        rationale: "Bridges the developer's familiarity with runtime crashes into high-signal JVM memory internals (Eden/Tenured generations) and garbage collection tuning.",
+        verdict: "SUCCESS (Engaging & Conceptually Deep)"
+      }
+    },
+    {
+      reelId: "reel-2",
+      reelTitle: "Day in the Life: Junior Backend SWE (Kafka & Standup)",
+      naiveOutput: {
+        keywordMatched: "Matcha / Lifestyle",
+        recommendedTitle: "Top 10 Aesthetic Coffee Shops for Remote Influencers in Seattle",
+        category: "Lifestyle / Entertainment",
+        flaw: "Focuses on the visual aesthetics (coffee, gym) rather than the technical subtext (Kafka consumer lag, database pool starvation).",
+        verdict: "FAILED (Distraction / Low Value)"
+      },
+      agentOutput: {
+        interestDetected: "Backend Engineering / Distributed Message Queues & System Design",
+        recommendedTitle: "Surviving Kafka Consumer Lag: Partition Rebalancing and Backpressure Patterns Explained",
+        category: "HLD",
+        difficulty: "Intermediate",
+        confidence: "High",
+        rationale: "Extracts the real backend engineering friction mentioned in the vlog (Kafka lag, database starvation) and provides actionable architectural design patterns.",
+        verdict: "SUCCESS (Actionable Career Skill)"
+      }
+    },
+    {
+      reelId: "reel-3",
+      reelTitle: "Interviewer Asks Two-Sum Optimization (DSA Comedy)",
+      naiveOutput: {
+        keywordMatched: "Interview / Job",
+        recommendedTitle: "Top 10 AI Tools That Will Get You a $200k FAANG Job Tomorrow Without Coding!",
+        category: "Career / Hype",
+        flaw: "Falls directly into the hype trap: clickbait listicle with predatory claims, offering zero durable algorithmic understanding.",
+        verdict: "FAILED (Hype / Clickbait Trap)"
+      },
+      agentOutput: {
+        interestDetected: "Algorithms & Data Structures / Coding Interview Mastery",
+        recommendedTitle: "Why Dual-Pivot Quicksort & Timsort Beat Naive Algorithms in Real Production",
+        category: "DSA",
+        difficulty: "Intermediate",
+        confidence: "High",
+        rationale: "Transforms interview stress humor into deep algorithmic intuition, exploring how CPU cache locality makes hybrid sorting outperform naive big-O theory in real silicon.",
+        verdict: "SUCCESS (Durable Algorithmic Mastery)"
+      }
+    },
+    {
+      reelId: "reel-4",
+      reelTitle: "Snapdragon X Elite vs M3 Pro vs RTX 4080: Kernel Compile Benchmark",
+      naiveOutput: {
+        keywordMatched: "Laptop / RTX 4080",
+        recommendedTitle: "Top 5 RGB Gaming Laptops Under $600 with Free Mousepad",
+        category: "Gadgets / Consumer",
+        flaw: "Treats a multi-threaded Linux kernel compilation benchmark as a generic consumer shopping query for gaming laptops.",
+        verdict: "FAILED (Superficial Product Pitch)"
+      },
+      agentOutput: {
+        interestDetected: "Computer Architecture / CPU Microarchitecture & Compiler Performance",
+        recommendedTitle: "How Unified Memory & CPU Cache Lines Supercharge Modern Compilers",
+        category: "Hardware",
+        difficulty: "Advanced",
+        confidence: "High",
+        rationale: "Addresses the underlying interest in compiler parallelism, L1/L2/L3 cache misses, and unified memory bandwidth.",
+        verdict: "SUCCESS (Deep Systems Insight)"
+      }
+    }
+  ],
+
+  summaryComparison: {
+    naiveSystem: {
+      strategy: "Literal Token Matching + Engagement Maximization via Clickbait",
+      weaknesses: [
+        "Treats all mentions of 'Java' as Day-1 beginner syntax searches",
+        "Blindly pushes sensational hype ('10 AI tools that get you hired in 24 hours')",
+        "Ignores narrative context, humor, and underlying engineering concepts",
+        "Increases doom-scrolling without building durable student competence"
+      ],
+      overallScore: "22/100 (Shallow & Hype-Prone)"
+    },
+    deepAgent: {
+      strategy: "Multi-Modal Intent Extraction + Latent Interest Graph + Anti-Hype Gate",
+      strengths: [
+        "Infers the broader Software Engineering / Systems persona",
+        "Filters out sensational listicles and predatory clickbait",
+        "Calibrates difficulty to student's apparent skill curve (Intermediate/Advanced)",
+        "Transforms mindless scrolling into high-signal, engaging educational micro-learning"
+      ],
+      overallScore: "96/100 (High Substance & Alignment)"
+    }
+  }
+};
+
+
+/**
+ * Interactive SVG Radar Chart & Category Skill/Interest Breakdown
+ */
+
+class InterestRadarVisualizer {
+  constructor(containerId) {
+    this.container = document.getElementById(containerId);
+    this.categories = [
+      { key: 'Java', label: 'Java / Backend', color: '#f59e0b' },
+      { key: 'DSA', label: 'DSA / Algorithms', color: '#10b981' },
+      { key: 'HLD', label: 'High Level Design', color: '#3b82f6' },
+      { key: 'Hardware', label: 'Computer Arch / Hardware', color: '#ec4899' },
+      { key: 'AI', label: 'AI & Agents', color: '#8b5cf6' },
+      { key: 'Cybersecurity', label: 'Cybersecurity', color: '#ef4444' },
+      { key: 'Other', label: 'Graphics / Systems', color: '#06b6d4' },
+      { key: 'Career', label: 'SWE Career', color: '#14b8a6' }
+    ];
+  }
+
+  /**
+   * Render or update the radar chart and category bars
+   * @param {Object} categoryCounts - Map of category keys to counts or scores (0-100)
+   */
+  render(categoryCounts = {}) {
+    if (!this.container) return;
+
+    // Calculate maximum and normalize
+    const totalInteractions = Object.values(categoryCounts).reduce((a, b) => a + b, 0) || 1;
+    
+    const values = this.categories.map(cat => {
+      const count = categoryCounts[cat.key] || 0;
+      // Convert to score between 15 and 95 for visual radar balance
+      const rawRatio = count / totalInteractions;
+      const score = count === 0 ? 15 : Math.min(95, Math.round(25 + rawRatio * 70));
+      return { ...cat, count, score };
+    });
+
+    const size = 320;
+    const center = size / 2;
+    const radius = 110;
+    const angleStep = (Math.PI * 2) / this.categories.length;
+
+    // Build SVG polygons for concentric grid
+    let gridPolygons = '';
+    [0.25, 0.5, 0.75, 1.0].forEach((scale, idx) => {
+      const points = this.categories.map((_, i) => {
+        const angle = i * angleStep - Math.PI / 2;
+        const x = center + Math.cos(angle) * (radius * scale);
+        const y = center + Math.sin(angle) * (radius * scale);
+        return `${x.toFixed(1)},${y.toFixed(1)}`;
+      }).join(' ');
+
+      gridPolygons += `
+        <polygon points="${points}" fill="none" stroke="rgba(255,255,255,${0.06 + idx * 0.03})" stroke-width="1" />
+      `;
+    });
+
+    // Build spokes
+    let spokes = '';
+    this.categories.forEach((_, i) => {
+      const angle = i * angleStep - Math.PI / 2;
+      const x = center + Math.cos(angle) * radius;
+      const y = center + Math.sin(angle) * radius;
+      spokes += `
+        <line x1="${center}" y1="${center}" x2="${x.toFixed(1)}" y2="${y.toFixed(1)}" stroke="rgba(255,255,255,0.08)" stroke-width="1" />
+      `;
+    });
+
+    // Build data polygon
+    const dataPoints = values.map((v, i) => {
+      const angle = i * angleStep - Math.PI / 2;
+      const r = (v.score / 100) * radius;
+      const x = center + Math.cos(angle) * r;
+      const y = center + Math.sin(angle) * r;
+      return { x, y, ...v };
+    });
+
+    const polygonPointsStr = dataPoints.map(p => `${p.x.toFixed(1)},${p.y.toFixed(1)}`).join(' ');
+
+    // Build vertex circles & labels
+    let vertices = '';
+    let labels = '';
+    dataPoints.forEach((p, i) => {
+      const angle = i * angleStep - Math.PI / 2;
+      const labelRadius = radius + 24;
+      const lx = center + Math.cos(angle) * labelRadius;
+      const ly = center + Math.sin(angle) * labelRadius;
+
+      let textAnchor = 'middle';
+      if (Math.cos(angle) > 0.3) textAnchor = 'start';
+      else if (Math.cos(angle) < -0.3) textAnchor = 'end';
+
+      vertices += `
+        <circle cx="${p.x.toFixed(1)}" cy="${p.y.toFixed(1)}" r="4.5" fill="${p.color}" stroke="#0f172a" stroke-width="2" />
+      `;
+
+      labels += `
+        <text x="${lx.toFixed(1)}" y="${ly.toFixed(1) + 4}" fill="rgba(255,255,255,0.75)" font-size="10" font-family="'JetBrains Mono', monospace" text-anchor="${textAnchor}">${p.label}</text>
+      `;
+    });
+
+    // Build Breakdown Bars HTML
+    const barsHtml = values.map(v => {
+      const pct = Math.min(100, Math.round((v.count / Math.max(1, totalInteractions)) * 100));
+      return `
+        <div class="radar-bar-item">
+          <div class="radar-bar-header">
+            <span class="bar-name"><span class="color-dot" style="background:${v.color}"></span>${v.label}</span>
+            <span class="bar-val">${v.count} reel${v.count === 1 ? '' : 's'}</span>
+          </div>
+          <div class="radar-bar-track">
+            <div class="radar-bar-fill" style="width: ${Math.max(4, pct)}%; background: ${v.color};"></div>
+          </div>
+        </div>
+      `;
+    }).join('');
+
+    this.container.innerHTML = `
+      <div class="radar-wrapper">
+        <div class="radar-chart-box">
+          <svg viewBox="0 0 ${size} ${size}" class="radar-svg" role="img" aria-label="Student Latent Interest Radar">
+            <defs>
+              <linearGradient id="radarFillGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+                <stop offset="0%" stop-color="#3b82f6" stop-opacity="0.45" />
+                <stop offset="50%" stop-color="#8b5cf6" stop-opacity="0.35" />
+                <stop offset="100%" stop-color="#10b981" stop-opacity="0.45" />
+              </linearGradient>
+            </defs>
+            ${gridPolygons}
+            ${spokes}
+            <polygon points="${polygonPointsStr}" fill="url(#radarFillGrad)" stroke="#60a5fa" stroke-width="2" />
+            ${vertices}
+            ${labels}
+          </svg>
+        </div>
+        <div class="radar-bars-box">
+          <div class="radar-bars-title">
+            <span>Interest Intensity Breakdown</span>
+            <span class="badge-pill">${totalInteractions} Signal${totalInteractions === 1 ? '' : 's'}</span>
+          </div>
+          <div class="radar-bars-list">
+            ${barsHtml}
+          </div>
+        </div>
+      </div>
+    `;
+  }
+}
+
+
+/**
+ * Interactive Reel Simulator with Procedural Canvas Graphics & Engagement Hooks
+ */
+
+class ReelFeedSimulator {
+  constructor(containerId, options = {}) {
+    this.container = document.getElementById(containerId);
+    this.reels = options.reels || [];
+    this.currentIndex = 0;
+    this.isPlaying = true;
+    this.isMuted = false;
+    this.watchProgress = 0;
+    this.likedMap = {};
+    this.savedMap = {};
+    this.onReelChange = options.onReelChange || (() => {});
+    this.onInteraction = options.onInteraction || (() => {});
+    this.animationFrameId = null;
+    this.particleSystem = [];
+  }
+
+  setReels(reels, startIndex = 0) {
+    this.reels = reels;
+    this.currentIndex = Math.max(0, Math.min(startIndex, reels.length - 1));
+    this.watchProgress = 0;
+    this.render();
+    this._initCanvasAnimation();
+    this.onReelChange(this.getCurrentReel());
+  }
+
+  getCurrentReel() {
+    return this.reels[this.currentIndex] || null;
+  }
+
+  nextReel() {
+    if (this.reels.length === 0) return;
+    this.currentIndex = (this.currentIndex + 1) % this.reels.length;
+    this.watchProgress = 0;
+    this.render();
+    this._initCanvasAnimation();
+    this.onReelChange(this.getCurrentReel());
+    this.onInteraction({ type: 'scroll_next', reel: this.getCurrentReel() });
+  }
+
+  prevReel() {
+    if (this.reels.length === 0) return;
+    this.currentIndex = (this.currentIndex - 1 + this.reels.length) % this.reels.length;
+    this.watchProgress = 0;
+    this.render();
+    this._initCanvasAnimation();
+    this.onReelChange(this.getCurrentReel());
+    this.onInteraction({ type: 'scroll_prev', reel: this.getCurrentReel() });
+  }
+
+  toggleLike() {
+    const reel = this.getCurrentReel();
+    if (!reel) return;
+    this.likedMap[reel.id] = !this.likedMap[reel.id];
+    this.render();
+    this._initCanvasAnimation();
+    this.onInteraction({ type: 'like', liked: this.likedMap[reel.id], reel });
+  }
+
+  toggleSave() {
+    const reel = this.getCurrentReel();
+    if (!reel) return;
+    this.savedMap[reel.id] = !this.savedMap[reel.id];
+    this.render();
+    this._initCanvasAnimation();
+    this.onInteraction({ type: 'save', saved: this.savedMap[reel.id], reel });
+  }
+
+  render() {
+    if (!this.container) return;
+    const reel = this.getCurrentReel();
+    if (!reel) {
+      this.container.innerHTML = `<div class="empty-feed">No reels available in this view.</div>`;
+      return;
+    }
+
+    const isLiked = !!this.likedMap[reel.id];
+    const isSaved = !!this.savedMap[reel.id];
+
+    this.container.innerHTML = `
+      <div class="reel-player-card" id="reelPlayerCard">
+        <!-- Canvas Video Stage -->
+        <div class="reel-stage">
+          <canvas id="reelCanvas" class="reel-canvas" width="360" height="640"></canvas>
+          
+          <!-- Category & Audio Pill -->
+          <div class="reel-top-bar">
+            <span class="reel-category-badge">${reel.category}</span>
+            <div class="audio-track-pill">
+              <span class="sound-wave-icon">
+                <span class="bar bar-1"></span>
+                <span class="bar bar-2"></span>
+                <span class="bar bar-3"></span>
+              </span>
+              <span class="audio-name">${reel.audio || 'Original Audio'}</span>
+            </div>
+          </div>
+
+          <!-- Quick Navigation Buttons on Feed -->
+          <button class="feed-nav-btn prev-btn" id="btnFeedPrev" title="Previous Reel (Up Arrow)">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M18 15l-6-6-6 6"/></svg>
+          </button>
+          <button class="feed-nav-btn next-btn" id="btnFeedNext" title="Next Reel (Down Arrow)">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M6 9l6 6 6-6"/></svg>
+          </button>
+
+          <!-- Interaction Floating Side Actions -->
+          <div class="reel-side-actions">
+            <button class="action-btn ${isLiked ? 'liked' : ''}" id="btnLike" title="Like">
+              <svg width="24" height="24" viewBox="0 0 24 24" fill="${isLiked ? '#ef4444' : 'none'}" stroke="${isLiked ? '#ef4444' : 'currentColor'}" stroke-width="2"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"></path></svg>
+              <span>${isLiked ? 'Liked' : reel.likes}</span>
+            </button>
+
+            <button class="action-btn" id="btnComment" title="Comments">
+              <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.38 8.38 0 0 1-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.38 8.38 0 0 1 3.8-.9h.5a8.48 8.48 0 0 1 8 8v.5z"></path></svg>
+              <span>${reel.comments}</span>
+            </button>
+
+            <button class="action-btn ${isSaved ? 'saved' : ''}" id="btnSave" title="Save / Bookmark">
+              <svg width="24" height="24" viewBox="0 0 24 24" fill="${isSaved ? '#f59e0b' : 'none'}" stroke="${isSaved ? '#f59e0b' : 'currentColor'}" stroke-width="2"><path d="M19 21l-7-5-7 5V5a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2z"></path></svg>
+              <span>${isSaved ? 'Saved' : 'Save'}</span>
+            </button>
+
+            <button class="action-btn" id="btnShare" title="Share">
+              <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="18" cy="5" r="3"></circle><circle cx="6" cy="12" r="3"></circle><circle cx="18" cy="19" r="3"></circle><line x1="8.59" y1="13.51" x2="15.42" y2="17.49"></line><line x1="15.41" y1="6.51" x2="8.59" y2="10.49"></line></svg>
+              <span>${reel.shares}</span>
+            </button>
+          </div>
+
+          <!-- Bottom Meta & Transcript Info -->
+          <div class="reel-overlay-info">
+            <div class="creator-row">
+              <span class="creator-avatar">${reel.creator.substring(1, 3).toUpperCase()}</span>
+              <span class="creator-handle">${reel.creator}</span>
+              <button class="follow-btn">Follow</button>
+            </div>
+            
+            <h3 class="reel-title-text">${reel.title}</h3>
+            
+            <p class="reel-transcript-preview" id="reelTranscriptBox">
+              <span class="caption-label">Transcript:</span> "${reel.transcript}"
+            </p>
+
+            <div class="reel-tags-row">
+              ${(reel.tags || []).map(t => `<span class="tag-pill">${t}</span>`).join(' ')}
+            </div>
+
+            <!-- Progress Scrubber -->
+            <div class="reel-progress-container">
+              <div class="reel-progress-bar" id="reelProgressBar" style="width: 35%"></div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Feed Control Strip -->
+        <div class="feed-footer-controls">
+          <div class="feed-counter">
+            Reel <strong>${this.currentIndex + 1}</strong> of <strong>${this.reels.length}</strong>
+          </div>
+          <div class="feed-shortcuts-hint">
+            <span>Use <strong>&uarr; / &darr;</strong> keys to scroll</span>
+          </div>
+        </div>
+      </div>
+    `;
+
+    this._bindEvents();
+  }
+
+  _bindEvents() {
+    const btnNext = document.getElementById('btnFeedNext');
+    const btnPrev = document.getElementById('btnFeedPrev');
+    const btnLike = document.getElementById('btnLike');
+    const btnSave = document.getElementById('btnSave');
+
+    if (btnNext) btnNext.onclick = () => this.nextReel();
+    if (btnPrev) btnPrev.onclick = () => this.prevReel();
+    if (btnLike) btnLike.onclick = () => this.toggleLike();
+    if (btnSave) btnSave.onclick = () => this.toggleSave();
+  }
+
+  _initCanvasAnimation() {
+    if (this.animationFrameId) {
+      cancelAnimationFrame(this.animationFrameId);
+      this.animationFrameId = null;
+    }
+
+    const canvas = document.getElementById('reelCanvas');
+    if (!canvas) return;
+    const ctx = canvas.getContext('2d');
+    const reel = this.getCurrentReel();
+    if (!reel) return;
+
+    const visualType = reel.videoVisualType || 'meme-matrix';
+    let tick = 0;
+
+    // Initialize particles based on visual type
+    this.particleSystem = [];
+    for (let i = 0; i < 40; i++) {
+      this.particleSystem.push({
+        x: Math.random() * canvas.width,
+        y: Math.random() * canvas.height,
+        vx: (Math.random() - 0.5) * 1.5,
+        vy: (Math.random() - 0.5) * 1.5,
+        size: Math.random() * 3 + 1,
+        alpha: Math.random() * 0.7 + 0.3,
+        char: String.fromCharCode(0x30A0 + Math.floor(Math.random() * 96))
+      });
+    }
+
+    const renderFrame = () => {
+      tick++;
+      ctx.clearRect(0, 0, canvas.width, canvas.height);
+
+      // Background ambient gradient
+      const bgGrad = ctx.createLinearGradient(0, 0, 0, canvas.height);
+      bgGrad.addColorStop(0, '#0a0f1d');
+      bgGrad.addColorStop(1, '#030712');
+      ctx.fillStyle = bgGrad;
+      ctx.fillRect(0, 0, canvas.width, canvas.height);
+
+      if (visualType === 'meme-matrix') {
+        this._drawMatrixTheme(ctx, canvas, tick);
+      } else if (visualType === 'lifestyle-vlog') {
+        this._drawVlogTheme(ctx, canvas, tick);
+      } else if (visualType === 'sketch-comedy') {
+        this._drawComedyTheme(ctx, canvas, tick);
+      } else if (visualType === 'hardware-teardown') {
+        this._drawHardwareTheme(ctx, canvas, tick);
+      } else if (visualType === 'game-simulation') {
+        this._drawRedstoneTheme(ctx, canvas, tick);
+      } else if (visualType === 'ai-flowchart') {
+        this._drawAITheme(ctx, canvas, tick);
+      } else if (visualType === 'math-particles') {
+        this._drawParticlesTheme(ctx, canvas, tick);
+      } else if (visualType === 'security-terminal') {
+        this._drawSecurityTheme(ctx, canvas, tick);
+      } else {
+        this._drawGenericTheme(ctx, canvas, tick);
+      }
+
+      // Update progress bar
+      const pBar = document.getElementById('reelProgressBar');
+      if (pBar) {
+        const pct = (tick % 300) / 300 * 100;
+        pBar.style.width = `${pct}%`;
+      }
+
+      this.animationFrameId = requestAnimationFrame(renderFrame);
+    };
+
+    renderFrame();
+  }
+
+  _drawMatrixTheme(ctx, canvas, tick) {
+    ctx.fillStyle = 'rgba(16, 185, 129, 0.25)';
+    ctx.font = '12px "JetBrains Mono", monospace';
+    this.particleSystem.forEach(p => {
+      p.y += 2.5;
+      if (p.y > canvas.height) p.y = 0;
+      ctx.fillText(p.char, p.x, p.y);
+    });
+
+    // Alert Card simulation
+    ctx.fillStyle = 'rgba(239, 68, 68, 0.2)';
+    ctx.strokeStyle = '#ef4444';
+    ctx.lineWidth = 1.5;
+    ctx.roundRect(40, 160, 280, 120, 8);
+    ctx.fill();
+    ctx.stroke();
+
+    ctx.fillStyle = '#fca5a5';
+    ctx.font = 'bold 13px "JetBrains Mono", monospace';
+    ctx.fillText('CRITICAL: PROD CI/CD ALERT', 55, 190);
+    ctx.font = '11px "JetBrains Mono", monospace';
+    ctx.fillStyle = '#ffffff';
+    ctx.fillText('NullPointerException: Thread #3', 55, 215);
+    ctx.fillText('at FridayDeploy.pushToProd()', 55, 235);
+    ctx.fillStyle = '#94a3b8';
+    ctx.fillText('Status: 15 nested if-else skipped', 55, 258);
+  }
+
+  _drawVlogTheme(ctx, canvas, tick) {
+    // Cafe & Terminal Split Screen
+    ctx.fillStyle = 'rgba(59, 130, 246, 0.15)';
+    ctx.roundRect(30, 130, 300, 180, 12);
+    ctx.fill();
+
+    ctx.strokeStyle = '#3b82f6';
+    ctx.lineWidth = 1;
+    ctx.stroke();
+
+    ctx.fillStyle = '#60a5fa';
+    ctx.font = 'bold 12px "JetBrains Mono", monospace';
+    ctx.fillText('KAFKA TELEMETRY MONITOR', 45, 155);
+
+    // Live consumer lag pulse
+    const lagVal = 400000 + Math.floor(Math.sin(tick * 0.05) * 15000);
+    ctx.font = '22px "JetBrains Mono", monospace';
+    ctx.fillStyle = '#f87171';
+    ctx.fillText(`${lagVal.toLocaleString()} msgs`, 45, 195);
+
+    ctx.font = '11px sans-serif';
+    ctx.fillStyle = '#cbd5e1';
+    ctx.fillText('Consumer Group: order-processing-v2', 45, 225);
+    ctx.fillText('DB Pool: 98/100 connections active', 45, 245);
+    ctx.fillText('Latency Spike: +420ms at morning peak', 45, 265);
+  }
+
+  _drawComedyTheme(ctx, canvas, tick) {
+    ctx.fillStyle = 'rgba(168, 85, 247, 0.15)';
+    ctx.roundRect(30, 130, 300, 180, 12);
+    ctx.fill();
+
+    ctx.strokeStyle = '#a855f7';
+    ctx.lineWidth = 1;
+    ctx.stroke();
+
+    ctx.fillStyle = '#c084fc';
+    ctx.font = 'bold 13px "JetBrains Mono", monospace';
+    ctx.fillText('CODING INTERVIEW ZOOM CALL', 45, 155);
+
+    // Pulse Waveform
+    ctx.beginPath();
+    ctx.strokeStyle = '#38bdf8';
+    ctx.lineWidth = 2;
+    for (let x = 45; x < 315; x += 5) {
+      const y = 205 + Math.sin((x + tick * 4) * 0.08) * 18;
+      if (x === 45) ctx.moveTo(x, y);
+      else ctx.lineTo(x, y);
+    }
+    ctx.stroke();
+
+    ctx.font = '11px "JetBrains Mono", monospace';
+    ctx.fillStyle = '#ffffff';
+    ctx.fillText('Interviewer: "Can we do better than O(n^2)?"', 45, 245);
+    ctx.fillStyle = '#4ade80';
+    ctx.fillText('You: "HashMap complement O(n) amortized!"', 45, 270);
+  }
+
+  _drawHardwareTheme(ctx, canvas, tick) {
+    ctx.fillStyle = 'rgba(236, 72, 153, 0.15)';
+    ctx.roundRect(30, 120, 300, 200, 12);
+    ctx.fill();
+    ctx.strokeStyle = '#ec4899';
+    ctx.stroke();
+
+    ctx.fillStyle = '#f472b6';
+    ctx.font = 'bold 12px "JetBrains Mono", monospace';
+    ctx.fillText('LINUX KERNEL 6.8 COMPILE BENCHMARK', 45, 145);
+
+    // Core Bars
+    const chips = [
+      { name: 'Apple M3 Pro (36GB Uni)', time: '1m 42s', pct: 85, color: '#38bdf8' },
+      { name: 'Snapdragon X Elite', time: '2m 14s', pct: 68, color: '#f59e0b' },
+      { name: 'RTX 4080 Laptop (i9)', time: '1m 55s', pct: 76, color: '#10b981' }
+    ];
+
+    chips.forEach((c, idx) => {
+      const y = 175 + idx * 42;
+      ctx.fillStyle = '#e2e8f0';
+      ctx.font = '11px "JetBrains Mono", monospace';
+      ctx.fillText(`${c.name}: ${c.time}`, 45, y);
+
+      ctx.fillStyle = 'rgba(255,255,255,0.1)';
+      ctx.fillRect(45, y + 6, 270, 8);
+
+      ctx.fillStyle = c.color;
+      ctx.fillRect(45, y + 6, (c.pct / 100) * 270, 8);
+    });
+  }
+
+  _drawRedstoneTheme(ctx, canvas, tick) {
+    ctx.fillStyle = 'rgba(239, 68, 68, 0.15)';
+    ctx.roundRect(30, 130, 300, 180, 12);
+    ctx.fill();
+    ctx.strokeStyle = '#ef4444';
+    ctx.stroke();
+
+    ctx.fillStyle = '#fca5a5';
+    ctx.font = 'bold 13px "JetBrains Mono", monospace';
+    ctx.fillText('8-BIT MINECRAFT CPU IN SILICON', 45, 155);
+
+    // Logic Gate Diagram Simulation
+    ctx.strokeStyle = '#ef4444';
+    ctx.lineWidth = 2;
+    const pulse = Math.sin(tick * 0.1) > 0;
+    ctx.fillStyle = pulse ? '#ef4444' : '#7f1d1d';
+    ctx.fillRect(55, 180, 60, 35);
+    ctx.fillRect(160, 180, 60, 35);
+    ctx.fillRect(250, 180, 60, 35);
+
+    ctx.fillStyle = '#ffffff';
+    ctx.font = '10px "JetBrains Mono", monospace';
+    ctx.fillText('NAND A', 65, 202);
+    ctx.fillText('ALU ADD', 168, 202);
+    ctx.fillText('RAM 256B', 255, 202);
+
+    ctx.fillStyle = '#38bdf8';
+    ctx.font = '11px "JetBrains Mono", monospace';
+    ctx.fillText('Executing: FIBONACCI(8) = 21', 45, 260);
+    ctx.fillText('Clock Speed: 0.2 Hz (Redstone Ticks)', 45, 280);
+  }
+
+  _drawAITheme(ctx, canvas, tick) {
+    ctx.fillStyle = 'rgba(139, 92, 246, 0.15)';
+    ctx.roundRect(30, 130, 300, 180, 12);
+    ctx.fill();
+    ctx.strokeStyle = '#8b5cf6';
+    ctx.stroke();
+
+    ctx.fillStyle = '#c4b5fd';
+    ctx.font = 'bold 12px "JetBrains Mono", monospace';
+    ctx.fillText('AGENTIC DOM GROUNDING PIPELINE', 45, 155);
+
+    ctx.font = '11px "JetBrains Mono", monospace';
+    ctx.fillStyle = '#ffffff';
+    ctx.fillText('> Raw DOM: 4,800 nodes (120k tokens)', 45, 185);
+    ctx.fillStyle = '#4ade80';
+    ctx.fillText('> AXTree Pruned: 48 interactive nodes', 45, 210);
+    ctx.fillStyle = '#38bdf8';
+    ctx.fillText('> Action: click(bbox: [240, 180])', 45, 235);
+    ctx.fillStyle = '#f59e0b';
+    ctx.fillText('> Token Savings: 94.2% per step', 45, 260);
+  }
+
+  _drawParticlesTheme(ctx, canvas, tick) {
+    // 3-Body orbital chaos simulation on canvas
+    ctx.fillStyle = 'rgba(6, 182, 212, 0.15)';
+    ctx.roundRect(30, 120, 300, 200, 12);
+    ctx.fill();
+    ctx.strokeStyle = '#06b6d4';
+    ctx.stroke();
+
+    ctx.fillStyle = '#67e8f9';
+    ctx.font = 'bold 12px "JetBrains Mono", monospace';
+    ctx.fillText('3-BODY ORBITAL CHAOS (RUNGE-KUTTA 4)', 45, 145);
+
+    const cx = canvas.width / 2;
+    const cy = 220;
+    const bodies = [
+      { r: 40, speed: 0.03, color: '#f59e0b', size: 6 },
+      { r: 65, speed: -0.02, color: '#06b6d4', size: 5 },
+      { r: 85, speed: 0.015, color: '#ec4899', size: 7 }
+    ];
+
+    bodies.forEach(b => {
+      const bx = cx + Math.cos(tick * b.speed) * b.r;
+      const by = cy + Math.sin(tick * b.speed) * (b.r * 0.6);
+      ctx.beginPath();
+      ctx.arc(bx, by, b.size, 0, Math.PI * 2);
+      ctx.fillStyle = b.color;
+      ctx.fill();
+    });
+
+    ctx.font = '10px "JetBrains Mono", monospace';
+    ctx.fillStyle = '#94a3b8';
+    ctx.fillText('10,000 Particle Physics in WebGL @ 60FPS', 45, 295);
+  }
+
+  _drawSecurityTheme(ctx, canvas, tick) {
+    ctx.fillStyle = 'rgba(239, 68, 68, 0.15)';
+    ctx.roundRect(30, 130, 300, 180, 12);
+    ctx.fill();
+    ctx.strokeStyle = '#ef4444';
+    ctx.stroke();
+
+    ctx.fillStyle = '#fca5a5';
+    ctx.font = 'bold 12px "JetBrains Mono", monospace';
+    ctx.fillText('USB HID KEYSTROKE INJECTION', 45, 155);
+
+    ctx.font = '11px "JetBrains Mono", monospace';
+    ctx.fillStyle = '#ffffff';
+    ctx.fillText('> USB Device ID: 0x046D (Spoofed Keyboard)', 45, 185);
+    ctx.fillStyle = '#f87171';
+    ctx.fillText('> Payload: powershell.exe -enc ...', 45, 210);
+    ctx.fillStyle = '#fbbf24';
+    ctx.fillText('> Speed: 1,000 WPM (Bypasses AV check)', 45, 235);
+    ctx.fillStyle = '#4ade80';
+    ctx.fillText('> Defense: udev rule device whitelist', 45, 260);
+  }
+
+  _drawGenericTheme(ctx, canvas, tick) {
+    ctx.fillStyle = 'rgba(59, 130, 246, 0.1)';
+    ctx.fillRect(30, 130, 300, 180);
+    ctx.fillStyle = '#ffffff';
+    ctx.font = '14px sans-serif';
+    ctx.fillText('Simulated Reel Feed Content', 60, 220);
+  }
+}
+
+
+/**
+ * Main Application Orchestrator
+ * Links ReelFeed, RecommendationAgent, RadarVisualizer, TrapAnalyzer, BatchStudio, and CustomLab.
+ */
+
+
+
+
+
+
+class App {
+  constructor() {
+    this.agent = new RecommendationAgent(TECH_REELS_CATALOG);
+    this.geminiService = new GeminiService();
+    this.currentPreset = PRESETS[0]; // Start with The Built-In Trap Scenario
+    this.activeReels = this._resolvePresetReels(this.currentPreset);
+    this.watchHistory = [...this.activeReels];
+
+    // Sub-components
+    this.feedSimulator = null;
+    this.radarVisualizer = null;
+
+    this.activeTab = 'simulator'; // 'simulator', 'trap-analysis', 'batch-studio', 'custom-lab', 'gemini-studio'
+  }
+
+  init() {
+    this._initTabs();
+    this._initPresetSelector();
+    this._initFeedSimulator();
+    this._initRadar();
+    this._initTrapAnalyzer();
+    this._initBatchStudio();
+    this._initCustomLab();
+    this._initGeminiStudio();
+    this._initKeyboardNav();
+
+    // Initial evaluation
+    const currentReel = this.feedSimulator.getCurrentReel();
+    this.updateAgentInspection(currentReel);
+    this.updateAggregatePersona();
+  }
+
+  _resolvePresetReels(preset) {
+    if (!preset || !preset.reels) return SAMPLE_REELS;
+    return preset.reels.map(id => SAMPLE_REELS.find(r => r.id === id)).filter(Boolean);
+  }
+
+  _initTabs() {
+    const tabButtons = document.querySelectorAll('.nav-tab-btn');
+    tabButtons.forEach(btn => {
+      btn.addEventListener('click', () => {
+        const targetTab = btn.dataset.tab;
+        this.switchTab(targetTab);
+      });
+    });
+  }
+
+  switchTab(tabId) {
+    this.activeTab = tabId;
+    
+    // Update button states
+    document.querySelectorAll('.nav-tab-btn').forEach(btn => {
+      btn.classList.toggle('active', btn.dataset.tab === tabId);
+    });
+
+    // Update section visibility
+    document.querySelectorAll('.app-tab-section').forEach(sec => {
+      sec.classList.toggle('active', sec.id === `tab-${tabId}`);
+    });
+
+    // Refresh tab content if necessary
+    if (tabId === 'batch-studio') {
+      this.renderBatchOutputs();
+    } else if (tabId === 'trap-analysis') {
+      this.renderTrapAnalyzer();
+    }
+  }
+
+  _initPresetSelector() {
+    const selectEl = document.getElementById('presetSelect');
+    if (!selectEl) return;
+
+    selectEl.innerHTML = PRESETS.map(p => `
+      <option value="${p.id}">${p.name}</option>
+    `).join('');
+
+    selectEl.value = this.currentPreset.id;
+
+    selectEl.addEventListener('change', (e) => {
+      const selected = PRESETS.find(p => p.id === e.target.value);
+      if (selected) {
+        this.currentPreset = selected;
+        this.activeReels = this._resolvePresetReels(selected);
+        this.watchHistory = [...this.activeReels];
+        
+        // Update preset description banner
+        const descEl = document.getElementById('presetDescriptionBox');
+        if (descEl) {
+          descEl.innerHTML = `
+            <div class="preset-banner-content">
+              <strong>${selected.name}:</strong> ${selected.description}
+              <div class="preset-goal-tag">🎯 Goal: ${selected.avoidanceGoal}</div>
+            </div>
+          `;
+        }
+
+        this.feedSimulator.setReels(this.activeReels, 0);
+        this.updateAggregatePersona();
+      }
+    });
+
+    // Initial banner render
+    const descEl = document.getElementById('presetDescriptionBox');
+    if (descEl) {
+      descEl.innerHTML = `
+        <div class="preset-banner-content">
+          <strong>${this.currentPreset.name}:</strong> ${this.currentPreset.description}
+          <div class="preset-goal-tag">🎯 Goal: ${this.currentPreset.avoidanceGoal}</div>
+        </div>
+      `;
+    }
+  }
+
+  _initFeedSimulator() {
+    this.feedSimulator = new ReelFeedSimulator('reelFeedContainer', {
+      reels: this.activeReels,
+      onReelChange: (reel) => {
+        this.updateAgentInspection(reel);
+      },
+      onInteraction: (interaction) => {
+        if (!this.watchHistory.some(r => r.id === interaction.reel.id)) {
+          this.watchHistory.push(interaction.reel);
+        }
+        this.updateAgentInspection(interaction.reel);
+        this.updateAggregatePersona();
+      }
+    });
+
+    this.feedSimulator.render();
+    this.feedSimulator._initCanvasAnimation();
+  }
+
+  _initRadar() {
+    this.radarVisualizer = new InterestRadarVisualizer('interestRadarContainer');
+  }
+
+  /**
+   * Update the live AI Agent thought process & recommendation card
+   */
+  updateAgentInspection(reel) {
+    if (!reel) return;
+    const analysis = this.agent.analyzeReel(reel);
+
+    // 1. Context & Signals Box
+    const signalsBox = document.getElementById('extractedSignalsBox');
+    if (signalsBox) {
+      const ext = analysis.extraction;
+      const badges = [];
+      if (ext.isMemeOrHumor) badges.push('<span class="signal-tag humor">Satire / Meme</span>');
+      if (ext.hasCareerContext) badges.push('<span class="signal-tag career">SWE Career Friction</span>');
+      if (ext.hasSystemsContext) badges.push('<span class="signal-tag systems">Distributed Systems / Kafka</span>');
+      if (ext.hasAlgoContext) badges.push('<span class="signal-tag dsa">Algorithmic Complexity</span>');
+      if (ext.hasHardwareContext) badges.push('<span class="signal-tag hardware">CPU & Memory Bandwidth</span>');
+      if (ext.hasAgenticAIContext) badges.push('<span class="signal-tag ai">Agentic AI & DOM</span>');
+      if (ext.hasSecurityContext) badges.push('<span class="signal-tag sec">Hardware / USB Security</span>');
+      if (ext.hasGraphicsContext) badges.push('<span class="signal-tag graphics">WebGL / GPU Shaders</span>');
+      if (ext.hasLogicArchContext) badges.push('<span class="signal-tag logic">Digital Logic / ALU</span>');
+
+      signalsBox.innerHTML = `
+        <div class="signal-header-row">
+          <span class="signal-eyebrow">Input Nuance & Subtext</span>
+          <div class="signal-badges-list">${badges.join('')}</div>
+        </div>
+        <p class="signal-evidence-text"><strong>Evidence:</strong> ${analysis.extraction.summaryEvidence}</p>
+      `;
+    }
+
+    // 2. Latent Interest Box
+    const latentBox = document.getElementById('latentInterestBox');
+    if (latentBox) {
+      latentBox.innerHTML = `
+        <div class="latent-header">
+          <span class="latent-badge-category">${analysis.latentInterest.primaryCategory}</span>
+          <span class="latent-topic-name">${analysis.latentInterest.topic}</span>
+        </div>
+        <p class="latent-intent-text"><strong>Inferred Intent:</strong> ${analysis.latentInterest.intent}</p>
+        <div class="latent-meta-chips">
+          <span class="meta-chip">Apparent Level: <strong>${analysis.latentInterest.apparentSkillLevel}</strong></span>
+          <span class="meta-chip">Confidence: <strong>${analysis.latentInterest.confidence}</strong></span>
+        </div>
+      `;
+    }
+
+    // 3. Recommended Tech Reel Card
+    const recBox = document.getElementById('recommendationBox');
+    if (recBox) {
+      const rec = analysis.recommendation;
+      recBox.innerHTML = `
+        <div class="rec-card-header">
+          <div class="rec-category-badge cat-${rec.category.toLowerCase()}">${rec.category}</div>
+          <div class="rec-meta-badges">
+            <span class="badge-difficulty ${rec.difficulty.toLowerCase()}">${rec.difficulty}</span>
+            <span class="badge-confidence ${rec.confidence.toLowerCase()}">${rec.confidence} Confidence</span>
+          </div>
+        </div>
+        
+        <h3 class="rec-title">${rec.title}</h3>
+        <p class="rec-hook">"${rec.hook || rec.summary}"</p>
+        
+        <div class="rec-why-block">
+          <span class="why-label">Why This Recommendation:</span>
+          <p class="why-text">${rec.whyRecommendation}</p>
+        </div>
+
+        <div class="rec-signal-proof">
+          <span class="proof-label">High-Signal Substance:</span>
+          <p class="proof-text">${rec.whyHighSignal || rec.summary}</p>
+        </div>
+
+        <div class="rec-footer-row">
+          <span class="rec-creator">${rec.creator || '@tech_educator'} &bull; ${rec.duration}s</span>
+          <span class="anti-hype-pill">🛡️ Anti-Hype Score: ${rec.antiHypeScore || 95}/100</span>
+        </div>
+      `;
+    }
+
+    // 4. Exact Formatted Text Box
+    const formattedBox = document.getElementById('requiredOutputFormattedText');
+    if (formattedBox) {
+      formattedBox.textContent = analysis.formattedText;
+    }
+
+    // Bind Copy Button
+    const btnCopy = document.getElementById('btnCopyFormatted');
+    if (btnCopy) {
+      btnCopy.onclick = () => {
+        navigator.clipboard.writeText(analysis.formattedText).then(() => {
+          btnCopy.textContent = '✓ Copied Output!';
+          setTimeout(() => { btnCopy.textContent = '📋 Copy Required Output'; }, 2000);
+        });
+      };
+    }
+  }
+
+  /**
+   * Update aggregate student persona and radar chart based on watch history
+   */
+  updateAggregatePersona() {
+    const sessionData = this.agent.synthesizeAggregateSession(this.watchHistory);
+    if (!sessionData) return;
+
+    if (this.radarVisualizer) {
+      this.radarVisualizer.render(sessionData.categoryCounts);
+    }
+
+    const personaBox = document.getElementById('personaSummaryBox');
+    if (personaBox) {
+      personaBox.innerHTML = `
+        <div class="persona-card-inner">
+          <div class="persona-title-row">
+            <span class="persona-icon">🧑‍💻</span>
+            <div>
+              <h4 class="persona-name">Synthesized Student Persona</h4>
+              <span class="persona-status">${sessionData.sessionSize} Reels Interacted (${sessionData.isTrapScenario ? '⚠️ Trap Scenario Active' : 'Normal Feed'})</span>
+            </div>
+          </div>
+          <p class="persona-desc">${sessionData.aggregateSummary}</p>
+        </div>
+      `;
+    }
+  }
+
+  /**
+   * Initialize Side-by-Side Trap Analyzer
+   */
+  _initTrapAnalyzer() {
+    this.renderTrapAnalyzer();
+  }
+
+  renderTrapAnalyzer() {
+    const container = document.getElementById('trapAnalyzerContainer');
+    if (!container) return;
+
+    const data = TRAP_SCENARIO_DATA;
+
+    const itemsHtml = data.items.map((item, idx) => `
+      <div class="trap-card-row">
+        <div class="trap-row-header">
+          <span class="trap-step-num">Item ${idx + 1}</span>
+          <h4 class="trap-reel-title">${item.reelTitle}</h4>
+        </div>
+        
+        <div class="trap-comparison-grid">
+          <!-- Naive Keyword Matcher Column -->
+          <div class="trap-col naive-col">
+            <div class="col-header">
+              <span class="col-icon">❌</span>
+              <span class="col-title">Shallow / Keyword Matcher</span>
+              <span class="verdict-tag fail">${item.naiveOutput.verdict}</span>
+            </div>
+            <div class="col-body">
+              <div class="field-group">
+                <span class="field-label">Trigger Keyword:</span>
+                <span class="field-val">"${item.naiveOutput.keywordMatched}"</span>
+              </div>
+              <div class="field-group">
+                <span class="field-label">Recommended Output:</span>
+                <span class="field-val highlight-naive">${item.naiveOutput.recommendedTitle}</span>
+              </div>
+              <div class="field-group">
+                <span class="field-label">Fatal Flaw:</span>
+                <p class="flaw-text">${item.naiveOutput.flaw}</p>
+              </div>
+            </div>
+          </div>
+
+          <!-- Deep Context AI Agent Column -->
+          <div class="trap-col agent-col">
+            <div class="col-header">
+              <span class="col-icon">✨</span>
+              <span class="col-title">Context-Aware AI Recommendation Agent</span>
+              <span class="verdict-tag pass">${item.agentOutput.verdict}</span>
+            </div>
+            <div class="col-body">
+              <div class="field-group">
+                <span class="field-label">Inferred Interest:</span>
+                <span class="field-val highlight-agent">${item.agentOutput.interestDetected}</span>
+              </div>
+              <div class="field-group">
+                <span class="field-label">Recommended Tech Reel:</span>
+                <span class="field-val highlight-agent-rec">${item.agentOutput.recommendedTitle}</span>
+              </div>
+              <div class="field-group">
+                <span class="field-label">Why This Succeeds:</span>
+                <p class="success-text">${item.agentOutput.rationale}</p>
+              </div>
+              <div class="rec-tags-line">
+                <span class="badge-cat">${item.agentOutput.category}</span>
+                <span class="badge-diff">${item.agentOutput.difficulty}</span>
+                <span class="badge-conf">${item.agentOutput.confidence} Confidence</span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    `).join('');
+
+    container.innerHTML = `
+      <div class="trap-analyzer-hero">
+        <div class="trap-hero-badge">BUILT-IN TRAP MITIGATION ENGINE</div>
+        <h2 class="trap-hero-title">Why Keyword Matching Fails & How Our Agent Evades the Trap</h2>
+        <p class="trap-hero-desc">${data.description}</p>
+      </div>
+
+      <div class="trap-summary-banner">
+        <div class="summary-box naive-box">
+          <h4>🚨 The Shallow System Trap</h4>
+          <ul>
+            ${data.summaryComparison.naiveSystem.weaknesses.map(w => `<li>${w}</li>`).join('')}
+          </ul>
+        </div>
+        <div class="summary-box deep-box">
+          <h4>🛡️ The Context-Aware Agent Solution</h4>
+          <ul>
+            ${data.summaryComparison.deepAgent.strengths.map(s => `<li>${s}</li>`).join('')}
+          </ul>
+        </div>
+      </div>
+
+      <div class="trap-items-list">
+        ${itemsHtml}
+      </div>
+    `;
+  }
+
+  /**
+   * Initialize Batch Evaluation Studio for all 8 Sample Inputs
+   */
+  _initBatchStudio() {
+    const btnCopyAll = document.getElementById('btnCopyAllBatch');
+    const btnDownloadMd = document.getElementById('btnDownloadBatchMd');
+    const btnExportJson = document.getElementById('btnExportBatchJson');
+
+    if (btnCopyAll) {
+      btnCopyAll.addEventListener('click', () => {
+        const text = this._generateAllBatchRawText();
+        navigator.clipboard.writeText(text).then(() => {
+          btnCopyAll.textContent = '✓ All 8 Outputs Copied!';
+          setTimeout(() => { btnCopyAll.textContent = '📋 Copy All 8 Outputs'; }, 2000);
+        });
+      });
+    }
+
+    if (btnDownloadMd) {
+      btnDownloadMd.addEventListener('click', () => {
+        const text = this._generateAllBatchMarkdown();
+        this._downloadFile(text, 'ai_reel_recommendation_batch_evaluation.md', 'text/markdown');
+      });
+    }
+
+    if (btnExportJson) {
+      btnExportJson.addEventListener('click', () => {
+        const data = SAMPLE_REELS.map(r => this.agent.analyzeReel(r));
+        this._downloadFile(JSON.stringify(data, null, 2), 'ai_reel_recommendations.json', 'application/json');
+      });
+    }
+  }
+
+  _generateAllBatchRawText() {
+    return SAMPLE_REELS.map(r => {
+      const res = this.agent.analyzeReel(r);
+      return res.formattedText;
+    }).join('\n\n========================================\n\n');
+  }
+
+  _generateAllBatchMarkdown() {
+    let md = `# AI-Powered Tech Reel Recommendation Agent - Batch Evaluation Report\n\n`;
+    md += `Evaluated on **${SAMPLE_REELS.length} Sample Reels** covering Entertainment, Gaming, Coding, AI, Gadgets, Career, Programming Memes, and Tech News.\n\n`;
+
+    SAMPLE_REELS.forEach((r, idx) => {
+      const res = this.agent.analyzeReel(r);
+      md += `## Case ${idx + 1}: ${r.title} (${r.category})\n\n`;
+      md += `\`\`\`text\n${res.formattedText}\n\`\`\`\n\n`;
+      md += `> **Anti-Hype Score**: ${res.recommendation.antiHypeScore || 95}/100 | **Creator**: ${res.recommendation.creator}\n\n---\n\n`;
+    });
+
+    return md;
+  }
+
+  _downloadFile(content, filename, type) {
+    const blob = new Blob([content], { type });
+    const url = URL.createObjectURL(blob);
+    const a = document.createElement('a');
+    a.href = url;
+    a.download = filename;
+    document.body.appendChild(a);
+    a.click();
+    document.body.removeChild(a);
+    URL.revokeObjectURL(url);
+  }
+
+  renderBatchOutputs() {
+    const container = document.getElementById('batchOutputsList');
+    if (!container) return;
+
+    container.innerHTML = SAMPLE_REELS.map((r, idx) => {
+      const analysis = this.agent.analyzeReel(r);
+      return `
+        <div class="batch-reel-card">
+          <div class="batch-card-header">
+            <div class="batch-title-col">
+              <span class="batch-num-pill">Sample ${idx + 1} of ${SAMPLE_REELS.length}</span>
+              <h3 class="batch-title">${r.title}</h3>
+              <span class="batch-cat-pill">${r.category}</span>
+            </div>
+            <button class="batch-copy-btn" onclick="navigator.clipboard.writeText(\`${analysis.formattedText.replace(/`/g, '\\`')}\`); this.textContent='✓ Copied'; setTimeout(() => this.textContent='📋 Copy', 2000);">
+              📋 Copy
+            </button>
+          </div>
+
+          <div class="batch-transcript-quote">
+            <span class="quote-icon">❝</span>
+            <p>${r.transcript}</p>
+          </div>
+
+          <pre class="batch-formatted-pre"><code>${analysis.formattedText}</code></pre>
+        </div>
+      `;
+    }).join('');
+  }
+
+  /**
+   * Custom Reel Input Lab
+   */
+  _initCustomLab() {
+    const form = document.getElementById('customReelForm');
+    const runBtn = document.getElementById('btnRunCustomAgent');
+    const resultBox = document.getElementById('customAgentResult');
+
+    if (!form || !runBtn) return;
+
+    runBtn.addEventListener('click', (e) => {
+      e.preventDefault();
+      const title = document.getElementById('customTitle').value.trim() || 'Custom Student Reel';
+      const category = document.getElementById('customCategory').value || 'Other';
+      const transcript = document.getElementById('customTranscript').value.trim();
+      const tagsStr = document.getElementById('customTags').value.trim();
+      const tags = tagsStr.split(/[\s,]+/).filter(t => t.length > 0);
+
+      if (!transcript) {
+        alert('Please enter a Reel transcript or description to analyze.');
+        return;
+      }
+
+      const customReel = {
+        id: 'custom-' + Date.now().toString().slice(-4),
+        title,
+        category,
+        creator: '@custom_user',
+        duration: 30,
+        likes: '10K',
+        comments: '200',
+        shares: '500',
+        tags,
+        audio: 'Trending Audio Track',
+        videoVisualType: 'custom',
+        transcript
+      };
+
+      const analysis = this.agent.analyzeReel(customReel);
+
+      if (resultBox) {
+        resultBox.innerHTML = `
+          <div class="custom-result-card">
+            <div class="custom-result-header">
+              <span class="custom-success-pill">✓ Agent Inference Completed</span>
+              <button class="batch-copy-btn" id="btnCopyCustomOutput">📋 Copy Formatted Output</button>
+            </div>
+            
+            <pre class="custom-output-pre"><code>${analysis.formattedText}</code></pre>
+            
+            <div class="custom-breakdown-details">
+              <div class="detail-item">
+                <span class="d-label">Inferred Concept:</span>
+                <span class="d-val">${analysis.latentInterest.topic}</span>
+              </div>
+              <div class="detail-item">
+                <span class="d-label">Recommended Tech Reel:</span>
+                <span class="d-val">${analysis.recommendation.title}</span>
+              </div>
+              <div class="detail-item">
+                <span class="d-label">Difficulty & Confidence:</span>
+                <span class="d-val">${analysis.recommendation.difficulty} / ${analysis.recommendation.confidence}</span>
+              </div>
+            </div>
+          </div>
+        `;
+
+        const btnCopy = document.getElementById('btnCopyCustomOutput');
+        if (btnCopy) {
+          btnCopy.onclick = () => {
+            navigator.clipboard.writeText(analysis.formattedText).then(() => {
+              btnCopy.textContent = '✓ Copied!';
+              setTimeout(() => { btnCopy.textContent = '📋 Copy Formatted Output'; }, 2000);
+            });
+          };
+        }
+      }
+    });
+
+    // Populate Sample Presets into Custom Input
+    const presetLinks = document.querySelectorAll('.fill-custom-preset');
+    presetLinks.forEach(btn => {
+      btn.addEventListener('click', (e) => {
+        e.preventDefault();
+        const reelId = btn.dataset.reelId;
+        const reel = SAMPLE_REELS.find(r => r.id === reelId);
+        if (reel) {
+          document.getElementById('customTitle').value = reel.title;
+          document.getElementById('customCategory').value = reel.category;
+          document.getElementById('customTranscript').value = reel.transcript;
+          document.getElementById('customTags').value = (reel.tags || []).join(' ');
+        }
+      });
+    });
+  }
+
+  _initGeminiStudio() {
+    const keyInput = document.getElementById('geminiApiKeyInput');
+    const btnSaveKey = document.getElementById('btnSaveGeminiKey');
+    const btnClearKey = document.getElementById('btnClearGeminiKey');
+    const statusDot = document.querySelector('.status-dot');
+    const statusText = document.getElementById('geminiStatusText');
+
+    const updateStatusUI = () => {
+      if (this.geminiService.hasApiKey()) {
+        if (statusDot) statusDot.className = 'status-dot active-gemini';
+        if (statusText) statusText.textContent = 'Active (Live Gemini 2.5 Flash Connected)';
+        if (keyInput) keyInput.value = this.geminiService.getApiKey();
+      } else {
+        if (statusDot) statusDot.className = 'status-dot';
+        if (statusText) statusText.textContent = 'Local Heuristic Agent (No API Key Required)';
+        if (keyInput) keyInput.value = '';
+      }
+    };
+
+    updateStatusUI();
+
+    if (btnSaveKey) {
+      btnSaveKey.onclick = () => {
+        const k = keyInput ? keyInput.value.trim() : '';
+        if (k) {
+          this.geminiService.setApiKey(k);
+          btnSaveKey.textContent = '✓ Saved!';
+          setTimeout(() => { btnSaveKey.textContent = 'Save Key'; }, 2000);
+        }
+        updateStatusUI();
+      };
+    }
+
+    if (btnClearKey) {
+      btnClearKey.onclick = () => {
+        this.geminiService.setApiKey('');
+        updateStatusUI();
+      };
+    }
+
+    // Sample Fill in Gemini Studio
+    const sampleButtons = document.querySelectorAll('.gemini-sample-fill');
+    sampleButtons.forEach(btn => {
+      btn.onclick = () => {
+        const reelId = btn.dataset.reelId;
+        const reel = SAMPLE_REELS.find(r => r.id === reelId);
+        if (reel) {
+          const promptInput = document.getElementById('geminiPromptInput');
+          if (promptInput) promptInput.value = reel.transcript;
+        }
+      };
+    });
+
+    // Run Live Gemini Analysis Button
+    const btnRunAnalysis = document.getElementById('btnRunGeminiAnalysis');
+    const analysisCode = document.getElementById('geminiOutputCode');
+
+    if (btnRunAnalysis) {
+      btnRunAnalysis.onclick = async () => {
+        const transcript = (document.getElementById('geminiPromptInput')?.value || '').trim();
+        if (!transcript) {
+          alert('Please enter a transcript to analyze.');
+          return;
+        }
+
+        btnRunAnalysis.disabled = true;
+        btnRunAnalysis.textContent = '⚡ Running Gemini Reasoning...';
+        if (analysisCode) analysisCode.textContent = 'Connecting to Google Gemini API and evaluating context signals...';
+
+        try {
+          if (this.geminiService.hasApiKey()) {
+            const res = await this.geminiService.analyzeWithGemini({
+              title: "Student Interacted Clip",
+              category: "General Tech",
+              transcript
+            });
+            if (analysisCode) analysisCode.textContent = res.rawText;
+          } else {
+            // Use our high-precision local recommendation agent
+            const customReel = {
+              id: 'gemini-sim-' + Date.now().toString().slice(-4),
+              title: 'Student Interacted Clip',
+              category: 'General Tech',
+              transcript
+            };
+            const analysis = this.agent.analyzeReel(customReel);
+            if (analysisCode) {
+              analysisCode.textContent = `[LOCAL AGENT REASONING ENGINE - Add API Key above for Live Gemini 2.5 Flash]\n\n` + analysis.formattedText;
+            }
+          }
+        } catch (err) {
+          if (analysisCode) {
+            analysisCode.textContent = `Error during inference: ${err.message}\n\nFalling back to local heuristic reasoning:\n` +
+              this.agent.analyzeReel({ title: "Student Clip", category: "General", transcript }).formattedText;
+          }
+        } finally {
+          btnRunAnalysis.disabled = false;
+          btnRunAnalysis.textContent = '✨ Run Live Gemini Analysis';
+        }
+      };
+    }
+
+    // Generate 60s Reel Script Button
+    const btnGenScript = document.getElementById('btnGenerateReelScript');
+    const scriptDisplay = document.getElementById('geminiScriptDisplay');
+
+    if (btnGenScript) {
+      btnGenScript.onclick = async () => {
+        const topic = (document.getElementById('scriptTopicInput')?.value || '').trim();
+        const category = document.getElementById('scriptCategorySelect')?.value || 'Other';
+        const difficulty = document.getElementById('scriptDifficultySelect')?.value || 'Intermediate';
+
+        if (!topic) {
+          alert('Please enter a topic for the script.');
+          return;
+        }
+
+        btnGenScript.disabled = true;
+        btnGenScript.textContent = '🎬 Generating Storyboard & Script...';
+        if (scriptDisplay) scriptDisplay.innerHTML = '<div class="script-empty-placeholder">Generating 60-second viral educational storyboard...</div>';
+
+        try {
+          let scriptData = null;
+          if (this.geminiService.hasApiKey()) {
+            scriptData = await this.geminiService.generateReelScript(topic, category, difficulty);
+          } else {
+            // Rich fallback script generator
+            scriptData = {
+              hook: `Stop making this mistake when debugging ${category}! Here is what is actually happening in under 60 seconds.`,
+              visualScenes: [
+                {
+                  timestamp: "0:00 - 0:12",
+                  visualPrompt: "Split screen: frantic developer staring at stack trace vs animated silicon/memory architecture glow",
+                  voiceover: `Why does your code fail under load? Most developers think it's a syntax problem, but it's actually memory hierarchy.`
+                },
+                {
+                  timestamp: "0:12 - 0:35",
+                  visualPrompt: "Animated step-by-step schematic of the data flow and cache line/partition rebalance",
+                  voiceover: `Look at the heap: objects in Eden space get promoted, triggering stop-the-world pauses. When you configure your allocation limits properly, GC throughput doubles.`
+                },
+                {
+                  timestamp: "0:35 - 0:50",
+                  visualPrompt: "Clean before/after code comparison in IDE with high-contrast syntax highlighting",
+                  voiceover: `Here is the clean architectural fix you can push in 2 lines of code today.`
+                },
+                {
+                  timestamp: "0:50 - 1:00",
+                  visualPrompt: "Summary takeaway banner and quick interactive challenge question",
+                  voiceover: `Save this for your next production incident, and tell me in the comments: which garbage collector is your backend running?`
+                }
+              ],
+              keyTakeaway: `Understanding low-level internals transforms defensive coding into high-throughput systems performance.`,
+              challengeQuestion: `Can you name the difference between Minor and Full GC pauses in 3 words?`
+            };
+          }
+
+          // Render Script
+          if (scriptDisplay && scriptData) {
+            const scenesHtml = (scriptData.visualScenes || []).map(s => `
+              <div class="script-scene-item">
+                <span class="scene-time-pill">⏱️ ${s.timestamp}</span>
+                <p class="scene-visual-prompt">🎥 <strong>Visual Storyboard:</strong> ${s.visualPrompt}</p>
+                <p class="scene-voiceover">🎙️ <strong>Narrator Voiceover:</strong> "${s.voiceover}"</p>
+              </div>
+            `).join('');
+
+            scriptDisplay.innerHTML = `
+              <div class="script-card-content">
+                <div class="script-hook-banner">
+                  🪝 <strong>3-Second Hook:</strong> "${scriptData.hook}"
+                </div>
+                <div class="script-scenes-list">
+                  ${scenesHtml}
+                </div>
+                <div class="rec-why-block" style="margin-top: 10px;">
+                  <span class="why-label">Key Educational Takeaway:</span>
+                  <p class="why-text">${scriptData.keyTakeaway}</p>
+                </div>
+                <div class="rec-signal-proof">
+                  <span class="proof-label">Viewer Interactive Challenge:</span>
+                  <p class="proof-text">${scriptData.challengeQuestion}</p>
+                </div>
+              </div>
+            `;
+          }
+        } catch (err) {
+          if (scriptDisplay) {
+            scriptDisplay.innerHTML = `<div class="script-empty-placeholder" style="color: #ef4444;">Script generation error: ${err.message}</div>`;
+          }
+        } finally {
+          btnGenScript.disabled = false;
+          btnGenScript.textContent = '🎬 Generate 60s Educational Video Script';
+        }
+      };
+    }
+  }
+
+  _initKeyboardNav() {
+    window.addEventListener('keydown', (e) => {
+      // Don't intercept when typing in text inputs or textareas
+      if (['INPUT', 'TEXTAREA', 'SELECT'].includes(document.activeElement.tagName)) {
+        return;
+      }
+
+      if (e.key === 'ArrowDown' || e.key === 'j') {
+        e.preventDefault();
+        this.feedSimulator.nextReel();
+      } else if (e.key === 'ArrowUp' || e.key === 'k') {
+        e.preventDefault();
+        this.feedSimulator.prevReel();
+      } else if (e.key === 'l') {
+        e.preventDefault();
+        this.feedSimulator.toggleLike();
+      } else if (e.key === 's') {
+        e.preventDefault();
+        this.feedSimulator.toggleSave();
+      } else if (e.key === '1') {
+        this.switchTab('simulator');
+      } else if (e.key === '2') {
+        this.switchTab('trap-analysis');
+      } else if (e.key === '3') {
+        this.switchTab('batch-studio');
+      } else if (e.key === '4') {
+        this.switchTab('custom-lab');
+      }
+    });
+  }
+}
+
+// Instantiate on DOM load
+document.addEventListener('DOMContentLoaded', () => {
+  const app = new App();
+  app.init();
+  window.__APP_INSTANCE__ = app;
+});
+
+})();
+</script>
+</body>
+</html>

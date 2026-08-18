@@ -1,0 +1,364 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>AI Tech Reel Recommendation Agent | Educational Micro-Learning for Students</title>
+  <meta name="description" content="AI-powered recommendation agent that analyzes student Reels interactions, infers underlying technical interests beyond superficial keywords, and recommends high-signal educational tech reels.">
+  
+  <!-- Google Fonts: Inter & JetBrains Mono -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=JetBrains+Mono:ital,wght@0,400;0,500;0,600;0,700;1,400&display=swap" rel="stylesheet">
+  
+  <link rel="stylesheet" href="css/styles.css">
+</head>
+<body>
+
+  <!-- Top App Navigation Bar -->
+  <header class="app-header">
+    <div class="header-container">
+      <div class="brand-col">
+        <div class="brand-icon">⚡</div>
+        <div>
+          <h1 class="brand-title">AI Tech Reel Recommendation Agent</h1>
+        </div>
+        <span class="brand-badge">Context-Engine v2.4</span>
+      </div>
+
+      <div class="header-actions">
+        <!-- Preset Scenario Selector -->
+        <div class="preset-picker-group">
+          <label for="presetSelect" class="preset-label">Test Scenario:</label>
+          <select id="presetSelect" class="preset-select" aria-label="Select student preset scenario"></select>
+        </div>
+
+        <!-- Navigation Tabs -->
+        <nav class="nav-tab-strip" aria-label="Main Navigation">
+          <button class="nav-tab-btn active" data-tab="simulator" id="tabBtnSimulator">
+            <span>📱 Feed & Agent Mind</span>
+          </button>
+          <button class="nav-tab-btn" data-tab="trap-analysis" id="tabBtnTrap">
+            <span>🛡️ Trap Analyzer</span>
+          </button>
+          <button class="nav-tab-btn" data-tab="batch-studio" id="tabBtnBatch">
+            <span>📦 Batch Studio</span>
+            <span class="tab-badge">8 Reels</span>
+          </button>
+          <button class="nav-tab-btn" data-tab="custom-lab" id="tabBtnCustom">
+            <span>🧪 Custom Lab</span>
+          </button>
+          <button class="nav-tab-btn" data-tab="gemini-studio" id="tabBtnGemini">
+            <span>✨ Gemini Studio & Script Gen</span>
+          </button>
+        </nav>
+      </div>
+    </div>
+  </header>
+
+  <!-- Main Application Body -->
+  <main class="app-main">
+
+    <!-- Active Preset Description Banner -->
+    <div class="preset-banner" id="presetDescriptionBox">
+      <!-- Injected via JavaScript -->
+    </div>
+
+    <!-- ========================================================================= -->
+    <!-- TAB 1: Reel Feed Simulator & Live AI Agent Inspector                       -->
+    <!-- ========================================================================= -->
+    <section class="app-tab-section active" id="tab-simulator">
+      <div class="simulator-grid">
+        
+        <!-- Left Column: Interactive Reel Player Simulator -->
+        <div class="player-col">
+          <div id="reelFeedContainer">
+            <!-- Injected by ReelFeedSimulator -->
+          </div>
+        </div>
+
+        <!-- Right Column: AI Agent Mind & Live Thought Process -->
+        <div class="inspector-col">
+          
+          <!-- Stage 1 & 2: Context Extraction & Latent Inference -->
+          <div class="inspector-card">
+            <div class="inspector-header-row">
+              <h2 class="inspector-title">
+                <span>🧠 AI Agent Reasoning Pipeline</span>
+              </h2>
+              <span class="step-indicator">Stages 1–4</span>
+            </div>
+
+            <!-- Stage 1: Context Signals Extractor -->
+            <div class="signal-box" id="extractedSignalsBox">
+              <!-- Injected by app.js -->
+            </div>
+
+            <!-- Stage 2: Latent Interest Synthesizer -->
+            <div class="latent-box" id="latentInterestBox">
+              <!-- Injected by app.js -->
+            </div>
+
+            <!-- Stage 3: High-Signal Recommendation Card -->
+            <div class="recommendation-card" id="recommendationBox">
+              <!-- Injected by app.js -->
+            </div>
+
+            <!-- Stage 4: Required Output Specification Terminal -->
+            <div class="required-output-box">
+              <div class="required-output-header">
+                <span class="output-title-label">
+                  <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="4" width="20" height="16" rx="2"/><path d="M10 4v4"/><path d="M2 8h20"/><path d="M6 4v4"/></svg>
+                  REQUIRED OUTPUT FORMAT
+                </span>
+                <button class="btn-copy" id="btnCopyFormatted">📋 Copy Required Output</button>
+              </div>
+              <pre class="output-pre" id="requiredOutputFormattedText"><code>Generating recommendation...</code></pre>
+            </div>
+          </div>
+
+          <!-- Student Persona & Radar Graph -->
+          <div class="inspector-card">
+            <div class="inspector-header-row">
+              <h3 class="inspector-title">
+                <span>📊 Latent Interest Radar & Aggregate Persona</span>
+              </h3>
+              <span class="step-indicator">Dynamic Vector</span>
+            </div>
+            
+            <div class="persona-section">
+              <div id="personaSummaryBox">
+                <!-- Injected by app.js -->
+              </div>
+              <div id="interestRadarContainer">
+                <!-- Injected by InterestRadarVisualizer -->
+              </div>
+            </div>
+          </div>
+
+        </div>
+
+      </div>
+    </section>
+
+    <!-- ========================================================================= -->
+    <!-- TAB 2: Built-in Trap Analyzer (Naive Matcher vs Deep Context Agent)        -->
+    <!-- ========================================================================= -->
+    <section class="app-tab-section" id="tab-trap-analysis">
+      <div id="trapAnalyzerContainer">
+        <!-- Injected by trap-analyzer.js & app.js -->
+      </div>
+    </section>
+
+    <!-- ========================================================================= -->
+    <!-- TAB 3: Batch Evaluation Studio (All 8 Sample Inputs)                       -->
+    <!-- ========================================================================= -->
+    <section class="app-tab-section" id="tab-batch-studio">
+      <div class="batch-studio-header">
+        <div>
+          <h2 class="batch-studio-title">Comprehensive Batch Evaluation</h2>
+          <p class="batch-studio-desc">Evaluation of all 8 fictional/anonymized sample Reels formatted strictly to the Required Output specification.</p>
+        </div>
+        <div class="batch-actions-row">
+          <button class="batch-btn primary" id="btnCopyAllBatch">📋 Copy All 8 Outputs</button>
+          <button class="batch-btn" id="btnDownloadBatchMd">📥 Download Markdown</button>
+          <button class="batch-btn" id="btnExportBatchJson">💾 Export JSON</button>
+        </div>
+      </div>
+
+      <div class="batch-grid" id="batchOutputsList">
+        <!-- Injected by app.js -->
+      </div>
+    </section>
+
+    <!-- ========================================================================= -->
+    <!-- TAB 4: Custom Reel Input Lab                                              -->
+    <!-- ========================================================================= -->
+    <section class="app-tab-section" id="tab-custom-lab">
+      <div class="custom-lab-container">
+        
+        <!-- Input Form -->
+        <div class="custom-form-card">
+          <h2 class="inspector-title" style="margin-bottom: 14px;">🧪 Custom Reel Input Sandbox</h2>
+          <p class="signal-evidence-text" style="margin-bottom: 16px;">Test the AI Recommendation Agent on any arbitrary Reel transcript, meme, or student interaction.</p>
+
+          <form id="customReelForm">
+            <div class="form-group">
+              <label for="customTitle" class="form-label">Reel Title / Hook:</label>
+              <input type="text" id="customTitle" class="form-input" placeholder="e.g. My code worked on localhost but crashed on AWS EC2" value="My code worked on localhost but crashed on AWS EC2">
+            </div>
+
+            <div class="form-group">
+              <label for="customCategory" class="form-label">Surface Category:</label>
+              <select id="customCategory" class="form-select">
+                <option value="Programming Memes">Programming Memes</option>
+                <option value="Career / SWE Lifestyle">Career / SWE Lifestyle</option>
+                <option value="DSA / Coding Interview">DSA / Coding Interview</option>
+                <option value="Gadgets / Hardware">Gadgets / Hardware</option>
+                <option value="Gaming / Systems">Gaming / Systems</option>
+                <option value="AI / Tech News">AI / Tech News</option>
+                <option value="Cybersecurity">Cybersecurity</option>
+                <option value="Entertainment">Entertainment</option>
+                <option value="Other">Other</option>
+              </select>
+            </div>
+
+            <div class="form-group">
+              <label for="customTranscript" class="form-label">Reel Audio Transcript / Subtitle Content:</label>
+              <textarea id="customTranscript" class="form-textarea" placeholder="Enter the spoken audio transcript or narrative of the Reel...">Running Docker container in production with 512MB RAM limit. OOMKilled signal 9 triggers whenever 100 concurrent websocket connections open. Me frantically checking docker stats in SSH.</textarea>
+            </div>
+
+            <div class="form-group">
+              <label for="customTags" class="form-label">Hashtags / Metadata (space separated):</label>
+              <input type="text" id="customTags" class="form-input" placeholder="#docker #aws #oomkilled #cloud #devops" value="#docker #aws #oomkilled #cloud #devops">
+            </div>
+
+            <div class="form-presets-row">
+              <span class="presets-label">Quick autofill sample:</span>
+              <button type="button" class="fill-custom-preset" data-reel-id="reel-1">Java Meme</button>
+              <button type="button" class="fill-custom-preset" data-reel-id="reel-2">SWE Lifestyle</button>
+              <button type="button" class="fill-custom-preset" data-reel-id="reel-3">Two-Sum DSA</button>
+              <button type="button" class="fill-custom-preset" data-reel-id="reel-5">Minecraft ALU</button>
+              <button type="button" class="fill-custom-preset" data-reel-id="reel-8">USB Rubber Ducky</button>
+            </div>
+
+            <button type="submit" class="btn-submit-agent" id="btnRunCustomAgent">⚡ Run AI Agent Inference</button>
+          </form>
+        </div>
+
+        <!-- Output Result Panel -->
+        <div id="customAgentResult">
+          <div class="custom-result-card">
+            <div class="custom-result-header">
+              <span class="custom-success-pill">Ready for Analysis</span>
+            </div>
+            <p class="signal-evidence-text">Fill out the form or choose a quick autofill sample and click "Run AI Agent Inference" to see the full reasoning breakdown and Required Output format.</p>
+          </div>
+        </div>
+
+      </div>
+    </section>
+
+    <!-- ========================================================================= -->
+    <!-- TAB 5: Live Gemini AI Studio & 60s Reel Script Generator                  -->
+    <!-- ========================================================================= -->
+    <section class="app-tab-section" id="tab-gemini-studio">
+      <div class="gemini-studio-container">
+        
+        <!-- Header banner -->
+        <div class="gemini-hero-box">
+          <div class="gemini-hero-badge">GOOGLE GEMINI 2.5/3.6 FLASH INTEGRATION</div>
+          <h2 class="gemini-hero-title">Live Multimodal AI Recommendation & Script Studio</h2>
+          <p class="gemini-hero-desc">Connect directly to Gemini to perform live semantic reasoning on arbitrary video transcripts, verify trap mitigation, and auto-generate viral 60-second educational Tech Reel scripts.</p>
+        </div>
+
+        <!-- API Key & Config Bar -->
+        <div class="gemini-config-bar">
+          <div class="config-input-group">
+            <label for="geminiApiKeyInput" class="config-label">🔑 Gemini API Key:</label>
+            <input type="password" id="geminiApiKeyInput" class="config-input" placeholder="Paste your Google AI Studio API Key (AIzaSy...)">
+            <button class="config-btn" id="btnSaveGeminiKey">Save Key</button>
+            <button class="config-btn secondary" id="btnClearGeminiKey">Clear</button>
+          </div>
+          <div class="gemini-status-indicator" id="geminiStatusIndicator">
+            <span class="status-dot"></span>
+            <span class="status-text" id="geminiStatusText">Ready (Local Heuristic Agent Available)</span>
+          </div>
+        </div>
+
+        <!-- Split Workspace: Analysis & Script Generator -->
+        <div class="gemini-workspace-grid">
+          
+          <!-- Column 1: Live Gemini Reel Analyzer -->
+          <div class="gemini-card">
+            <div class="gemini-card-header">
+              <h3 class="gemini-card-title">1. Live Gemini Context Inference</h3>
+              <span class="badge-gemini-tag">Zero-Shot Reasoning</span>
+            </div>
+
+            <div class="form-group">
+              <label class="form-label">Test with Sample or Custom Transcript:</label>
+              <div class="form-presets-row" style="margin-bottom: 8px;">
+                <button type="button" class="gemini-sample-fill" data-reel-id="reel-1">Java Meme</button>
+                <button type="button" class="gemini-sample-fill" data-reel-id="reel-2">SWE Vlog</button>
+                <button type="button" class="gemini-sample-fill" data-reel-id="reel-3">DSA Joke</button>
+                <button type="button" class="gemini-sample-fill" data-reel-id="reel-4">M3 Compile</button>
+              </div>
+              <textarea id="geminiPromptInput" class="form-textarea" style="min-height: 110px;" placeholder="Paste student video transcript or narrative here...">When you fix a production crash by adding 15 nested if-else null checks, commit message 'minor fix', push straight to main at 4:59 PM on Friday, and shut your laptop before the CI pipeline triggers NullPointerException in cluster 3.</textarea>
+            </div>
+
+            <button class="btn-gemini-action" id="btnRunGeminiAnalysis">✨ Run Live Gemini Analysis</button>
+
+            <!-- Result Output Box -->
+            <div class="gemini-result-box" id="geminiAnalysisResultBox">
+              <pre class="gemini-pre-output"><code id="geminiOutputCode">Click "Run Live Gemini Analysis" to inspect live model output...</code></pre>
+            </div>
+          </div>
+
+          <!-- Column 2: 60-Second Educational Script Generator -->
+          <div class="gemini-card">
+            <div class="gemini-card-header">
+              <h3 class="gemini-card-title">2. 60s Tech Reel Script Generator</h3>
+              <span class="badge-gemini-tag">Content Bridge Studio</span>
+            </div>
+
+            <div class="form-group">
+              <label for="scriptTopicInput" class="form-label">Recommended Tech Topic:</label>
+              <input type="text" id="scriptTopicInput" class="form-input" value="How the JVM Garbage Collector Actually Works: Stop Your Microservices From Freezing">
+            </div>
+
+            <div class="form-group-row">
+              <div class="form-group" style="flex: 1;">
+                <label for="scriptCategorySelect" class="form-label">Category:</label>
+                <select id="scriptCategorySelect" class="form-select">
+                  <option value="Java">Java</option>
+                  <option value="HLD">HLD</option>
+                  <option value="DSA">DSA</option>
+                  <option value="Hardware">Hardware</option>
+                  <option value="AI">AI</option>
+                  <option value="Cybersecurity">Cybersecurity</option>
+                  <option value="Other">Other</option>
+                </select>
+              </div>
+              <div class="form-group" style="flex: 1;">
+                <label for="scriptDifficultySelect" class="form-label">Target Difficulty:</label>
+                <select id="scriptDifficultySelect" class="form-select">
+                  <option value="Intermediate">Intermediate</option>
+                  <option value="Beginner">Beginner</option>
+                  <option value="Advanced">Advanced</option>
+                </select>
+              </div>
+            </div>
+
+            <button class="btn-gemini-action secondary" id="btnGenerateReelScript">🎬 Generate 60s Educational Video Script</button>
+
+            <!-- Script Viewer Box -->
+            <div class="gemini-script-display" id="geminiScriptDisplay">
+              <div class="script-empty-placeholder">
+                <span>Select a topic and generate a 60-second educational storyboard with visual cues and narrator dialogue.</span>
+              </div>
+            </div>
+          </div>
+
+        </div>
+
+      </div>
+    </section>
+
+  </main>
+
+  <!-- Footer -->
+  <footer class="app-footer">
+    <p>AI-Powered Tech Reel Recommendation Agent &bull; Turning student scrolling into high-signal educational micro-learning without clickbait traps.</p>
+  </footer>
+
+  <!-- Scripts -->
+  <script type="module" src="js/dataset.js"></script>
+  <script type="module" src="js/agent.js"></script>
+  <script type="module" src="js/gemini-service.js"></script>
+  <script type="module" src="js/trap-analyzer.js"></script>
+  <script type="module" src="js/ui-radar.js"></script>
+  <script type="module" src="js/ui-feed.js"></script>
+  <script type="module" src="js/app.js"></script>
+</body>
+</html>

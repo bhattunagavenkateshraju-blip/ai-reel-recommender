@@ -1,0 +1,20 @@
+{
+  "name": "ai-tech-reel-recommendation-agent",
+  "version": "2.4.0",
+  "description": "AI-Powered Recommendation Agent that analyzes student Reels interactions, infers underlying interests beyond superficial keywords, and recommends high-signal educational tech reels.",
+  "type": "module",
+  "scripts": {
+    "test": "node test/test-agent.js",
+    "start": "npx serve ."
+  },
+  "keywords": [
+    "ai",
+    "recommendation-system",
+    "education",
+    "micro-learning",
+    "systems-engineering",
+    "dsa"
+  ],
+  "author": "Antigravity Engineering",
+  "license": "MIT"
+}
